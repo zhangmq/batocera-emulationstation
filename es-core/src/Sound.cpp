@@ -75,6 +75,7 @@ void Sound::deinit()
 	{
 		stop();
 		Mix_FreeChunk(mSampleData);
+		mSampleData = nullptr;
 	}
 }
 
