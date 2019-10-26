@@ -23,6 +23,10 @@ std::string myCollectionsName = "collections";
  * a CollectionSystemManager Instance */
 CollectionSystemManager* CollectionSystemManager::sInstance = NULL;
 
+#define STR_SORT1 _("FILENAME, ASCENDING")
+#define str_SORT2 _("LAST PLAYED, DESCENDING")
+#define STR_SORT3 _("FILENAME, ASCENDING")
+
 CollectionSystemManager::CollectionSystemManager(Window* window) : mWindow(window)
 {
 	CollectionSystemDecl systemDecls[] = {
