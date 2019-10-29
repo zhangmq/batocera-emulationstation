@@ -7,7 +7,7 @@
 #include "utils/StringUtil.h"
 #include "LocaleES.h"
 
-GuiBackupStart::GuiBackupStart(Window* window) : GuiComponent(window), mMenu(window, _("BACKUP USER DATA").c_str())
+GuiBackupStart::GuiBackupStart(Window* window) : GuiComponent(window), mMenu(window, _("BACKUP USER DATA"))
 {
 	addChild(&mMenu);
 

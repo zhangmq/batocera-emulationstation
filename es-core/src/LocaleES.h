@@ -3,12 +3,25 @@
 
 #if !defined(WIN32)
 
-#include <boost/locale.hpp>
-
-#define _(A) boost::locale::gettext(A)
-#define ngettext(A, B, C) boost::locale::ngettext(A, B, C)
+#ifdef HAVE_INTL
+#include <libintl.h>
+#define _(A) gettext(A)
+#else
+#define _(A) A
+char* ngettext(char* msgid, char* msgid_plural, unsigned long int n);
+#endif
 
 #define _U(x) x
+#include <string>
+
+class EsLocale
+{
+ public:
+  static std::string init(std::string locale, std::string path);
+  static std::string changeLocale(const std::string& locale);
+ private:
+  static std::string default_LANGUAGE;
+};
 
 #else // WIN32
 

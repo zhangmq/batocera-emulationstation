@@ -43,8 +43,8 @@ void ThreadedScraper::search(const ScraperSearchParams& params)
 
 	std::string idx = std::to_string(mTotal + 1- mSearchQueue.size()) + "/" + std::to_string(mTotal);
 
-	mWndNotification->updateTitle(GUIICON + _("SCRAPING") + "... " + idx);
-	mWndNotification->updateText(formatGameName(params.game), _("Searching")+"...");
+	mWndNotification->updateTitle(GUIICON + std::string(_("SCRAPING")) + "... " + idx);
+	mWndNotification->updateText(formatGameName(params.game), std::string(_("Searching")) + "...");
 	mWndNotification->updatePercent(-1);
 }
 
@@ -125,7 +125,7 @@ void ThreadedScraper::run()
 	}
 	
 	if (!mExit)
-		mWindow->displayNotificationMessage(GUIICON + _("SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES."));
+	  mWindow->displayNotificationMessage(GUIICON + std::string(_("SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES.")));
 
 	delete this;
 	ThreadedScraper::mInstance = nullptr;

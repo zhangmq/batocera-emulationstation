@@ -12,7 +12,7 @@
 // Batocera: new option in batocera.conf to hide specific systems
 // Example: put "nes.hide=1" in batocera.conf to *not* display NES category in ES 
 GuiSystemsHide::GuiSystemsHide(Window* window) : GuiComponent(window),
-  mMenu(window, _("SELECT SYSTEMS TO DISPLAY").c_str()) 
+  mMenu(window, _("SELECT SYSTEMS TO DISPLAY")) 
 {  
 	addChild(&mMenu);
 

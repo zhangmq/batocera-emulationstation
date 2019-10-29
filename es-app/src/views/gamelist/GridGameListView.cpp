@@ -38,29 +38,29 @@ GridGameListView::GridGameListView(Window* window, FolderData* root, const std::
 	addChild(&mGrid);
 
 	// metadata labels + values
-	mLblRating.setText(_("Rating") + ": ");
+	mLblRating.setText(_("Rating") + std::string(": "));
 	addChild(&mLblRating);
 	addChild(&mRating);
-	mLblReleaseDate.setText(_("Released") + ": ");
+	mLblReleaseDate.setText(_("Released") + std::string(": "));
 	addChild(&mLblReleaseDate);
 	addChild(&mReleaseDate);
-	mLblDeveloper.setText(_("Developer") + ": ");
+	mLblDeveloper.setText(_("Developer") + std::string(": "));
 	addChild(&mLblDeveloper);
 	addChild(&mDeveloper);
-	mLblPublisher.setText(_("Publisher") + ": ");
+	mLblPublisher.setText(_("Publisher") + std::string(": "));
 	addChild(&mLblPublisher);
 	addChild(&mPublisher);
-	mLblGenre.setText(_("Genre") + ": ");
+	mLblGenre.setText(_("Genre") + std::string(": "));
 	addChild(&mLblGenre);
 	addChild(&mGenre);
-	mLblPlayers.setText(_("Players") + ": ");
+	mLblPlayers.setText(_("Players") + std::string(": "));
 	addChild(&mLblPlayers);
 	addChild(&mPlayers);
-	mLblLastPlayed.setText(_("Last played") + ": ");
+	mLblLastPlayed.setText(_("Last played") + std::string(": "));
 	addChild(&mLblLastPlayed);
 	mLastPlayed.setDisplayRelative(true);
 	addChild(&mLastPlayed);
-	mLblPlayCount.setText(_("Times played") + ": ");
+	mLblPlayCount.setText(_("Times played") + std::string(": "));
 	addChild(&mLblPlayCount);
 	addChild(&mPlayCount);
 

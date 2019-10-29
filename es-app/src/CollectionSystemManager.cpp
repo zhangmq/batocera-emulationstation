@@ -464,14 +464,14 @@ void CollectionSystemManager::setEditMode(std::string collectionName)
 	mEditingCollectionSystemData = sysData;
 
 	char strbuf[512];
-	snprintf(strbuf, 512, _("Editing the '%s' Collection. Add/remove games with Y.").c_str(), Utils::String::toUpper(collectionName).c_str());
+	snprintf(strbuf, 512, _("Editing the '%s' Collection. Add/remove games with Y."), Utils::String::toUpper(collectionName));
 	mWindow->displayNotificationMessage(strbuf, 10000);
 }
 
 void CollectionSystemManager::exitEditMode()
 {
 	char strbuf[512];
-	snprintf(strbuf, 512, _("Finished editing the '%s' Collection.").c_str(), mEditingCollection.c_str());
+	snprintf(strbuf, 512, _("Finished editing the '%s' Collection."), mEditingCollection.c_str());
 	mWindow->displayNotificationMessage(strbuf, 4000);
 
 	mIsEditingCustom = false;
@@ -558,9 +558,9 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
 		}
 
 		if (adding)
-			snprintf(trstring, 256, _("Added '%s' to '%s'").c_str(), Utils::String::removeParenthesis(name).c_str(), Utils::String::toUpper(sysName).c_str()); // batocera
+			snprintf(trstring, 256, _("Added '%s' to '%s'"), Utils::String::removeParenthesis(name).c_str(), Utils::String::toUpper(sysName).c_str()); // batocera
 		else
-			snprintf(trstring, 256, _("Removed '%s' from '%s'").c_str(), Utils::String::removeParenthesis(name).c_str(), Utils::String::toUpper(sysName).c_str()); // batocera		  
+			snprintf(trstring, 256, _("Removed '%s' from '%s'"), Utils::String::removeParenthesis(name).c_str(), Utils::String::toUpper(sysName).c_str()); // batocera		  
 
 		mWindow->displayNotificationMessage(trstring, 4000);
 		return true;
@@ -651,10 +651,10 @@ void CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sys)
 
 		if(games_counter <= 3) {
 		  snprintf(trstring, 512, ngettext("This collection contains %1$i game, including %2$s.",
-						   "This collection contains %1$i games, including %2$s.", games_counter).c_str(), games_counter, games_list.c_str());
+						   "This collection contains %1$i games, including %2$s.", games_counter), games_counter, games_list.c_str());
 		} else {
 		  snprintf(trstring, 512, ngettext("This collection contains %1$i game, including %2$s among other titles.",
-						   "This collection contains %1$i games, including %2$s among other titles.", games_counter).c_str(), games_counter, games_list.c_str());
+						   "This collection contains %1$i games, including %2$s among other titles.", games_counter), games_counter, games_list.c_str());
 		}
 		desc = trstring;
 

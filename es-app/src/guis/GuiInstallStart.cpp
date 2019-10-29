@@ -8,7 +8,7 @@
 #include "LocaleES.h"
 
 GuiInstallStart::GuiInstallStart(Window* window) : GuiComponent(window),
-mMenu(window, _("INSTALL BATOCERA").c_str())
+mMenu(window, _("INSTALL BATOCERA"))
 {
 	addChild(&mMenu);
 

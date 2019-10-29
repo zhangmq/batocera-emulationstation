@@ -111,7 +111,7 @@ void GuiScraperMulti::doNextSearch()
 	// update subtitle
 	ss.str(""); // clear
 	char strbuf[256];
-	snprintf(strbuf, 256, _("GAME %i OF %i").c_str(), mCurrentGame + 1, mTotalGames); // batocera
+	snprintf(strbuf, 256, _("GAME %i OF %i"), mCurrentGame + 1, mTotalGames); // batocera
 	ss << strbuf << " - " << Utils::String::toUpper(Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath()));
 	mSubtitle->setText(ss.str());
 
@@ -150,11 +150,11 @@ void GuiScraperMulti::finish()
 			);
 	} else {
 	  char strbuf[256];
-	  snprintf(strbuf, 256, ngettext("%i GAME SUCCESSFULLY SCRAPED!", "%i GAMES SUCCESSFULLY SCRAPED!", mTotalSuccessful).c_str(), mTotalSuccessful); // batocera
+	  snprintf(strbuf, 256, ngettext("%i GAME SUCCESSFULLY SCRAPED!", "%i GAMES SUCCESSFULLY SCRAPED!", mTotalSuccessful), mTotalSuccessful); // batocera
 	  ss << strbuf;
 
 	  if(mTotalSkipped > 0) {
-	    snprintf(strbuf, 256, ngettext("%i GAME SKIPPED.", "%i GAMES SKIPPED.", mTotalSkipped).c_str(), mTotalSkipped); // batocera
+	    snprintf(strbuf, 256, ngettext("%i GAME SKIPPED.", "%i GAMES SKIPPED.", mTotalSkipped), mTotalSkipped); // batocera
 	    ss << "\n" << strbuf;
 	  }
 	}

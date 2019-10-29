@@ -11,7 +11,7 @@
 #include "LocaleES.h"
 
 GuiScraperStart::GuiScraperStart(Window* window) : GuiComponent(window),
-  mMenu(window, _("SCRAPE NOW").c_str()) // batocera
+  mMenu(window, _("SCRAPE NOW")) // batocera
 {
 	mOverwriteMedias = true;
 

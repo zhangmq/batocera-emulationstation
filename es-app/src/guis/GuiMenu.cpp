@@ -25,6 +25,7 @@
 #include <SDL_events.h>
 #include <algorithm>
 #include "platform.h"
+#include "LocaleES.h"
 
 #include "SystemConf.h"
 #include "ApiSystem.h"
@@ -40,8 +41,9 @@
 #include "guis/GuiTextEditPopup.h"
 #include "scrapers/ThreadedScraper.h"
 #include "FileSorts.h"
+#include <cstring>
 
-GuiMenu::GuiMenu(Window *window) : GuiComponent(window), mMenu(window, _("MAIN MENU").c_str()), mVersion(window)
+GuiMenu::GuiMenu(Window *window) : GuiComponent(window), mMenu(window, _("MAIN MENU")), mVersion(window)
 {
 	// MAIN MENU
 	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
@@ -59,53 +61,53 @@ GuiMenu::GuiMenu(Window *window) : GuiComponent(window), mMenu(window, _("MAIN M
 	// KODI
 #ifdef _ENABLE_KODI_
 	if (SystemConf::getInstance()->get("kodi.enabled") != "0")
-		addEntry(_("KODI MEDIA CENTER").c_str(), false, [this] { openKodiLauncher_batocera(); }, "iconKodi");	
+		addEntry(_("KODI MEDIA CENTER"), false, [this] { openKodiLauncher_batocera(); }, "iconKodi");	
 #endif
 
 	if (isFullUI &&
 		SystemConf::getInstance()->get("global.retroachievements") == "1" &&
 		SystemConf::getInstance()->get("global.retroachievements.username") != "")
-		addEntry(_("RETROACHIEVEMENTS").c_str(), true, [this] { openRetroAchievements_batocera(); }, "iconRetroachievements");
+		addEntry(_("RETROACHIEVEMENTS"), true, [this] { openRetroAchievements_batocera(); }, "iconRetroachievements");
 
 	// GAMES SETTINGS
 	if (isFullUI)
-		addEntry(_("GAMES SETTINGS").c_str(), true, [this] { openGamesSettings_batocera(); }, "iconGames");
+		addEntry(_("GAMES SETTINGS"), true, [this] { openGamesSettings_batocera(); }, "iconGames");
 
 	// CONTROLLERS SETTINGS
 	if (isFullUI)
-		addEntry(_("CONTROLLERS SETTINGS").c_str(), true, [this] { openControllersSettings_batocera(); }, "iconControllers");
+		addEntry(_("CONTROLLERS SETTINGS"), true, [this] { openControllersSettings_batocera(); }, "iconControllers");
 
 	if (isFullUI)
-		addEntry(_("UI SETTINGS").c_str(), true, [this] { openUISettings(); }, "iconUI");
+		addEntry(_("UI SETTINGS"), true, [this] { openUISettings(); }, "iconUI");
 
 	// batocera
 	if (isFullUI)
-		addEntry(_("GAME COLLECTION SETTINGS").c_str(), true, [this] { openCollectionSystemSettings(); }, "iconAdvanced");
+		addEntry(_("GAME COLLECTION SETTINGS"), true, [this] { openCollectionSystemSettings(); }, "iconAdvanced");
 
 	if (isFullUI)
-		addEntry(_("SOUND SETTINGS").c_str(), true, [this] { openSoundSettings(); }, "iconSound");
+		addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
 #if !defined(WIN32) || defined(_DEBUG)
 	if (isFullUI)
-		addEntry(_("NETWORK SETTINGS").c_str(), true, [this] { openNetworkSettings_batocera(); }, "iconNetwork");
+		addEntry(_("NETWORK SETTINGS"), true, [this] { openNetworkSettings_batocera(); }, "iconNetwork");
 #endif
 
 	if (isFullUI)
 	{
-		addEntry(_("SCRAPE").c_str(), true, [this] { openScraperSettings(); }, "iconScraper");		
-//		addEntry(_("SCRAPE").c_str(), true, [this] { openScraperSettings_batocera(); }, "iconScraper");
+		addEntry(_("SCRAPE"), true, [this] { openScraperSettings(); }, "iconScraper");		
+//		addEntry(_("SCRAPE"), true, [this] { openScraperSettings_batocera(); }, "iconScraper");
 	}
 	
 	// SYSTEM
 	if (isFullUI)
-		addEntry(_("SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings_batocera(); }, "iconSystem");
+		addEntry(_("SYSTEM SETTINGS"), true, [this] { openSystemSettings_batocera(); }, "iconSystem");
 	else
-		addEntry(_("INFORMATIONS").c_str(), true, [this] { openSystemInformations_batocera(); }, "iconSystem");
+		addEntry(_("INFORMATIONS"), true, [this] { openSystemInformations_batocera(); }, "iconSystem");
 
 #ifdef WIN32
-	addEntry(_("QUIT").c_str(), false, [this] { openQuitMenu_batocera(); }, "iconQuit");
+	addEntry(_("QUIT"), false, [this] { openQuitMenu_batocera(); }, "iconQuit");
 #else
-	addEntry(_("QUIT").c_str(), true, [this] { openQuitMenu_batocera(); }, "iconQuit");
+	addEntry(_("QUIT"), true, [this] { openQuitMenu_batocera(); }, "iconQuit");
 #endif
 	
 	addChild(&mMenu);
@@ -270,18 +272,18 @@ void GuiMenu::addVersionInfo()
 
 void GuiMenu::openScreensaverOptions() 
 {
-	mWindow->pushGui(new GuiGeneralScreensaverOptions(mWindow, _("SCREENSAVER SETTINGS").c_str()));
+	mWindow->pushGui(new GuiGeneralScreensaverOptions(mWindow, _("SCREENSAVER SETTINGS")));
 }
 
 // new screensaver options for Batocera
 void GuiMenu::openSlideshowScreensaverOptions() 
 {
-	mWindow->pushGui(new GuiSlideshowScreensaverOptions(mWindow, _("SLIDESHOW SETTINGS").c_str()));
+	mWindow->pushGui(new GuiSlideshowScreensaverOptions(mWindow, _("SLIDESHOW SETTINGS")));
 }
 
 // new screensaver options for Batocera
 void GuiMenu::openVideoScreensaverOptions() {
-	mWindow->pushGui(new GuiVideoScreensaverOptions(mWindow, _("RANDOM VIDEO SETTINGS").c_str()));
+	mWindow->pushGui(new GuiVideoScreensaverOptions(mWindow, _("RANDOM VIDEO SETTINGS")));
 }
 
 
@@ -377,7 +379,7 @@ void GuiMenu::openSystemInformations_batocera()
 
 	Window *window = mWindow;
 	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
-	GuiSettings *informationsGui = new GuiSettings(window, _("INFORMATION").c_str());
+	GuiSettings *informationsGui = new GuiSettings(window, _("INFORMATION"));
 
 	auto version = std::make_shared<TextComponent>(window, ApiSystem::getInstance()->getVersion(), font, color);
 	informationsGui->addWithLabel(_("VERSION"), version);
@@ -417,7 +419,7 @@ void GuiMenu::openDeveloperSettings()
 {
 	Window *window = mWindow;
 
-	auto s = new GuiSettings(mWindow, _("DEVELOPER").c_str());
+	auto s = new GuiSettings(mWindow, _("DEVELOPER"));
 	
 	// maximum vram
 	auto max_vram = std::make_shared<SliderComponent>(mWindow, 40.f, 1000.f, 10.f, "Mb");
@@ -540,7 +542,7 @@ void GuiMenu::openDeveloperSettings()
 
 void GuiMenu::openUpdatesSettings()
 {
-	GuiSettings *updateGui = new GuiSettings(mWindow, _("UPDATES").c_str());
+	GuiSettings *updateGui = new GuiSettings(mWindow, _("UPDATES"));
 
 	// Batocera themes installer/browser
 	updateGui->addEntry(_("THEMES"), true, [this] { mWindow->pushGui(new GuiThemeInstallStart(mWindow)); });
@@ -582,7 +584,7 @@ void GuiMenu::openSystemSettings_batocera()
 {
 	Window *window = mWindow;
 
-	auto s = new GuiSettings(mWindow, _("SYSTEM SETTINGS").c_str());
+	auto s = new GuiSettings(mWindow, _("SYSTEM SETTINGS"));
 	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 
 	// System informations
@@ -721,7 +723,7 @@ void GuiMenu::openSystemSettings_batocera()
 
 #ifdef _ENABLE_KODI_
 	s->addEntry(_("KODI SETTINGS"), true, [this] {
-		GuiSettings *kodiGui = new GuiSettings(mWindow, _("KODI SETTINGS").c_str());
+		GuiSettings *kodiGui = new GuiSettings(mWindow, _("KODI SETTINGS"));
 		auto kodiEnabled = std::make_shared<SwitchComponent>(mWindow);
 		kodiEnabled->setState(SystemConf::getInstance()->get("kodi.enabled") != "0");
 		kodiGui->addWithLabel(_("ENABLE KODI"), kodiEnabled);
@@ -751,7 +753,7 @@ void GuiMenu::openSystemSettings_batocera()
 
 	// Security
 	s->addEntry(_("SECURITY"), true, [this] {
-		GuiSettings *securityGui = new GuiSettings(mWindow, _("SECURITY").c_str());
+		GuiSettings *securityGui = new GuiSettings(mWindow, _("SECURITY"));
 		auto securityEnabled = std::make_shared<SwitchComponent>(mWindow);
 		securityEnabled->setState(SystemConf::getInstance()->get("system.security.enabled") == "1");
 		securityGui->addWithLabel(_("ENFORCE SECURITY"), securityEnabled);
@@ -773,7 +775,7 @@ void GuiMenu::openSystemSettings_batocera()
 			}
 
 			if (reboot)
-				window->displayNotificationMessage(_U("\uF011  ") + _("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION"));
+			  window->displayNotificationMessage(_U("\uF011  ") + std::string(_("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION")));
 		});
 		mWindow->pushGui(securityGui);
 	});
@@ -796,10 +798,10 @@ void GuiMenu::openSystemSettings_batocera()
 			SystemConf::getInstance()->set("system.language",
 				language_choice->getSelected());
 			SystemConf::getInstance()->saveSystemConf();
-			reboot = true;
+			EsLocale::changeLocale(language_choice->getSelected());
 		}
 		if (reboot)
-			window->displayNotificationMessage(_U("\uF011  ") + _("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION"));
+		  window->displayNotificationMessage(_U("\uF011  ") + std::string(_("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION")));
 
 	});
 
@@ -814,7 +816,7 @@ void GuiMenu::openGamesSettings_batocera()
 {
 	Window* window = mWindow;
 
-	auto s = new GuiSettings(mWindow, _("GAMES SETTINGS").c_str());
+	auto s = new GuiSettings(mWindow, _("GAMES SETTINGS"));
 	if (SystemConf::getInstance()->get("system.es.menu") != "bartop") {
 
 		// Screen ratio choice
@@ -917,7 +919,7 @@ void GuiMenu::openGamesSettings_batocera()
 		// Retroachievements
 		s->addEntry(_("RETROACHIEVEMENTS SETTINGS"), true, [this] 
 		{
-			GuiSettings *retroachievements = new GuiSettings(mWindow, _("RETROACHIEVEMENTS SETTINGS").c_str());
+			GuiSettings *retroachievements = new GuiSettings(mWindow, _("RETROACHIEVEMENTS SETTINGS"));
 
 			// retroachievements_enable
 			auto retroachievements_enabled = std::make_shared<SwitchComponent>(mWindow);
@@ -975,7 +977,7 @@ void GuiMenu::openGamesSettings_batocera()
 		// Bios
 		s->addEntry(_("MISSING BIOS"), true, [this, s]
 		{
-			GuiSettings *configuration = new GuiSettings(mWindow, _("MISSING BIOS").c_str());
+			GuiSettings *configuration = new GuiSettings(mWindow, _("MISSING BIOS"));
 			std::vector<BiosSystem> biosInformations = ApiSystem::getInstance()->getBiosInformations();
 
 			if (biosInformations.size() == 0) {
@@ -1007,8 +1009,8 @@ void GuiMenu::openGamesSettings_batocera()
 							biosFileRow.addElement(biosPath, true);
 							configurationInfo->addRow(biosFileRow);
 
-							configurationInfo->addWithLabel("   " + _("MD5"), biosMd5);
-							configurationInfo->addWithLabel("   " + _("STATUS"), biosStatus);
+							configurationInfo->addWithLabel(std::string("   ") + _("MD5"), biosMd5);
+							configurationInfo->addWithLabel(std::string("   ") + _("STATUS"), biosStatus);
 						}
 						mWindow->pushGui(configurationInfo);
 					});
@@ -1021,7 +1023,7 @@ void GuiMenu::openGamesSettings_batocera()
 		s->addEntry(_("ADVANCED"), true, [this, s, window] 
 		{
 			s->save();
-			GuiSettings* configuration = new GuiSettings(window, _("ADVANCED").c_str());
+			GuiSettings* configuration = new GuiSettings(window, _("ADVANCED"));
 
 			// For each activated system
 			std::vector<SystemData *> systems = SystemData::sSystemVector;
@@ -1092,7 +1094,7 @@ void GuiMenu::openGamesSettings_batocera()
 void GuiMenu::openControllersSettings_batocera()
 {
 
-	GuiSettings *s = new GuiSettings(mWindow, _("CONTROLLERS SETTINGS").c_str());
+	GuiSettings *s = new GuiSettings(mWindow, _("CONTROLLERS SETTINGS"));
 
 	Window *window = mWindow;
 
@@ -1157,7 +1159,7 @@ void GuiMenu::openControllersSettings_batocera()
 		sstm << "INPUT P" << player + 1;
 		std::string confName = sstm.str() + "NAME";
 		std::string confGuid = sstm.str() + "GUID";
-		snprintf(strbuf, 256, _("INPUT P%i").c_str(), player + 1);
+		snprintf(strbuf, 256, _("INPUT P%i"), player + 1);
 
 		LOG(LogInfo) << player + 1 << " " << confName << " " << confGuid;
 		auto inputOptionList = std::make_shared<OptionListComponent<StrInputConfig *> >(mWindow, strbuf, false);
@@ -1279,7 +1281,7 @@ void GuiMenu::openThemeConfiguration(GuiSettings* s, std::shared_ptr<OptionListC
 	auto system = ViewController::get()->getState().getSystem();
 	auto theme = system->getTheme();
 
-	auto themeconfig = new GuiSettings(mWindow, _("THEME CONFIGURATION").c_str());
+	auto themeconfig = new GuiSettings(mWindow, _("THEME CONFIGURATION"));
 
 	auto themeSubSets = theme->getSubSets();
 
@@ -1453,7 +1455,7 @@ void GuiMenu::openUISettings()
 	auto pthis = this;
 	Window* window = mWindow;
 
-	auto s = new GuiSettings(mWindow, _("UI SETTINGS").c_str());
+	auto s = new GuiSettings(mWindow, _("UI SETTINGS"));
 
 	// theme set
 	auto theme = ThemeData::getMenuTheme();
@@ -1558,7 +1560,7 @@ void GuiMenu::openUISettings()
 		std::string selectedMode = UImodeSelection->getSelected();
 		if (selectedMode != "Full")
 		{
-			std::string msg = _("You are changing the UI to a restricted mode:\nThis will hide most menu-options to prevent changes to the system.\nTo unlock and return to the full UI, enter this code:") + "\n";
+		  std::string msg = _("You are changing the UI to a restricted mode:\nThis will hide most menu-options to prevent changes to the system.\nTo unlock and return to the full UI, enter this code:") + std::string("\n");
 			msg += "\"" + UIModeController::getInstance()->getFormattedPassKeyStr() + "\"\n\n";
 			msg += _("Do you want to proceed ?");
 			window->pushGui(new GuiMsgBox(window, msg,
@@ -1595,7 +1597,7 @@ void GuiMenu::openUISettings()
 		if (optionsVideo->changed()) {
 			SystemConf::getInstance()->set("global.videooutput", optionsVideo->getSelected());
 			SystemConf::getInstance()->saveSystemConf();
-			mWindow->displayNotificationMessage(_U("\uF011  ") + _("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION"));
+			mWindow->displayNotificationMessage(_U("\uF011  ") + std::string(_("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION")));
 		}
 	});
 #endif
@@ -1815,7 +1817,7 @@ void GuiMenu::openUISettings()
 
 void GuiMenu::openSoundSettings() 
 {
-	auto s = new GuiSettings(mWindow, _("SOUND SETTINGS").c_str());
+	auto s = new GuiSettings(mWindow, _("SOUND SETTINGS"));
 
 	// volume
 	auto volume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
@@ -1946,7 +1948,7 @@ void GuiMenu::openSoundSettings()
 		}
 		SystemConf::getInstance()->saveSystemConf();
 		if (v_need_reboot)
-			mWindow->displayNotificationMessage(_U("\uF011  ") + _("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION"));
+		  mWindow->displayNotificationMessage(_U("\uF011  ") + std::string(_("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION")));
 	});
 #endif
 
@@ -1961,7 +1963,7 @@ void GuiMenu::openNetworkSettings_batocera()
 
 	Window *window = mWindow;
 
-	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS").c_str());
+	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS"));
 	auto status = std::make_shared<TextComponent>(mWindow,
 		ApiSystem::getInstance()->ping() ? _("CONNECTED")
 		: _("NOT CONNECTED"),
@@ -2018,7 +2020,7 @@ void GuiMenu::openNetworkSettings_batocera()
 void GuiMenu::openRetroAchievements_batocera()
 {
 	Window *window = mWindow;
-	auto s = new GuiSettings(mWindow, _("RETROACHIEVEMENTS").c_str());
+	auto s = new GuiSettings(mWindow, _("RETROACHIEVEMENTS"));
 	ComponentListRow row;
 	std::vector<std::string> retroRes = ApiSystem::getInstance()->getRetroAchievements();
 	for (auto it = retroRes.begin(); it != retroRes.end(); it++) 
@@ -2055,7 +2057,7 @@ void GuiMenu::openRetroAchievements_batocera()
 
 void GuiMenu::openScraperSettings_batocera() 
 {
-	auto s = new GuiSettings(mWindow, _("SCRAPE").c_str());
+	auto s = new GuiSettings(mWindow, _("SCRAPE"));
 
 	s->addEntry(_("AUTOMATIC SCRAPER"), true, [this] {
 		Window* window = mWindow;
@@ -2086,7 +2088,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 	}
 #endif
 
-	auto s = new GuiSettings(window, _("QUIT").c_str());
+	auto s = new GuiSettings(window, _("QUIT"));
 	
 	if (forceWin32Menu)
 		s->setCloseButton("select");

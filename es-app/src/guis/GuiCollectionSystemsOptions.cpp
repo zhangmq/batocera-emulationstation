@@ -10,7 +10,7 @@
 #include "CollectionSystemManager.h"
 #include "Window.h"
 
-GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window) : GuiComponent(window), mMenu(window, _("GAME COLLECTION SETTINGS").c_str())
+GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window) : GuiComponent(window), mMenu(window, _("GAME COLLECTION SETTINGS"))
 {
 	initializeMenu();
 }
@@ -28,9 +28,9 @@ void GuiCollectionSystemsOptions::initializeMenu()
 	std::vector<std::string> unusedFolders = CollectionSystemManager::get()->getUnusedSystemsFromTheme();
 	if (unusedFolders.size() > 0)
 	{
-	  addEntry(_("CREATE NEW CUSTOM COLLECTION FROM THEME").c_str(), true,
+	  addEntry(_("CREATE NEW CUSTOM COLLECTION FROM THEME"), true,
 		[this, unusedFolders] {
-		     auto s = new GuiSettings(mWindow, _("SELECT THEME FOLDER").c_str());
+		     auto s = new GuiSettings(mWindow, _("SELECT THEME FOLDER"));
 		     std::shared_ptr< OptionListComponent<std::string> > folderThemes = std::make_shared< OptionListComponent<std::string> >(mWindow, _("SELECT THEME FOLDER"), true);
 
 			// add Custom Systems
@@ -60,7 +60,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 		window->removeGui(topGui);
 		createCollection(name);
 	};
-	addEntry(_("CREATE NEW CUSTOM COLLECTION").c_str(), true, [this, createCustomCollection] {
+	addEntry(_("CREATE NEW CUSTOM COLLECTION"), true, [this, createCustomCollection] {
 		if (Settings::getInstance()->getBool("UseOSK")) {
 			mWindow->pushGui(new GuiTextEditPopupKeyboard(mWindow, _("New Collection Name"), "", createCustomCollection, false));
 		}
@@ -82,7 +82,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 	mMenu.addWithLabel(_("SHOW SYSTEM NAME IN COLLECTIONS"), toggleSystemNameInCollections);
 
 	if(CollectionSystemManager::get()->isEditing())
-		addEntry((_("FINISH EDITING COLLECTION") + " : " + Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection())).c_str(), false, std::bind(&GuiCollectionSystemsOptions::exitEditMode, this));
+	  addEntry((_("FINISH EDITING COLLECTION") + std::string(" : ") + Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection())).c_str(), false, std::bind(&GuiCollectionSystemsOptions::exitEditMode, this));
 
 	mMenu.addButton(_("BACK"), "back", std::bind(&GuiCollectionSystemsOptions::applySettings, this));
 

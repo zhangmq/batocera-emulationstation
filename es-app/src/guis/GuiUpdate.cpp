@@ -19,7 +19,7 @@ public:
 		GuiUpdate::state = GuiUpdateState::State::UPDATER_RUNNING;
 
 		mWndNotification = new AsyncNotificationComponent(window, false);
-		mWndNotification->updateTitle(_U("\uF019 ") + _("UPDATING BATOCERA"));
+		mWndNotification->updateTitle(_U("\uF019 ") + std::string(_("UPDATING BATOCERA")));
 
 		mWindow->registerNotificationComponent(mWndNotification);
 		mHandle = new std::thread(&ThreadedUpdater::threadUpdate, this);
@@ -62,7 +62,7 @@ public:
 		{
 			GuiUpdate::state = GuiUpdateState::State::UPDATE_READY;
 
-			mWndNotification->updateTitle(_U("\uF019 ") + _("UPDATE IS READY"));
+			mWndNotification->updateTitle(_U("\uF019 ") + std::string(_("UPDATE IS READY")));
 			mWndNotification->updateText(_("REBOOT SYSTEM TO APPLY"));
 
 			std::this_thread::yield();

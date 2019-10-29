@@ -55,12 +55,12 @@ ScraperSearchComponent::ScraperSearchComponent(Window* window, SearchType type) 
 	mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 	mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Rating") + ":"), font, mdLblColor), mMD_Rating, false)); // batocera
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Released") + ":"), font, mdLblColor), mMD_ReleaseDate)); // batocera
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Developer") + ":"), font, mdLblColor), mMD_Developer)); // batocera
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Publisher") + ":"), font, mdLblColor), mMD_Publisher)); // batocera
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Genre") + ":"), font, mdLblColor), mMD_Genre)); // batocera
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Players") + ":"), font, mdLblColor), mMD_Players)); // batocera
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Rating") + std::string(":")), font, mdLblColor), mMD_Rating, false)); // batocera
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Released") + std::string(":")), font, mdLblColor), mMD_ReleaseDate)); // batocera
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Developer") + std::string(":")), font, mdLblColor), mMD_Developer)); // batocera
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Publisher") + std::string(":")), font, mdLblColor), mMD_Publisher)); // batocera
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Genre") + std::string(":")), font, mdLblColor), mMD_Genre)); // batocera
+	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(_("Players") + std::string(":")), font, mdLblColor), mMD_Players)); // batocera
 
 	mMD_Grid = std::make_shared<ComponentGrid>(mWindow, Vector2i(2, (int)mMD_Pairs.size()*2 - 1));
 	unsigned int i = 0;
@@ -296,7 +296,7 @@ void ScraperSearchComponent::onSearchDone(const std::vector<ScraperSearchResult>
 void ScraperSearchComponent::onSearchError(const std::string& error)
 {
 	LOG(LogInfo) << "ScraperSearchComponent search error: " << error;
-	mWindow->pushGui(new GuiMsgBox(mWindow, _("AN ERROR HAS OCCURED") + " :\n" + Utils::String::toUpper(error),
+	mWindow->pushGui(new GuiMsgBox(mWindow, _("AN ERROR HAS OCCURED") + std::string(" :\n") + Utils::String::toUpper(error),
 				       _("RETRY"), std::bind(&ScraperSearchComponent::search, this, mLastSearch), // batocera
 				       _("SKIP"), mSkipCallback, // batocera
 				       _("CANCEL"), mCancelCallback, ICON_ERROR)); // batocera
@@ -329,7 +329,7 @@ void ScraperSearchComponent::updateInfoPane()
 
 		if (mSearchType != ALWAYS_ACCEPT_FIRST_RESULT)
 		{
-			// Don't ask for thumbs in automatic mode to boost scraping -> mResultThumbnail is assigned after downloading first image 
+			// Don't ask for thumbs in automatic mode to speed up scraping -> mResultThumbnail is assigned after downloading first image 
 			const std::string& thumb = res.thumbnailUrl.empty() ? res.imageUrl : res.thumbnailUrl;
 			if (!thumb.empty())
 				mThumbnailReq = std::unique_ptr<HttpReq>(new HttpReq(thumb));
@@ -418,7 +418,7 @@ void ScraperSearchComponent::update(int deltaTime)
 					mResultThumbnail->setImage(result.mdl.get("image"));
 			}
 
-			mBusyAnim.setText(_("DOWNLOADING") + " " + Utils::String::toUpper(mMDResolveHandle->getCurrentItem()));
+			mBusyAnim.setText(_("DOWNLOADING") + std::string(" ") + Utils::String::toUpper(mMDResolveHandle->getCurrentItem()));
 		}
 		else if (mSearchHandle && mSearchHandle->status() == ASYNC_IN_PROGRESS)
 			mBusyAnim.setText(_("SEARCHING"));

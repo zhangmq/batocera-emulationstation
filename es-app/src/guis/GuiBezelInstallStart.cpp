@@ -9,10 +9,11 @@
 #include "GuiBezelUnInstall.h"
 #include "LocaleES.h"
 #include "ContentInstaller.h"
+#include <cstring>
 
 // Batocera integration with theBezelProject
 GuiBezelInstallMenu::GuiBezelInstallMenu(Window* window)
-        :GuiComponent(window), mMenu(window, _("THE BEZEL PROJECT").c_str())
+        :GuiComponent(window), mMenu(window, _("THE BEZEL PROJECT"))
 {
 	auto theme = ThemeData::getMenuTheme();
 
@@ -80,7 +81,7 @@ std::vector<HelpPrompt> GuiBezelInstallMenu::getHelpPrompts()
 
 // Batocera install theBezelProject
 GuiBezelInstallStart::GuiBezelInstallStart(Window* window)
-	:GuiComponent(window), mMenu(window, _("INSTALL THE BEZEL PROJECT").c_str())
+	:GuiComponent(window), mMenu(window, _("INSTALL THE BEZEL PROJECT"))
 {
 	auto theme = ThemeData::getMenuTheme();
 
@@ -139,7 +140,7 @@ void GuiBezelInstallStart::start(std::string SelectedBezel)
 		return;
 
 	char trstring[256];
-	snprintf(trstring, 256, _("'%s' ADDED TO DOWNLOAD QUEUE").c_str(), SelectedBezel.c_str()); // batocera
+	snprintf(trstring, 256, _("'%s' ADDED TO DOWNLOAD QUEUE"), SelectedBezel.c_str()); // batocera
 	mWindow->displayNotificationMessage(_U("\uF019 ") + std::string(trstring));
 
 	ContentInstaller::Enqueue(mWindow, ContentInstaller::CONTENT_BEZEL, SelectedBezel);
@@ -177,7 +178,7 @@ std::vector<HelpPrompt> GuiBezelInstallStart::getHelpPrompts()
 
 // And now uninstall them
 GuiBezelUninstallStart::GuiBezelUninstallStart(Window* window)
-	:GuiComponent(window), mMenu(window, _("UNINSTALL THE BEZEL PROJECT").c_str())
+	:GuiComponent(window), mMenu(window, _("UNINSTALL THE BEZEL PROJECT"))
 {
 	auto theme = ThemeData::getMenuTheme();
 

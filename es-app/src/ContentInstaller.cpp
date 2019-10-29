@@ -60,7 +60,7 @@ void ContentInstaller::updateNotificationComponentTitle(bool incQueueSize)
 		mQueueSize++;
 
 	std::string cnt = " " + std::to_string(mCurrent) + "/" + std::to_string(mQueueSize);
-	mWndNotification->updateTitle(ICONINDEX + _("DOWNLOADING")+ cnt);
+	mWndNotification->updateTitle(ICONINDEX + std::string(_("DOWNLOADING")) + cnt);
 }
 
 void ContentInstaller::updateNotificationComponentContent(const std::string info)

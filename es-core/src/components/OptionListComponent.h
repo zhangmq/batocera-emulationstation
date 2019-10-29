@@ -410,7 +410,7 @@ private:
                         // batocera
 		  	char strbuf[256];
 			int x = getSelectedObjects().size();
-		  	snprintf(strbuf, 256, ngettext("%i SELECTED", "%i SELECTED", x).c_str(), x);
+		  	snprintf(strbuf, 256, ngettext("%i SELECTED", "%i SELECTED", x), x);
 			mText.setText(strbuf);
 
 			mText.setSize(0, mText.getSize().y());

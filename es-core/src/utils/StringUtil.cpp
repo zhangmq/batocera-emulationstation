@@ -6,8 +6,6 @@
 
 #if defined(_WIN32)
 #include <Windows.h>
-#else
-#include <boost/locale.hpp>
 #endif
 
 namespace Utils
@@ -152,7 +150,9 @@ namespace Utils
 
 			return convertFromWideString(stringW);
 #else
-			return boost::locale::to_lower(_string);
+			std::string str = _string;
+			std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+			return str;
 #endif
 		} // toLower
 
@@ -166,7 +166,9 @@ namespace Utils
 
 			return convertFromWideString(stringW);
 #else
-			return boost::locale::to_upper(_string);
+			std::string str = _string;
+			std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+			return str;
 #endif
 		} // toUpper
 

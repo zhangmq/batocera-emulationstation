@@ -59,7 +59,7 @@ void GuiBezelUninstall::update(int deltaTime) {
 
         if(mState == 2){
 	  window->pushGui(
-			  new GuiMsgBox(window, _("FINISHED") + "\n" + _("BEZELS DELETED SUCCESSFULLY"), _("OK"),
+			  new GuiMsgBox(window, _("FINISHED") + std::string("\n") + _("BEZELS DELETED SUCCESSFULLY"), _("OK"),
 					[this] {
 					  mState = -1;
 					}

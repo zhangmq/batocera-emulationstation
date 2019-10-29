@@ -70,10 +70,10 @@ GuiGeneralScreensaverOptions::~GuiGeneralScreensaverOptions()
 }
 
 void GuiGeneralScreensaverOptions::openVideoScreensaverOptions() {
-	mWindow->pushGui(new GuiVideoScreensaverOptions(mWindow, _("VIDEO SCREENSAVER").c_str()));
+	mWindow->pushGui(new GuiVideoScreensaverOptions(mWindow, _("VIDEO SCREENSAVER")));
 }
 
 void GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions() {
-    mWindow->pushGui(new GuiSlideshowScreensaverOptions(mWindow, _("SLIDESHOW SCREENSAVER").c_str()));
+    mWindow->pushGui(new GuiSlideshowScreensaverOptions(mWindow, _("SLIDESHOW SCREENSAVER")));
 }
 
