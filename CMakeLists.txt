@@ -85,15 +85,15 @@ else()
     set(GLSystem "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
 endif(GLES)
 
-set_property(CACHE GLSystem PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
+#set_property(CACHE GLSystem PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 
 #finding necessary packages
 #-------------------------------------------------------------------------------
-if(${GLSystem} MATCHES "Desktop OpenGL")
-    find_package(OpenGL REQUIRED)
-else()
-    find_package(OpenGLES REQUIRED)
-endif()
+#if(${GLSystem} MATCHES "Desktop OpenGL")
+#    find_package(OpenGL REQUIRED)
+#else()
+#    find_package(OpenGLES REQUIRED)
+#endif()
 find_package(Freetype REQUIRED)
 find_package(FreeImage REQUIRED)
 # batocera / background musics
@@ -157,11 +157,13 @@ else()
 endif()
 endif()
 
-if(${GLSystem} MATCHES "Desktop OpenGL")
-    add_definitions(-DUSE_OPENGL_21)
-else()
-    add_definitions(-DUSE_OPENGLES_10)
-endif()
+add_definitions(-DUSE_OPENGLES_10)
+
+#if(${GLSystem} MATCHES "Desktop OpenGL")
+#    add_definitions(-DUSE_OPENGL_21)
+#else()
+#    add_definitions(-DUSE_OPENGLES_10)
+#endif()
 
 #-------------------------------------------------------------------------------
 #add include directories
