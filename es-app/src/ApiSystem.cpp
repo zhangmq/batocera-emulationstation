@@ -273,7 +273,7 @@ std::pair<std::string, int> ApiSystem::scrape(BusyComponent* ui)
 
 bool ApiSystem::ping() 
 {
-	return executeScript("timeout 1 ping -c 1 -t 1000 google.com");
+	return executeScript("timeout 1 ping -c 1 -t 255 google.com");
 }
 
 bool ApiSystem::canUpdate(std::vector<std::string>& output) 
