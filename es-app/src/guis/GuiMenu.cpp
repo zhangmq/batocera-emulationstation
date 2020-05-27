@@ -3367,6 +3367,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 		}, _("NO"), nullptr));
 	}, "iconControllers");
 	
+#if 0
 	s->addEntry(_("REBOOT FROM NAND"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY REBOOT FROM NAND?"), _("YES"),
 			[] {
@@ -3377,6 +3378,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 			quitES(QuitMode::QUIT);
 		}, _("NO"), nullptr));
 	}, "iconAdvanced");
+#endif
 
 #endif
 
