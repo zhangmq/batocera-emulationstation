@@ -3401,7 +3401,6 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 	}, "iconFastShutdown");
 #endif
 
-#ifdef WIN32
 	if (Settings::getInstance()->getBool("ShowExit"))
 	{
 		s->addEntry(_("QUIT EMULATIONSTATION"), false, [window] {
@@ -3410,7 +3409,6 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 				_("NO"), nullptr));
 		}, "iconQuit");
 	}
-#endif
 
 	if (forceWin32Menu)
 		s->getMenu().animateTo(Vector2f((Renderer::getScreenWidth() - s->getMenu().getSize().x()) / 2, (Renderer::getScreenHeight() - s->getMenu().getSize().y()) / 2));
