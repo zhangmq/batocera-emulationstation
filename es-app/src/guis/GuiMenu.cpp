@@ -355,6 +355,7 @@ void GuiMenu::openEmuELECSettings()
 		SystemConf::getInstance()->saveSystemConf();
 	});
 	
+#if 0
 	if (UIModeController::getInstance()->isUIModeFull())
 	{
 	
@@ -398,6 +399,7 @@ void GuiMenu::openEmuELECSettings()
 	
 	mWindow->pushGui(s);
  }
+#endif
 }
 /*  emuelec >*/
 #endif
