@@ -289,10 +289,10 @@ void GuiMenu::openEmuELECSettings()
 			if (sshd_enabled->changed()) {
 			if (sshd_enabled->getState() == false) {
 				runSystemCommand("systemctl stop sshd", "", nullptr); 
-				runSystemCommand("rm /storage/.cache/services/sshd.conf", "", nullptr); 
+				//runSystemCommand("rm /storage/.cache/services/sshd.conf", "", nullptr); 
 			} else { 
-				runSystemCommand("mkdir -p /storage/.cache/services/", "", nullptr);
-				runSystemCommand("touch /storage/.cache/services/sshd.conf", "", nullptr);
+				//runSystemCommand("mkdir -p /storage/.cache/services/", "", nullptr);
+				//runSystemCommand("touch /storage/.cache/services/sshd.conf", "", nullptr);
 				runSystemCommand("systemctl start sshd", "", nullptr);
 			}
                 bool sshenabled = sshd_enabled->getState();
@@ -303,14 +303,22 @@ void GuiMenu::openEmuELECSettings()
 			
 		auto emuelec_boot_def = std::make_shared< OptionListComponent<std::string> >(mWindow, "START AT BOOT", false);
 		std::vector<std::string> devices;
-		devices.push_back("Emulationstation");
-		devices.push_back("Retroarch");
+		devices.push_back("Emulation Station");
+		devices.push_back("Retro Launcher");
 		for (auto it = devices.cbegin(); it != devices.cend(); it++)
-		emuelec_boot_def->add(*it, *it, SystemConf::getInstance()->get("ee_boot") == *it);
+            emuelec_boot_def->add(*it, *it, SystemConf::getInstance()->get("ee_boot") == *it);
 		s->addWithLabel(_("START AT BOOT"), emuelec_boot_def);
 		s->addSaveFunc([emuelec_boot_def] {
 			if (emuelec_boot_def->changed()) {
 				std::string selectedBootMode = emuelec_boot_def->getSelected();
+                if (selectedBootMode == "Emulation Station") {
+				    runSystemCommand("systemctl enable emulationstation", "", nullptr);
+				    runSystemCommand("systemctl disable retrolauncher", "", nullptr);
+                }
+                else {
+				    runSystemCommand("systemctl disable emulationstation", "", nullptr);
+				    runSystemCommand("systemctl enable retrolauncher", "", nullptr);
+                }
 				SystemConf::getInstance()->set("ee_boot", selectedBootMode);
 				SystemConf::getInstance()->saveSystemConf();
 			}
