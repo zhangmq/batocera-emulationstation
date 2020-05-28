@@ -3,6 +3,10 @@
 #include "Window.h"
 #include "resources/TextureResource.h"
 
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include <algorithm>
 #include <SDL_events.h>
 
@@ -41,6 +45,13 @@ Splash::Splash(Window* window, const std::string image, bool fullScreenBackGroun
 
 	// Background image
 	std::string imagePath = image;
+
+    if (image == DEFAULT_SPLASH_IMAGE) {
+        srand(time(NULL));
+        char img[256];
+        snprintf(img, sizeof(img), ":/logo%d.png", rand() % 2)
+        imagePath = img;
+    }
 
 	auto backGroundImageTheme = theme->getElement("splash", "background", "image");
 	if (backGroundImageTheme && backGroundImageTheme->has("path") && Utils::FileSystem::exists(backGroundImageTheme->get<std::string>("path")))
