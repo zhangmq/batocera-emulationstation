@@ -196,7 +196,7 @@ void Settings::setDefaults()
 
 	// Audio out device for volume control
 	#if defined _RPI_ || defined _ENABLEEMUELEC
-		mStringMap["AudioDevice"] = "PCM";
+		mStringMap["AudioDevice"] = "Playback";
 	#else
 		mStringMap["AudioDevice"] = "Master";
 	#endif

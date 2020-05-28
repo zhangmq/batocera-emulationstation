@@ -1116,7 +1116,7 @@ void GuiMenu::openSystemSettings_batocera()
 #endif
 
 
-#if !defined(WIN32) && !defined _ENABLEEMUELEC || defined(_DEBUG)
+#if !defined(WIN32) || defined(_DEBUG)
 	s->addGroup(_("HARDWARE"));
 
 	// brighness
@@ -1269,7 +1269,7 @@ void GuiMenu::openSystemSettings_batocera()
 			overclock_choice->add(currentOverclock, currentOverclock, true);
 	}
 
-#if !defined(WIN32) && !defined _ENABLEEMUELEC || defined(_DEBUG)
+#if !defined(WIN32) || defined(_DEBUG)
 	// overclocking
 	s->addWithLabel(_("OVERCLOCK"), overclock_choice);
 	s->addGroup(_("STORAGE"));
@@ -3103,7 +3103,6 @@ void GuiMenu::openSoundSettings()
 {
 	auto s = new GuiSettings(mWindow, _("SOUND SETTINGS").c_str());
 
-#ifndef _ENABLEEMUELEC
 	s->addGroup(_("VOLUME"));
 
 	// volume
@@ -3123,7 +3122,6 @@ void GuiMenu::openSoundSettings()
 	volumePopup->setState(Settings::getInstance()->getBool("VolumePopup"));
 	s->addWithLabel(_("SHOW OVERLAY WHEN VOLUME CHANGES"), volumePopup);
 	s->addSaveFunc([volumePopup] { Settings::getInstance()->setBool("VolumePopup", volumePopup->getState()); });
-#endif
 
 	s->addGroup(_("MUSIC"));
 
