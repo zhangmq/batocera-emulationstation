@@ -355,11 +355,9 @@ void GuiMenu::openEmuELECSettings()
 		SystemConf::getInstance()->saveSystemConf();
 	});
 	
-#if 0
 	if (UIModeController::getInstance()->isUIModeFull())
 	{
-	
-	
+#if 0
 	//Danger zone options
 		s->addEntry(_("DANGER ZONE!"), true, [this]
 		{
@@ -396,10 +394,10 @@ void GuiMenu::openEmuELECSettings()
 			
 			mWindow->pushGui(danger_zone);
 		});
+#endif
 	
 	mWindow->pushGui(s);
  }
-#endif
 }
 /*  emuelec >*/
 #endif
