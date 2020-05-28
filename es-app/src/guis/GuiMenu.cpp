@@ -3356,18 +3356,18 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 		}, _("NO"), nullptr));
 	}, "iconRestart");
 
+#if 0
 	s->addEntry(_("START RETROARCH"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY START RETROARCH?"), _("YES"),
 			[] {
-			remove("/var/lock/start.games");
-            runSystemCommand("touch /var/lock/start.retro", "", nullptr);
+//			remove("/var/lock/start.games");
+//            runSystemCommand("touch /var/lock/start.retro", "", nullptr);
 			runSystemCommand("systemctl start retroarch.service", "", nullptr);
 			Scripting::fireEvent("quit", "retroarch");
 			quitES(QuitMode::QUIT);
 		}, _("NO"), nullptr));
 	}, "iconControllers");
 	
-#if 0
 	s->addEntry(_("REBOOT FROM NAND"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY REBOOT FROM NAND?"), _("YES"),
 			[] {
