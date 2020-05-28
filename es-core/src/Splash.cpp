@@ -49,7 +49,7 @@ Splash::Splash(Window* window, const std::string image, bool fullScreenBackGroun
     if (image == DEFAULT_SPLASH_IMAGE) {
         srand(time(NULL));
         char img[256];
-        snprintf(img, sizeof(img), ":/logo%d.png", rand() % 2)
+        snprintf(img, sizeof(img), ":/logo%d.png", rand() % 2);
         imagePath = img;
     }
 
