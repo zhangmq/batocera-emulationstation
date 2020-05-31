@@ -211,6 +211,7 @@ void GuiMenu::openEmuELECSettings()
 		videomode.push_back("Custom");
 		for (auto it = videomode.cbegin(); it != videomode.cend(); it++) {
 		emuelec_video_mode->add(*it, *it, SystemConf::getInstance()->get("ee_videomode") == *it); }
+#if 0
 		s->addWithLabel(_("VIDEO MODE"), emuelec_video_mode);
 	   	s->addSaveFunc([emuelec_video_mode, window] {
 			if (emuelec_video_mode->changed()) {
@@ -256,6 +257,7 @@ void GuiMenu::openEmuELECSettings()
 			}
 		 }
 		});
+#endif
 		
 		auto emuelec_audiodev_def = std::make_shared< OptionListComponent<std::string> >(mWindow, "AUDIO DEVICE", false);
 		std::vector<std::string> Audiodevices;
