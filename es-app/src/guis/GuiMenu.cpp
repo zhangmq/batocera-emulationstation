@@ -146,7 +146,9 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 #endif
 
 		addEntry(_("SCRAPE").c_str(), true, [this] { openScraperSettings(); }, "iconScraper");		
+#if 0
 		addEntry(_("UPDATES & DOWNLOADS"), true, [this] { openUpdatesSettings(); }, "iconUpdates");
+#endif
 		addEntry(_("SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings_batocera(); }, "iconSystem");
 	}
 	else
@@ -874,6 +876,7 @@ void GuiMenu::openDeveloperSettings()
 
 	if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))
 	{
+#if 0
 		// retroarch.menu_driver = rgui
 		auto retroarchRgui = std::make_shared<SwitchComponent>(mWindow);
 		retroarchRgui->setState(SystemConf::getInstance()->get("global.retroarch.menu_driver") == "rgui");
@@ -882,6 +885,7 @@ void GuiMenu::openDeveloperSettings()
 		{
 			SystemConf::getInstance()->set("global.retroarch.menu_driver", retroarchRgui->getState() ? "rgui" : "");
 		});
+#endif
 
 #if defined(WIN32)
 		auto autoControllers = std::make_shared<SwitchComponent>(mWindow);
@@ -1064,6 +1068,7 @@ void GuiMenu::openSystemSettings_batocera()
 	language_choice->add("正體中文", 	     "zh_TW", language == "zh_TW");
 	s->addWithLabel(_("LANGUAGE"), language_choice);
 
+#if 0
 	// power saver
 	auto power_saver = std::make_shared< OptionListComponent<std::string> >(mWindow, _("POWER SAVER MODES"), false);
 	std::vector<std::string> modes;
@@ -1083,6 +1088,7 @@ void GuiMenu::openSystemSettings_batocera()
 		Settings::getInstance()->setString("PowerSaverMode", power_saver->getSelected());
 		PowerSaver::init();
 	});
+#endif
 
 #ifdef _ENABLE_KODI_
 	if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::KODI))
@@ -1140,6 +1146,7 @@ void GuiMenu::openSystemSettings_batocera()
 
 	std::vector<std::string> availableVideo = ApiSystem::getInstance()->getAvailableVideoOutputDevices();
 
+#if 0
 	bool vfound = false;
 	for (auto it = availableVideo.begin(); it != availableVideo.end(); it++) {
 		optionsVideo->add((*it), (*it), currentDevice == (*it));
@@ -1159,7 +1166,7 @@ void GuiMenu::openSystemSettings_batocera()
 			mWindow->displayNotificationMessage(_U("\uF011  ") + _("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION"));
 		}
 	});
-	
+
 	// audio device
 	auto optionsAudio = std::make_shared<OptionListComponent<std::string> >(mWindow, _("AUDIO OUTPUT"), false);
 
@@ -1212,6 +1219,7 @@ void GuiMenu::openSystemSettings_batocera()
 		if (v_need_reboot)
 			mWindow->displayNotificationMessage(_U("\uF011  ") + _("A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION"));
 	});
+#endif
 #else
 	if (!ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))
 	{
@@ -1269,7 +1277,7 @@ void GuiMenu::openSystemSettings_batocera()
 			overclock_choice->add(currentOverclock, currentOverclock, true);
 	}
 
-#if !defined(WIN32) || defined(_DEBUG)
+#if 0
 	// overclocking
 	s->addWithLabel(_("OVERCLOCK"), overclock_choice);
 	s->addGroup(_("STORAGE"));
@@ -1303,16 +1311,16 @@ void GuiMenu::openSystemSettings_batocera()
 			}
 		}
 	}
-#if !defined(WIN32) && !defined _ENABLEEMUELEC || defined(_DEBUG)
+#if 0
 	s->addWithLabel(_("STORAGE DEVICE"), optionsStorage);
 #endif
 
-#if !defined(WIN32) && !defined _ENABLEEMUELEC || defined(_DEBUG)
+#if 0
 	// backup
 	s->addEntry(_("BACKUP USER DATA"), true, [this] { mWindow->pushGui(new GuiBackupStart(mWindow)); });
 #endif
 
-#if !defined(WIN32) && !defined _ENABLEEMUELEC || defined(_DEBUG)
+#if 0
 	// Install
 	s->addEntry(_("INSTALL BATOCERA ON A NEW DISK"), true, [this] { mWindow->pushGui(new GuiInstallStart(mWindow)); });
 
@@ -1347,8 +1355,6 @@ void GuiMenu::openSystemSettings_batocera()
 		mWindow->pushGui(securityGui);
 	});
 #else
-	if (isFullUI)
-		s->addGroup(_("ADVANCED"));
 #endif
 
 	s->addSaveFunc([overclock_choice, window, language_choice, language, optionsStorage, selectedStorage, s] 
@@ -1398,9 +1404,11 @@ void GuiMenu::openSystemSettings_batocera()
 
 	});
 
+#if 0
 	// Developer options
 	if (isFullUI)
 		s->addEntry(_("DEVELOPER"), true, [this] { openDeveloperSettings(); });
+#endif
 
 	auto pthis = this;
 	s->onFinalize([s, pthis, window]
@@ -2928,7 +2936,9 @@ void GuiMenu::openUISettings()
 
 	s->addGroup(_("DISPLAY OPTIONS"));
 
+#if 0
 	s->addEntry(_("SCREENSAVER SETTINGS"), true, std::bind(&GuiMenu::openScreensaverOptions, this));
+#endif
 
 	// transition style
 	auto transition_style = std::make_shared<OptionListComponent<std::string> >(mWindow,
@@ -3403,7 +3413,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 			_("NO"), nullptr));
 	}, "iconShutdown");
 
-#ifndef _ENABLEEMUELEC
+#if 0
 	s->addEntry(_("FAST SHUTDOWN SYSTEM"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY SHUTDOWN WITHOUT SAVING METADATAS?"), 
 			_("YES"), [] { quitES(QuitMode::FAST_SHUTDOWN); },
