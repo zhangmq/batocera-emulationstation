@@ -292,12 +292,12 @@ void GuiMenu::openEmuELECSettings()
 		s->addSaveFunc([sshd_enabled] {
 			if (sshd_enabled->changed()) {
 			if (sshd_enabled->getState() == false) {
-				runSystemCommand("systemctl stop sshd", "", nullptr); 
+				runSystemCommand("sudo systemctl stop sshd", "", nullptr); 
 				//runSystemCommand("rm /storage/.cache/services/sshd.conf", "", nullptr); 
 			} else { 
 				//runSystemCommand("mkdir -p /storage/.cache/services/", "", nullptr);
 				//runSystemCommand("touch /storage/.cache/services/sshd.conf", "", nullptr);
-				runSystemCommand("systemctl start sshd", "", nullptr);
+				runSystemCommand("sudo systemctl start sshd", "", nullptr);
 			}
                 bool sshenabled = sshd_enabled->getState();
                 SystemConf::getInstance()->set("ee_ssh.enabled", sshenabled ? "1" : "0");
@@ -316,12 +316,12 @@ void GuiMenu::openEmuELECSettings()
 			if (emuelec_boot_def->changed()) {
 				std::string selectedBootMode = emuelec_boot_def->getSelected();
                 if (selectedBootMode == "Emulation Station") {
-				    runSystemCommand("systemctl enable emulationstation", "", nullptr);
-				    runSystemCommand("systemctl disable retrolauncher", "", nullptr);
+				    runSystemCommand("sudo systemctl enable emulationstation", "", nullptr);
+				    runSystemCommand("sudo systemctl disable retrolauncher", "", nullptr);
                 }
                 else {
-				    runSystemCommand("systemctl disable emulationstation", "", nullptr);
-				    runSystemCommand("systemctl enable retrolauncher", "", nullptr);
+				    runSystemCommand("sudo systemctl disable emulationstation", "", nullptr);
+				    runSystemCommand("sudo systemctl enable retrolauncher", "", nullptr);
                 }
 				SystemConf::getInstance()->set("ee_boot", selectedBootMode);
 				SystemConf::getInstance()->saveSystemConf();
@@ -1383,7 +1383,7 @@ void GuiMenu::openSystemSettings_batocera()
 			window->pushGui(new GuiMsgBox(window, msg, _("YES"), [selectedLanguage] {
 			SystemConf::getInstance()->set("system.language", selectedLanguage);
 			SystemConf::getInstance()->saveSystemConf();
-					runSystemCommand("systemctl restart emustation", "", nullptr); 
+					runSystemCommand("sudo systemctl restart emulationstation", "", nullptr); 
 			}, "NO",nullptr));
 #else
 			if (SystemConf::getInstance()->set("system.language", language_choice->getSelected()))
