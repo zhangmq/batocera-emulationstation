@@ -3368,8 +3368,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool forceWin32Menu)
 	s->addEntry(_("RESTART EMULATIONSTATION"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY RESTART EMULATIONSTATION?"), _("YES"),
 			[] {
-    		   /*runSystemCommand("systemctl restart emustation.service", "", nullptr);*/
-    		   Scripting::fireEvent("quit", "restart");
+               runSystemCommand("touch /tmp/es-restart", "", nullptr);
 			   quitES(QuitMode::QUIT);
 		}, _("NO"), nullptr));
 	}, "iconRestart");
