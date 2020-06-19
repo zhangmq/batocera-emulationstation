@@ -244,6 +244,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system, bool 
 				auto srcSystem = file->getSourceFileData()->getSystem();
 				auto sysOptions = mSystem->isGroupSystem() ? srcSystem : mSystem;
 
+#if 0
 				if (sysOptions->hasFeatures() || sysOptions->hasEmulatorSelection())
 					mMenu.addEntry(_("ADVANCED SYSTEM OPTIONS"), true, [this, sysOptions] { GuiMenu::popSystemConfigurationGui(mWindow, sysOptions); });
 
@@ -252,6 +253,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system, bool 
 					if (srcSystem->hasFeatures() || srcSystem->hasEmulatorSelection())
 						mMenu.addEntry(_("ADVANCED GAME OPTIONS"), true, [this, file] { GuiMenu::popGameConfigurationGui(mWindow, file); });
 				}
+#endif
 			}
 
 			if (file->getType() == FOLDER)
