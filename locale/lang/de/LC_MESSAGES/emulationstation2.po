@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: emulationstation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 22:51+0200\n"
+"POT-Creation-Date: 2020-07-09 21:20+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "UPDATING BATOCERA"
@@ -70,6 +70,12 @@ msgstr "BITTE WARTEN"
 msgid "CONTROLLERS LINKS HAVE BEEN DELETED."
 msgstr "CONTROLLER-VERBINDUNGEN WURDEN GELÖSCHT."
 
+msgid "CLOSE"
+msgstr "SCHLIESSEN"
+
+msgid "Loading..."
+msgstr "Lade..."
+
 msgid "CONNECT TO NETPLAY"
 msgstr "VERBINDE MIT NETZWERKSPIEL"
 
@@ -78,9 +84,6 @@ msgstr "Wählen Sie das Spiel aus, an dem Sie teilnehmen möchten"
 
 msgid "REFRESH"
 msgstr "AKTUALISIEREN"
-
-msgid "CLOSE"
-msgstr "SCHLIESSEN"
 
 msgid "FAILED"
 msgstr "FEHLGESCHLAGEN"
@@ -114,6 +117,15 @@ msgstr "SPIELE SORTIEREN NACH"
 
 msgid "OTHER FILTERS"
 msgstr "ANDERE FILTER"
+
+msgid "GAME MEDIAS"
+msgstr ""
+
+msgid "VIEW GAME MANUAL"
+msgstr ""
+
+msgid "VIEW GAME MAP"
+msgstr ""
 
 msgid "COLLECTION"
 msgstr "SAMMLUNG"
@@ -163,11 +175,11 @@ msgstr "ORDNER-METADATEN BEARBEITEN"
 msgid "EDIT THIS GAME'S METADATA"
 msgstr "METADATEN DIESES SPIELS BEARBEITEN"
 
+msgid "RESET FILTERS"
+msgstr ""
+
 msgid "FILTER GAMES BY TEXT"
 msgstr "SPIELE NACH TEXT FILTERN"
-
-msgid "Loading..."
-msgstr "Lade..."
 
 msgid "THIS FUNCTION IS DISABLED WHEN SCRAPING IS RUNNING"
 msgstr "DIESE FUNKTION IST DEAKTIVIERT, WENN SCRAPING LÄUFT"
@@ -222,6 +234,9 @@ msgstr "Architektur"
 
 msgid "Temperature"
 msgstr "Temperatur"
+
+msgid "Available memory"
+msgstr "Verfügbarer Speicher"
 
 msgid "Battery"
 msgstr "Batterie"
@@ -283,6 +298,15 @@ msgstr "INFORMATIONEN"
 msgid "QUIT"
 msgstr "BEENDEN"
 
+msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
+msgstr "SCRAPING LÄUFT GERADE. WILLST DU ES STOPPEN?"
+
+msgid "SCRAPER"
+msgstr ""
+
+msgid "SCRAPE NOW"
+msgstr "SCRAPER STARTEN"
+
 msgid "SCRAPE FROM"
 msgstr "SCRAPEN VON"
 
@@ -307,6 +331,9 @@ msgstr "BOX 2D"
 msgid "BOX 3D"
 msgstr "BOX 3D"
 
+msgid "FAN ART"
+msgstr ""
+
 msgid "BOX SOURCE"
 msgstr "BOX QUELLE"
 
@@ -328,17 +355,17 @@ msgstr "BEWERTUNGEN SCRAPEN"
 msgid "SCRAPE VIDEOS"
 msgstr "VIDEOS SCRAPEN"
 
+msgid "SCRAPE FANART"
+msgstr ""
+
+msgid "SCRAPE MANUAL"
+msgstr ""
+
 msgid "USERNAME"
 msgstr "BENUTZERNAME"
 
 msgid "PASSWORD"
 msgstr "PASSWORT"
-
-msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
-msgstr "SCRAPING LÄUFT GERADE. WILLST DU ES STOPPEN?"
-
-msgid "SCRAPE NOW"
-msgstr "SCRAPER STARTEN"
 
 msgid "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?"
 msgstr "BIST DU SICHER, DASS DU DIE EINGABE KONFIGURIEREN MÖCHTEST?"
@@ -448,6 +475,9 @@ msgstr "FORMATIERE EINEN DATENTRÄGER"
 msgid "DOWNLOADS"
 msgstr "DOWNLOADS"
 
+msgid "CONTENT DOWNLOADER"
+msgstr ""
+
 msgid "THEMES"
 msgstr "THEMES"
 
@@ -519,6 +549,18 @@ msgstr "NETZWERKSPIEL-EINSTELLUNGEN"
 msgid "MISSING BIOS"
 msgstr "FEHLENDE BIOS-DATEIEN"
 
+msgid "MULTIMEDIA KEYS"
+msgstr ""
+
+msgid "AUTO"
+msgstr "AUTO"
+
+msgid "ON"
+msgstr "EIN"
+
+msgid "OFF"
+msgstr "AUS"
+
 msgid "OVERCLOCK"
 msgstr "ÜBERTAKTEN"
 
@@ -552,20 +594,11 @@ msgstr "LATENZREDUZIERUNG"
 msgid "RUN-AHEAD FRAMES"
 msgstr "RUN-AHEAD FRAMES"
 
-msgid "AUTO"
-msgstr "AUTO"
-
 msgid "USE RUN-AHEAD FRAMES"
 msgstr "USE RUN-AHEAD FRAMES"
 
 msgid "RUN-AHEAD USE SECOND INSTANCE"
 msgstr "RUN-AHEAD USE SECOND INSTANCE"
-
-msgid "ON"
-msgstr "EIN"
-
-msgid "OFF"
-msgstr "AUS"
 
 msgid "HARDCORE MODE"
 msgstr "HARDCORE MODUS"
@@ -578,6 +611,9 @@ msgstr "VERBOSE MODE"
 
 msgid "AUTOMATIC SCREENSHOT"
 msgstr "AUTOMATISCHER SCREENSHOT"
+
+msgid "SHOW IN MAIN MENU"
+msgstr ""
 
 msgid "SETTINGS"
 msgstr "EINSTELLUNGEN"
@@ -605,6 +641,12 @@ msgstr "ALLE SPIELE INDEXIEREN"
 
 msgid "INDEX MISSING GAMES"
 msgstr "INDEX FEHLENDER SPIELE"
+
+msgid "TOOLS"
+msgstr "WERKZEUGE"
+
+msgid "UPDATE GAMES LISTS"
+msgstr "SPIELELISTE AKTUALISIEREN"
 
 msgid "DEFAULT SETTINGS"
 msgstr "STANDARDEINSTELLUNGEN"
@@ -665,9 +707,6 @@ msgstr "PAUSE AUF ÜBERSETZTEM BILDSCHIRM"
 
 msgid "PER SYSTEM ADVANCED CONFIGURATION"
 msgstr "PER SYSTEM ERWEITERTE KONFIGURATION"
-
-msgid "UPDATE GAMES LISTS"
-msgstr "SPIELELISTE AKTUALISIEREN"
 
 msgid "NO MISSING BIOS"
 msgstr "KEINE FEHLENDEN BIOS-DATEIEN"
@@ -771,9 +810,6 @@ msgstr "ZEIGE  '..' ÜBERGEORDNETEN ORDNER"
 msgid "FILE EXTENSIONS"
 msgstr "DATEI-ERWEITERUNGEN"
 
-msgid "TOOLS"
-msgstr "WERKZEUGE"
-
 msgid "RESET GAMELIST CUSTOMISATIONS"
 msgstr "SPIELELISTEN-ANPASSUNGEN ZURÜCKSETZEN"
 
@@ -824,6 +860,9 @@ msgstr "ANZEIGEOPTIONEN"
 msgid "TRANSITION STYLE"
 msgstr "ÜBERGANGSSTIL"
 
+msgid "GAME LAUNCH TRANSITION"
+msgstr ""
+
 msgid "CAROUSEL TRANSITIONS"
 msgstr "KARUSSEL ÜBERGÄNGE"
 
@@ -853,6 +892,9 @@ msgstr "LAUTSTÄRKE"
 
 msgid "SYSTEM VOLUME"
 msgstr "LAUTSTÄRKE SYSTEM"
+
+msgid "MUSIC VOLUME"
+msgstr ""
 
 msgid "SHOW OVERLAY WHEN VOLUME CHANGES"
 msgstr "OVERLAY ANZEIGEN, WENN SICH DIE LAUTSTÄRKE ÄNDERT"
@@ -927,7 +969,7 @@ msgid "MANUAL SCRAPER"
 msgstr "MANUELLER SCRAPER"
 
 msgid "SKIP TO NEXT SONG"
-msgstr ""
+msgstr "ZUM NÄCHSTEN SONG SPRINGEN"
 
 msgid "LAUNCH SCREENSAVER"
 msgstr "BILDSCHIRMSCHONER STARTEN"
@@ -1022,8 +1064,17 @@ msgstr "OPTIONEN"
 msgid "GROUP UNTHEMED CUSTOM COLLECTIONS"
 msgstr "UNTHEMATISIERTE BENUTZERDEFINIERTE SAMMLUNGEN GRUPPIEREN"
 
-msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
-msgstr "BENUTZERDEFINIERTE SAMMLUNGEN UND SYSTEME SORTIEREN"
+msgid "SORT COLLECTIONS AND SYSTEMS"
+msgstr ""
+
+msgid "ALPHABETICALLY"
+msgstr ""
+
+msgid "BY MANUFACTURER"
+msgstr ""
+
+msgid "SORT SYSTEMS"
+msgstr ""
 
 msgid "SHOW SYSTEM NAME IN COLLECTIONS"
 msgstr "SYSTEMNAME IN SAMMLUNGEN ANZEIGEN"
@@ -1108,30 +1159,34 @@ msgid_plural "%i GAMES SKIPPED."
 msgstr[0] "%i SPIEL ÜBERSPRUNGEN."
 msgstr[1] "%i SPIELE ÜBERSPRUNGEN."
 
-msgid "INSTALL BEZELS"
-msgstr "BEZELS INSTALLIEREN"
+msgid "SELECT BEZELS TO INSTALL / REMOVE"
+msgstr ""
 
-msgid "UNINSTALL BEZELS"
-msgstr "BEZELS DEINSTALLIEREN"
-
-msgid "INSTALL THE BEZEL PROJECT"
-msgstr "THE BEZEL PROJECT INSTALLIEREN"
-
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
-msgstr "SYSTEM AUSWÄHLEN, BEI DEM DIE BEZELS (NEU)INSTALLIERT WERDEN"
+msgid "UPDATE"
+msgstr ""
 
 #, c-format
 msgid "'%s' ADDED TO DOWNLOAD QUEUE"
 msgstr "'%s' ZUR DOWNLOAD-LISTE HINZUGEFÜGT"
 
-msgid "UNINSTALL THE BEZEL PROJECT"
-msgstr "THE BEZEL PROJECT DEINSTALLIEREN"
+msgid "REMOVE"
+msgstr ""
 
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
-msgstr "SYSTEM AUSWÄHLEN, BEI DEM BEZELS ENTFERNT WERDEN"
+msgid "BEZELS UNINSTALLED SUCCESSFULLY"
+msgstr ""
 
-msgid "BEZELS DELETED SUCCESSFULLY"
-msgstr "BEZELS ERFOLGREICH GELÖSCHT"
+#, c-format
+msgid "CURRENTLY IN DOWNLOAD QUEUE"
+msgstr ""
+
+msgid "SELECT CONTENT TO INSTALL / REMOVE"
+msgstr ""
+
+msgid "MISC"
+msgstr ""
+
+msgid "UNINSTALL ADDED TO QUEUE"
+msgstr ""
 
 msgid "SWAP IMAGE AFTER (SECS)"
 msgstr "BILDWECHSEL NACH (SEK)"
@@ -1297,17 +1352,65 @@ msgstr "Video"
 msgid "enter path to video"
 msgstr "Pfad zum Video eingeben"
 
-msgid "Marquee"
-msgstr "Banner"
+msgid "Logo"
+msgstr ""
 
-msgid "enter path to marquee"
-msgstr "Pfad zum Banner eingeben"
+msgid "enter path to logo"
+msgstr ""
 
-msgid "Thumbnail"
-msgstr "Vorschaubild"
+msgid "Box"
+msgstr ""
 
-msgid "enter path to thumbnail"
-msgstr "Pfad zum Vorschaubild angeben"
+msgid "enter path to box"
+msgstr ""
+
+msgid "Fan art"
+msgstr ""
+
+msgid "enter path to fanart"
+msgstr ""
+
+msgid "Title shot"
+msgstr ""
+
+msgid "enter path to title shot"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "enter path to manual"
+msgstr ""
+
+msgid "Map"
+msgstr ""
+
+msgid "enter path to map"
+msgstr ""
+
+msgid "Cartridge"
+msgstr ""
+
+msgid "enter path to cartridge"
+msgstr ""
+
+msgid "Alt BoxArt"
+msgstr ""
+
+msgid "enter path to alt boxart"
+msgstr ""
+
+msgid "Wheel"
+msgstr ""
+
+msgid "enter path to wheel"
+msgstr ""
+
+msgid "Mix"
+msgstr ""
+
+msgid "enter path to mix"
+msgstr ""
 
 msgid "Rating"
 msgstr "Bewertung"
@@ -1405,20 +1508,11 @@ msgstr "Sprachen"
 msgid "Region"
 msgstr "Region"
 
-msgid "favorite"
-msgstr "Favorit"
-
 msgid "SCRAPING"
 msgstr "SCRAPING"
 
-msgid "Searching"
-msgstr "Suche"
-
 msgid "SCRAPE FAILED"
 msgstr "SCRAPE FEHLGESCHLAGEN"
-
-msgid "Downloading"
-msgstr "Downloading"
 
 msgid "SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES."
 msgstr "SCRAPING BEENDET. AKTUALISIERE SPIELELISTEN, UM ÄNDERUNGEN ANZUWENDEN."
@@ -1428,6 +1522,9 @@ msgstr "FEHLER: JEDES SYSTEM IST VERSTECKT, ALLE WERDEN NUN WIEDER ANGEZEIGT"
 
 msgid "DO YOU WANT TO START KODI MEDIA CENTER ?"
 msgstr "MÖCHTEN SIE KODI MEDIA CENTER STARTEN ?"
+
+msgid "GO TO MANUFACTURER"
+msgstr ""
 
 #, c-format
 msgid "%i COLLECTION"
@@ -1564,6 +1661,12 @@ msgstr "THEME ERFOLGREICH INSTALLIERT"
 msgid "BEZELS INSTALLED SUCCESSFULLY"
 msgstr "BEZELS ERFOLGREICH INSTALLIERT"
 
+msgid "PACKAGE INSTALLED SUCCESSFULLY"
+msgstr ""
+
+msgid "PACKAGE REMOVED SUCCESSFULLY"
+msgstr ""
+
 msgid "FAVORITES"
 msgstr "FAVORITEN"
 
@@ -1597,6 +1700,9 @@ msgstr "Sammlungen"
 msgid "Extracting"
 msgstr "Extrahiere"
 
+msgid "Searching"
+msgstr "Suche"
+
 msgid "NO GAMES FOUND - SKIP"
 msgstr "KEINE SPIELE GEFUNDEN - ÜBERSPRINGEN"
 
@@ -1605,6 +1711,9 @@ msgstr "EIN FEHLER IST AUFGETRETEN"
 
 msgid "RETRY"
 msgstr "WIEDERHOLEN"
+
+msgid "Downloading"
+msgstr "Downloading"
 
 msgid "ACCEPT RESULT"
 msgstr "ERGEBNIS AKZEPTIEREN"
@@ -1638,7 +1747,7 @@ msgstr ""
 "EIN NEUSTART DES SYSTEMS IST ERFORDERLICH UM DEN VORGANG ABZUSCHLIESSEN"
 
 msgid "DRIVE FORMAT IS ALREADY RUNNING."
-msgstr "LAUFWERKS-FORMATIERUNG LÄUFT BEREITS"
+msgstr "LAUFWERKS-FORMATIERUNG LÄUFT BEREITS."
 
 msgid "UPDATE AVAILABLE"
 msgstr "UPDATE VERFÜGBAR"
@@ -1696,8 +1805,8 @@ msgstr "Verschiedene"
 #, c-format
 msgid "This collection contains %i game, including :%s"
 msgid_plural "This collection contains %i games, including :%s"
-msgstr[0] "Diese Sammlung beinhaltet %i Spiel, inklusive %s."
-msgstr[1] "Diese Sammlung beinhaltet %i Spiele, inklusive %s."
+msgstr[0] "Diese Sammlung beinhaltet %i Spiel, inklusive %s"
+msgstr[1] "Diese Sammlung beinhaltet %i Spiele, inklusive %s"
 
 msgid "UP"
 msgstr "HOCH"
@@ -1878,6 +1987,45 @@ msgstr "ARBEITET..."
 
 msgid "up/down"
 msgstr "hoch/runter"
+
+#~ msgid "INSTALL BEZELS"
+#~ msgstr "BEZELS INSTALLIEREN"
+
+#~ msgid "UNINSTALL BEZELS"
+#~ msgstr "BEZELS DEINSTALLIEREN"
+
+#~ msgid "INSTALL THE BEZEL PROJECT"
+#~ msgstr "THE BEZEL PROJECT INSTALLIEREN"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
+#~ msgstr "SYSTEM AUSWÄHLEN, BEI DEM DIE BEZELS (NEU)INSTALLIERT WERDEN"
+
+#~ msgid "UNINSTALL THE BEZEL PROJECT"
+#~ msgstr "THE BEZEL PROJECT DEINSTALLIEREN"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
+#~ msgstr "SYSTEM AUSWÄHLEN, BEI DEM BEZELS ENTFERNT WERDEN"
+
+#~ msgid "BEZELS DELETED SUCCESSFULLY"
+#~ msgstr "BEZELS ERFOLGREICH GELÖSCHT"
+
+#~ msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
+#~ msgstr "BENUTZERDEFINIERTE SAMMLUNGEN UND SYSTEME SORTIEREN"
+
+#~ msgid "Marquee"
+#~ msgstr "Banner"
+
+#~ msgid "enter path to marquee"
+#~ msgstr "Pfad zum Banner eingeben"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Vorschaubild"
+
+#~ msgid "enter path to thumbnail"
+#~ msgstr "Pfad zum Vorschaubild angeben"
+
+#~ msgid "favorite"
+#~ msgstr "Favorit"
 
 #~ msgid "This collection contains %i game, including %s."
 #~ msgid_plural "This collection contains %i games, including %s."

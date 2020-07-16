@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 22:51+0200\n"
+"POT-Creation-Date: 2020-07-09 21:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,6 +75,12 @@ msgstr ""
 msgid "CONTROLLERS LINKS HAVE BEEN DELETED."
 msgstr ""
 
+msgid "CLOSE"
+msgstr ""
+
+msgid "Loading..."
+msgstr ""
+
 msgid "CONNECT TO NETPLAY"
 msgstr ""
 
@@ -82,9 +88,6 @@ msgid "Select the game you want to join"
 msgstr ""
 
 msgid "REFRESH"
-msgstr ""
-
-msgid "CLOSE"
 msgstr ""
 
 msgid "FAILED"
@@ -118,6 +121,15 @@ msgid "SORT GAMES BY"
 msgstr ""
 
 msgid "OTHER FILTERS"
+msgstr ""
+
+msgid "GAME MEDIAS"
+msgstr ""
+
+msgid "VIEW GAME MANUAL"
+msgstr ""
+
+msgid "VIEW GAME MAP"
 msgstr ""
 
 msgid "COLLECTION"
@@ -168,10 +180,10 @@ msgstr ""
 msgid "EDIT THIS GAME'S METADATA"
 msgstr ""
 
-msgid "FILTER GAMES BY TEXT"
+msgid "RESET FILTERS"
 msgstr ""
 
-msgid "Loading..."
+msgid "FILTER GAMES BY TEXT"
 msgstr ""
 
 msgid "THIS FUNCTION IS DISABLED WHEN SCRAPING IS RUNNING"
@@ -226,6 +238,9 @@ msgid "Architecture"
 msgstr ""
 
 msgid "Temperature"
+msgstr ""
+
+msgid "Available memory"
 msgstr ""
 
 msgid "Battery"
@@ -288,6 +303,15 @@ msgstr ""
 msgid "QUIT"
 msgstr ""
 
+msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
+msgstr ""
+
+msgid "SCRAPER"
+msgstr ""
+
+msgid "SCRAPE NOW"
+msgstr ""
+
 msgid "SCRAPE FROM"
 msgstr ""
 
@@ -312,6 +336,9 @@ msgstr ""
 msgid "BOX 3D"
 msgstr ""
 
+msgid "FAN ART"
+msgstr ""
+
 msgid "BOX SOURCE"
 msgstr ""
 
@@ -333,16 +360,16 @@ msgstr ""
 msgid "SCRAPE VIDEOS"
 msgstr ""
 
+msgid "SCRAPE FANART"
+msgstr ""
+
+msgid "SCRAPE MANUAL"
+msgstr ""
+
 msgid "USERNAME"
 msgstr ""
 
 msgid "PASSWORD"
-msgstr ""
-
-msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
-msgstr ""
-
-msgid "SCRAPE NOW"
 msgstr ""
 
 msgid "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?"
@@ -453,6 +480,9 @@ msgstr ""
 msgid "DOWNLOADS"
 msgstr ""
 
+msgid "CONTENT DOWNLOADER"
+msgstr ""
+
 msgid "THEMES"
 msgstr ""
 
@@ -522,6 +552,18 @@ msgstr ""
 msgid "MISSING BIOS"
 msgstr ""
 
+msgid "MULTIMEDIA KEYS"
+msgstr ""
+
+msgid "AUTO"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
 msgid "OVERCLOCK"
 msgstr ""
 
@@ -555,19 +597,10 @@ msgstr ""
 msgid "RUN-AHEAD FRAMES"
 msgstr ""
 
-msgid "AUTO"
-msgstr ""
-
 msgid "USE RUN-AHEAD FRAMES"
 msgstr ""
 
 msgid "RUN-AHEAD USE SECOND INSTANCE"
-msgstr ""
-
-msgid "ON"
-msgstr ""
-
-msgid "OFF"
 msgstr ""
 
 msgid "HARDCORE MODE"
@@ -580,6 +613,9 @@ msgid "VERBOSE MODE"
 msgstr ""
 
 msgid "AUTOMATIC SCREENSHOT"
+msgstr ""
+
+msgid "SHOW IN MAIN MENU"
 msgstr ""
 
 msgid "SETTINGS"
@@ -607,6 +643,12 @@ msgid "REINDEX ALL GAMES"
 msgstr ""
 
 msgid "INDEX MISSING GAMES"
+msgstr ""
+
+msgid "TOOLS"
+msgstr ""
+
+msgid "UPDATE GAMES LISTS"
 msgstr ""
 
 msgid "DEFAULT SETTINGS"
@@ -667,9 +709,6 @@ msgid "PAUSE ON TRANSLATED SCREEN"
 msgstr ""
 
 msgid "PER SYSTEM ADVANCED CONFIGURATION"
-msgstr ""
-
-msgid "UPDATE GAMES LISTS"
 msgstr ""
 
 msgid "NO MISSING BIOS"
@@ -768,9 +807,6 @@ msgstr ""
 msgid "FILE EXTENSIONS"
 msgstr ""
 
-msgid "TOOLS"
-msgstr ""
-
 msgid "RESET GAMELIST CUSTOMISATIONS"
 msgstr ""
 
@@ -816,6 +852,9 @@ msgstr ""
 msgid "TRANSITION STYLE"
 msgstr ""
 
+msgid "GAME LAUNCH TRANSITION"
+msgstr ""
+
 msgid "CAROUSEL TRANSITIONS"
 msgstr ""
 
@@ -844,6 +883,9 @@ msgid "VOLUME"
 msgstr ""
 
 msgid "SYSTEM VOLUME"
+msgstr ""
+
+msgid "MUSIC VOLUME"
 msgstr ""
 
 msgid "SHOW OVERLAY WHEN VOLUME CHANGES"
@@ -1014,7 +1056,16 @@ msgstr ""
 msgid "GROUP UNTHEMED CUSTOM COLLECTIONS"
 msgstr ""
 
-msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
+msgid "SORT COLLECTIONS AND SYSTEMS"
+msgstr ""
+
+msgid "ALPHABETICALLY"
+msgstr ""
+
+msgid "BY MANUFACTURER"
+msgstr ""
+
+msgid "SORT SYSTEMS"
 msgstr ""
 
 msgid "SHOW SYSTEM NAME IN COLLECTIONS"
@@ -1096,29 +1147,33 @@ msgid_plural "%i GAMES SKIPPED."
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "INSTALL BEZELS"
+msgid "SELECT BEZELS TO INSTALL / REMOVE"
 msgstr ""
 
-msgid "UNINSTALL BEZELS"
-msgstr ""
-
-msgid "INSTALL THE BEZEL PROJECT"
-msgstr ""
-
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
+msgid "UPDATE"
 msgstr ""
 
 #, c-format
 msgid "'%s' ADDED TO DOWNLOAD QUEUE"
 msgstr ""
 
-msgid "UNINSTALL THE BEZEL PROJECT"
+msgid "REMOVE"
 msgstr ""
 
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
+msgid "BEZELS UNINSTALLED SUCCESSFULLY"
 msgstr ""
 
-msgid "BEZELS DELETED SUCCESSFULLY"
+#, c-format
+msgid "CURRENTLY IN DOWNLOAD QUEUE"
+msgstr ""
+
+msgid "SELECT CONTENT TO INSTALL / REMOVE"
+msgstr ""
+
+msgid "MISC"
+msgstr ""
+
+msgid "UNINSTALL ADDED TO QUEUE"
 msgstr ""
 
 msgid "SWAP IMAGE AFTER (SECS)"
@@ -1275,16 +1330,64 @@ msgstr ""
 msgid "enter path to video"
 msgstr ""
 
-msgid "Marquee"
+msgid "Logo"
 msgstr ""
 
-msgid "enter path to marquee"
+msgid "enter path to logo"
 msgstr ""
 
-msgid "Thumbnail"
+msgid "Box"
 msgstr ""
 
-msgid "enter path to thumbnail"
+msgid "enter path to box"
+msgstr ""
+
+msgid "Fan art"
+msgstr ""
+
+msgid "enter path to fanart"
+msgstr ""
+
+msgid "Title shot"
+msgstr ""
+
+msgid "enter path to title shot"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "enter path to manual"
+msgstr ""
+
+msgid "Map"
+msgstr ""
+
+msgid "enter path to map"
+msgstr ""
+
+msgid "Cartridge"
+msgstr ""
+
+msgid "enter path to cartridge"
+msgstr ""
+
+msgid "Alt BoxArt"
+msgstr ""
+
+msgid "enter path to alt boxart"
+msgstr ""
+
+msgid "Wheel"
+msgstr ""
+
+msgid "enter path to wheel"
+msgstr ""
+
+msgid "Mix"
+msgstr ""
+
+msgid "enter path to mix"
 msgstr ""
 
 msgid "Rating"
@@ -1383,19 +1486,10 @@ msgstr ""
 msgid "Region"
 msgstr ""
 
-msgid "favorite"
-msgstr ""
-
 msgid "SCRAPING"
 msgstr ""
 
-msgid "Searching"
-msgstr ""
-
 msgid "SCRAPE FAILED"
-msgstr ""
-
-msgid "Downloading"
 msgstr ""
 
 msgid "SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES."
@@ -1405,6 +1499,9 @@ msgid "ERROR: EVERY SYSTEM IS HIDDEN, RE-DISPLAYING ALL OF THEM NOW"
 msgstr ""
 
 msgid "DO YOU WANT TO START KODI MEDIA CENTER ?"
+msgstr ""
+
+msgid "GO TO MANUFACTURER"
 msgstr ""
 
 #, c-format
@@ -1542,6 +1639,12 @@ msgstr ""
 msgid "BEZELS INSTALLED SUCCESSFULLY"
 msgstr ""
 
+msgid "PACKAGE INSTALLED SUCCESSFULLY"
+msgstr ""
+
+msgid "PACKAGE REMOVED SUCCESSFULLY"
+msgstr ""
+
 msgid "FAVORITES"
 msgstr ""
 
@@ -1575,6 +1678,9 @@ msgstr ""
 msgid "Extracting"
 msgstr ""
 
+msgid "Searching"
+msgstr ""
+
 msgid "NO GAMES FOUND - SKIP"
 msgstr ""
 
@@ -1582,6 +1688,9 @@ msgid "AN ERROR HAS OCCURED"
 msgstr ""
 
 msgid "RETRY"
+msgstr ""
+
+msgid "Downloading"
 msgstr ""
 
 msgid "ACCEPT RESULT"

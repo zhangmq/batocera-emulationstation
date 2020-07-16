@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: emulationstation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 22:51+0200\n"
+"POT-Creation-Date: 2020-07-09 21:20+0200\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,6 +67,12 @@ msgstr "잠시만 기다려주세요"
 msgid "CONTROLLERS LINKS HAVE BEEN DELETED."
 msgstr "컨트롤러와의 연결이 삭제되었습니다."
 
+msgid "CLOSE"
+msgstr "닫기"
+
+msgid "Loading..."
+msgstr "로딩"
+
 msgid "CONNECT TO NETPLAY"
 msgstr "넷플레이 연결"
 
@@ -75,9 +81,6 @@ msgstr "넷플레이에 연결할 게임을 선택하세요"
 
 msgid "REFRESH"
 msgstr "새로고침"
-
-msgid "CLOSE"
-msgstr "닫기"
 
 msgid "FAILED"
 msgstr "실패"
@@ -111,6 +114,15 @@ msgstr "다음으로 게임 정렬"
 
 msgid "OTHER FILTERS"
 msgstr "다른 필터"
+
+msgid "GAME MEDIAS"
+msgstr ""
+
+msgid "VIEW GAME MANUAL"
+msgstr ""
+
+msgid "VIEW GAME MAP"
+msgstr ""
 
 msgid "COLLECTION"
 msgstr "컬렉션"
@@ -160,11 +172,11 @@ msgstr "폴더 메타데이터 편집"
 msgid "EDIT THIS GAME'S METADATA"
 msgstr "게임 정보 편집"
 
+msgid "RESET FILTERS"
+msgstr ""
+
 msgid "FILTER GAMES BY TEXT"
 msgstr "텍스트로 게임 필터"
-
-msgid "Loading..."
-msgstr "로딩"
 
 msgid "THIS FUNCTION IS DISABLED WHEN SCRAPING IS RUNNING"
 msgstr "게임 아트워크 수집 중에는 이 기능은 비활성화됩니다"
@@ -219,6 +231,9 @@ msgstr "아키텍쳐"
 
 msgid "Temperature"
 msgstr "온도"
+
+msgid "Available memory"
+msgstr ""
 
 msgid "Battery"
 msgstr "배터리"
@@ -280,6 +295,15 @@ msgstr "인포메이션"
 msgid "QUIT"
 msgstr "종료"
 
+msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
+msgstr "게임 아트워크 수집이 실행중입니다. 중지하겠습니까?"
+
+msgid "SCRAPER"
+msgstr ""
+
+msgid "SCRAPE NOW"
+msgstr "게임 아트워크 수집 시작"
+
 msgid "SCRAPE FROM"
 msgstr "게임 아트워크 수집 출처"
 
@@ -304,6 +328,9 @@ msgstr "박스 2D"
 msgid "BOX 3D"
 msgstr "박스 3D"
 
+msgid "FAN ART"
+msgstr ""
+
 msgid "BOX SOURCE"
 msgstr "박스 출처"
 
@@ -325,17 +352,17 @@ msgstr "평점 수집"
 msgid "SCRAPE VIDEOS"
 msgstr "비디오 수집"
 
+msgid "SCRAPE FANART"
+msgstr ""
+
+msgid "SCRAPE MANUAL"
+msgstr ""
+
 msgid "USERNAME"
 msgstr "사용자 이름"
 
 msgid "PASSWORD"
 msgstr "비밀번호"
-
-msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
-msgstr "게임 아트워크 수집이 실행중입니다. 중지하겠습니까?"
-
-msgid "SCRAPE NOW"
-msgstr "게임 아트워크 수집 시작"
 
 msgid "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?"
 msgstr "입력 구성을 정말로 원합니까?"
@@ -445,6 +472,9 @@ msgstr "디스크를 포맷합니다"
 msgid "DOWNLOADS"
 msgstr "다운로드"
 
+msgid "CONTENT DOWNLOADER"
+msgstr ""
+
 msgid "THEMES"
 msgstr "테마"
 
@@ -514,6 +544,18 @@ msgstr "넷플레이 설정"
 msgid "MISSING BIOS"
 msgstr "없는 바이오스"
 
+msgid "MULTIMEDIA KEYS"
+msgstr ""
+
+msgid "AUTO"
+msgstr "자동"
+
+msgid "ON"
+msgstr "켜짐"
+
+msgid "OFF"
+msgstr "꺼짐"
+
 msgid "OVERCLOCK"
 msgstr "오버클럭"
 
@@ -547,20 +589,11 @@ msgstr "입력지연 줄이기"
 msgid "RUN-AHEAD FRAMES"
 msgstr "프레임 미리 실행"
 
-msgid "AUTO"
-msgstr "자동"
-
 msgid "USE RUN-AHEAD FRAMES"
 msgstr "프레임 미리 실행 사용"
 
 msgid "RUN-AHEAD USE SECOND INSTANCE"
 msgstr "미리 실행 초 단위 사용"
-
-msgid "ON"
-msgstr "켜짐"
-
-msgid "OFF"
-msgstr "꺼짐"
 
 msgid "HARDCORE MODE"
 msgstr "하드코어 모드"
@@ -573,6 +606,9 @@ msgstr "상세 모드"
 
 msgid "AUTOMATIC SCREENSHOT"
 msgstr "자동 스크린샷"
+
+msgid "SHOW IN MAIN MENU"
+msgstr ""
 
 msgid "SETTINGS"
 msgstr "설정"
@@ -600,6 +636,12 @@ msgstr "모든 게임 재 인덱싱"
 
 msgid "INDEX MISSING GAMES"
 msgstr "인덱스 안된 게임"
+
+msgid "TOOLS"
+msgstr "도구"
+
+msgid "UPDATE GAMES LISTS"
+msgstr "게임 목록 업데이트"
 
 msgid "DEFAULT SETTINGS"
 msgstr "기본설정"
@@ -660,9 +702,6 @@ msgstr "번역화면 일시정지"
 
 msgid "PER SYSTEM ADVANCED CONFIGURATION"
 msgstr "시스템 고급 환경설정"
-
-msgid "UPDATE GAMES LISTS"
-msgstr "게임 목록 업데이트"
 
 msgid "NO MISSING BIOS"
 msgstr "있는 바이오스 "
@@ -764,9 +803,6 @@ msgstr "'..' 상위 폴더 보여주기"
 msgid "FILE EXTENSIONS"
 msgstr "파일 확장자"
 
-msgid "TOOLS"
-msgstr "도구"
-
 msgid "RESET GAMELIST CUSTOMISATIONS"
 msgstr "사용자 게임리스트 초기화"
 
@@ -815,6 +851,9 @@ msgstr "옵션 표시"
 msgid "TRANSITION STYLE"
 msgstr "화면 전환 형식"
 
+msgid "GAME LAUNCH TRANSITION"
+msgstr ""
+
 msgid "CAROUSEL TRANSITIONS"
 msgstr "회전목마형 화면 전환"
 
@@ -844,6 +883,9 @@ msgstr "음량"
 
 msgid "SYSTEM VOLUME"
 msgstr "시스템 음량"
+
+msgid "MUSIC VOLUME"
+msgstr ""
 
 msgid "SHOW OVERLAY WHEN VOLUME CHANGES"
 msgstr "사운드 볼륨 조절 시 화면표기"
@@ -1013,8 +1055,17 @@ msgstr "옵션"
 msgid "GROUP UNTHEMED CUSTOM COLLECTIONS"
 msgstr "테마가 없는 커스텀 컬렉션을 그룹"
 
-msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
-msgstr "커스텀 컬렉션과 시스템을 분류"
+msgid "SORT COLLECTIONS AND SYSTEMS"
+msgstr ""
+
+msgid "ALPHABETICALLY"
+msgstr ""
+
+msgid "BY MANUFACTURER"
+msgstr ""
+
+msgid "SORT SYSTEMS"
+msgstr ""
 
 msgid "SHOW SYSTEM NAME IN COLLECTIONS"
 msgstr "컬렉션에서 시스템 이름 표시"
@@ -1096,30 +1147,34 @@ msgid "%i GAME SKIPPED."
 msgid_plural "%i GAMES SKIPPED."
 msgstr[0] "%i 개의 게임 아트워크 수집을 건너뛰었습니다."
 
-msgid "INSTALL BEZELS"
-msgstr "베젤 설치"
+msgid "SELECT BEZELS TO INSTALL / REMOVE"
+msgstr ""
 
-msgid "UNINSTALL BEZELS"
-msgstr "베젤 제거"
-
-msgid "INSTALL THE BEZEL PROJECT"
-msgstr "베젤 프로젝트 설치"
-
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
-msgstr "베젤이 있는 시스템을 선택하면 (재)설치될 것입니다."
+msgid "UPDATE"
+msgstr ""
 
 #, c-format
 msgid "'%s' ADDED TO DOWNLOAD QUEUE"
 msgstr "다운로드 대기에 '%개'가 추가됨"
 
-msgid "UNINSTALL THE BEZEL PROJECT"
-msgstr "베젤 프로젝트 제거"
+msgid "REMOVE"
+msgstr ""
 
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
-msgstr "베젤을 제거 할 시스템 선택"
+msgid "BEZELS UNINSTALLED SUCCESSFULLY"
+msgstr ""
 
-msgid "BEZELS DELETED SUCCESSFULLY"
-msgstr "베젤이 성공적으로 삭제됨"
+#, c-format
+msgid "CURRENTLY IN DOWNLOAD QUEUE"
+msgstr ""
+
+msgid "SELECT CONTENT TO INSTALL / REMOVE"
+msgstr ""
+
+msgid "MISC"
+msgstr ""
+
+msgid "UNINSTALL ADDED TO QUEUE"
+msgstr ""
 
 msgid "SWAP IMAGE AFTER (SECS)"
 msgstr "(몇 초) 후 이미지 필터 교체"
@@ -1283,17 +1338,65 @@ msgstr "비디오"
 msgid "enter path to video"
 msgstr "비디오 경로 입력"
 
-msgid "Marquee"
-msgstr "마키"
+msgid "Logo"
+msgstr ""
 
-msgid "enter path to marquee"
-msgstr "마키 경로 입력"
+msgid "enter path to logo"
+msgstr ""
 
-msgid "Thumbnail"
-msgstr "썸네일"
+msgid "Box"
+msgstr ""
 
-msgid "enter path to thumbnail"
-msgstr "썸네일 경로 입력"
+msgid "enter path to box"
+msgstr ""
+
+msgid "Fan art"
+msgstr ""
+
+msgid "enter path to fanart"
+msgstr ""
+
+msgid "Title shot"
+msgstr ""
+
+msgid "enter path to title shot"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "enter path to manual"
+msgstr ""
+
+msgid "Map"
+msgstr ""
+
+msgid "enter path to map"
+msgstr ""
+
+msgid "Cartridge"
+msgstr ""
+
+msgid "enter path to cartridge"
+msgstr ""
+
+msgid "Alt BoxArt"
+msgstr ""
+
+msgid "enter path to alt boxart"
+msgstr ""
+
+msgid "Wheel"
+msgstr ""
+
+msgid "enter path to wheel"
+msgstr ""
+
+msgid "Mix"
+msgstr ""
+
+msgid "enter path to mix"
+msgstr ""
 
 msgid "Rating"
 msgstr "평점"
@@ -1391,20 +1494,11 @@ msgstr "언어"
 msgid "Region"
 msgstr "지역"
 
-msgid "favorite"
-msgstr "즐겨찾기"
-
 msgid "SCRAPING"
 msgstr "게임 아트워크 수집 중"
 
-msgid "Searching"
-msgstr "검색 중"
-
 msgid "SCRAPE FAILED"
 msgstr "게임 아트워크 수집 실패"
-
-msgid "Downloading"
-msgstr "다운로드 중"
 
 msgid "SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES."
 msgstr ""
@@ -1416,6 +1510,9 @@ msgstr ""
 
 msgid "DO YOU WANT TO START KODI MEDIA CENTER ?"
 msgstr "KODI 미디어 센터를 실행하시겠습니까?"
+
+msgid "GO TO MANUFACTURER"
+msgstr ""
 
 #, c-format
 msgid "%i COLLECTION"
@@ -1549,6 +1646,12 @@ msgstr "테마가 성공적으로 설치됨"
 msgid "BEZELS INSTALLED SUCCESSFULLY"
 msgstr "베젤이 성공적으로 설치됨"
 
+msgid "PACKAGE INSTALLED SUCCESSFULLY"
+msgstr ""
+
+msgid "PACKAGE REMOVED SUCCESSFULLY"
+msgstr ""
+
 msgid "FAVORITES"
 msgstr "즐겨찾기"
 
@@ -1582,6 +1685,9 @@ msgstr "컬렉션"
 msgid "Extracting"
 msgstr "추출 중"
 
+msgid "Searching"
+msgstr "검색 중"
+
 msgid "NO GAMES FOUND - SKIP"
 msgstr "발견된 게임 없음 - 건너뛰기"
 
@@ -1590,6 +1696,9 @@ msgstr "오류가 발생"
 
 msgid "RETRY"
 msgstr "재시도"
+
+msgid "Downloading"
+msgstr "다운로드 중"
 
 msgid "ACCEPT RESULT"
 msgstr "결과 동의"
@@ -1849,6 +1958,45 @@ msgstr "작업 중..."
 
 msgid "up/down"
 msgstr "위/아래"
+
+#~ msgid "INSTALL BEZELS"
+#~ msgstr "베젤 설치"
+
+#~ msgid "UNINSTALL BEZELS"
+#~ msgstr "베젤 제거"
+
+#~ msgid "INSTALL THE BEZEL PROJECT"
+#~ msgstr "베젤 프로젝트 설치"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
+#~ msgstr "베젤이 있는 시스템을 선택하면 (재)설치될 것입니다."
+
+#~ msgid "UNINSTALL THE BEZEL PROJECT"
+#~ msgstr "베젤 프로젝트 제거"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
+#~ msgstr "베젤을 제거 할 시스템 선택"
+
+#~ msgid "BEZELS DELETED SUCCESSFULLY"
+#~ msgstr "베젤이 성공적으로 삭제됨"
+
+#~ msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
+#~ msgstr "커스텀 컬렉션과 시스템을 분류"
+
+#~ msgid "Marquee"
+#~ msgstr "마키"
+
+#~ msgid "enter path to marquee"
+#~ msgstr "마키 경로 입력"
+
+#~ msgid "Thumbnail"
+#~ msgstr "썸네일"
+
+#~ msgid "enter path to thumbnail"
+#~ msgstr "썸네일 경로 입력"
+
+#~ msgid "favorite"
+#~ msgstr "즐겨찾기"
 
 #~ msgid "STOP EDITING"
 #~ msgstr "편집 중단"

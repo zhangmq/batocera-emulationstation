@@ -19,6 +19,8 @@ set(ES_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/ThreadedBluetooth.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/Playlists.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LangParser.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/services/HttpServerThread.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/services/httplib.h
 
     # GuiComponents
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AsyncReqComponent.h
@@ -52,12 +54,13 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInstall.cpp # batocera
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiLoading.h # batocera
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeInstallStart.h # batocera
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBezelInstallStart.h # batocera
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBezelUnInstall.h # batocera
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBezelInstallStart.h # batocera    
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiNetPlay.h # batocera
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRetroAchievements.h # batocera
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBluetooth.h # batocera	
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiWifi.h # batocera
+	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiImageViewer.h # batocera
+	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBatoceraStore.h # batocera	
 
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.h
@@ -106,6 +109,7 @@ set(ES_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/ThreadedBluetooth.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/Playlists.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LangParser.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/services/HttpServerThread.cpp	
 
     # GuiComponents
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AsyncReqComponent.cpp
@@ -134,12 +138,13 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBackup.cpp # batocera
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInstall.cpp # batocera    
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiThemeInstallStart.cpp # batocera
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBezelInstallStart.cpp # batocera
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBezelUnInstall.cpp # batocera
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBezelInstallStart.cpp # batocera	    
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiNetPlay.cpp # batocera
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiRetroAchievements.cpp # batocera
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBluetooth.cpp # batocera	
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiWifi.cpp # batocera
+	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiImageViewer.cpp # batocera
+	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiBatoceraStore.cpp # batocera	
 
     # Scrapers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.cpp

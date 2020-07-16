@@ -111,6 +111,49 @@ CollectionSystemManager::~CollectionSystemManager()
 	sInstance = NULL;
 }
 
+
+bool systemSort(SystemData* sys1, SystemData* sys2)
+{
+	std::string name1 = Utils::String::toUpper(sys1->getName());
+	std::string name2 = Utils::String::toUpper(sys2->getName());
+	return name1.compare(name2) < 0;
+}
+
+bool systemByManufacurerSort(SystemData* sys1, SystemData* sys2)
+{	
+	// Move collection at End
+	if (sys1->isCollection() != sys2->isCollection())
+		return sys2->isCollection();
+
+	// Move custom collections before auto collections
+	if (sys1->isCollection() && sys2->isCollection())
+	{
+		std::string hw1 = Utils::String::toUpper(sys1->getSystemMetadata().hardwareType);
+		std::string hw2 = Utils::String::toUpper(sys2->getSystemMetadata().hardwareType);
+
+		if (hw1 != hw2)
+			return hw1.compare(hw2) >= 0;
+	}
+	
+	// Order by manufacturer
+	std::string mf1 = Utils::String::toUpper(sys1->getSystemMetadata().manufacturer);
+	std::string mf2 = Utils::String::toUpper(sys2->getSystemMetadata().manufacturer);
+
+	if (mf1 != mf2)
+		return mf1.compare(mf2) < 0;
+
+	// Then by release date 
+	if (sys1->getSystemMetadata().releaseYear < sys2->getSystemMetadata().releaseYear)
+		return true;
+	else if (sys1->getSystemMetadata().releaseYear > sys2->getSystemMetadata().releaseYear)
+		return false;
+
+	// Then by name
+	std::string name1 = Utils::String::toUpper(sys1->getName());
+	std::string name2 = Utils::String::toUpper(sys2->getName());
+	return name1.compare(name2) < 0;
+}
+
 CollectionSystemManager* CollectionSystemManager::get()
 {
 	assert(sInstance);
@@ -203,6 +246,9 @@ void CollectionSystemManager::loadEnabledListFromSettings()
 // updates enabled system list in System View
 void CollectionSystemManager::updateSystemsList()
 {
+	auto sortMode = Settings::getInstance()->getString("SortSystems");
+	bool sortByManufacturer = SystemData::isManufacturerSupported() && sortMode == "manufacturer";
+
 	// remove all Collection Systems
 	removeCollectionsFromDisplayedSystems();
 
@@ -212,15 +258,24 @@ void CollectionSystemManager::updateSystemsList()
 	// add custom enabled ones
 	addEnabledCollectionsToDisplayedSystems(&mCustomCollectionSystemsData, &map);
 
-	if(Settings::getInstance()->getBool("SortAllSystems"))
-	{
-		// sort custom individual systems with other systems
+	if (!sortMode.empty() && !sortByManufacturer)
 		std::sort(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(), systemSort);
 
-		// move RetroPie system to end, before auto collections
-		for(auto sysIt = SystemData::sSystemVector.cbegin(); sysIt != SystemData::sSystemVector.cend(); )
+	if(mCustomCollectionsBundle->getRootFolder()->getChildren().size() > 0)
+		SystemData::sSystemVector.push_back(mCustomCollectionsBundle);
+
+	// add auto enabled ones
+	addEnabledCollectionsToDisplayedSystems(&mAutoCollectionSystemsData, &map);
+	
+	if (!sortMode.empty())
+	{
+		if (sortByManufacturer)
+			std::sort(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(), systemByManufacurerSort);
+
+		// Move RetroPie / Retrobat system to end
+		for (auto sysIt = SystemData::sSystemVector.cbegin(); sysIt != SystemData::sSystemVector.cend(); )
 		{
-			if ((*sysIt)->getName() == "retropie")
+			if ((*sysIt)->getName() == "retropie" || (*sysIt)->getName() == "retrobat")
 			{
 				SystemData* retroPieSystem = (*sysIt);
 				sysIt = SystemData::sSystemVector.erase(sysIt);
@@ -228,33 +283,13 @@ void CollectionSystemManager::updateSystemsList()
 				break;
 			}
 			else
-			{
 				sysIt++;
-			}
 		}
 	}
-
-	if(mCustomCollectionsBundle->getRootFolder()->getChildren().size() > 0)
-		SystemData::sSystemVector.push_back(mCustomCollectionsBundle);
-
-	// add auto enabled ones
-	addEnabledCollectionsToDisplayedSystems(&mAutoCollectionSystemsData, &map);
-
-	// create views for collections, before reload
-	/*
-	for(auto sysIt = SystemData::sSystemVector.cbegin(); sysIt != SystemData::sSystemVector.cend(); sysIt++)
-	{
-		if ((*sysIt)->isCollection())
-		{
-			ViewController::get()->getGameListView((*sysIt));
-		}
-	}*/
 
 	// if we were editing a custom collection, and it's no longer enabled, exit edit mode
 	if(mIsEditingCustom && !mEditingCollectionSystemData->isEnabled)
-	{
 		exitEditMode();
-	}
 }
 
 /* Methods to manage collection files related to a source FileData */
@@ -763,8 +798,16 @@ SystemData* CollectionSystemManager::addNewCustomCollection(std::string name)
 
 // creates a new, empty Collection system, based on the name and declaration
 SystemData* CollectionSystemManager::createNewCollectionEntry(std::string name, CollectionSystemDecl sysDecl, bool index)
-{
-	SystemData* newSys = new SystemData(name, sysDecl.longName, mCollectionEnvData, sysDecl.themeFolder, NULL, true); // batocera
+{	
+	SystemMetadata md;
+	md.name = name;
+	md.fullName = sysDecl.longName;
+	md.themeFolder = sysDecl.themeFolder;
+	md.manufacturer = "Collections";
+	md.hardwareType = sysDecl.isCustom ? "custom collection" : "auto collection";
+	md.releaseYear = 0;
+	
+	SystemData* newSys = new SystemData(md, mCollectionEnvData, NULL, true); // batocera
 
 	CollectionSystemData newCollectionData;
 	newCollectionData.system = newSys;
@@ -1258,13 +1301,6 @@ std::string getCustomCollectionConfigPath(std::string collectionName)
 std::string getCollectionsFolder()
 {
 	return Utils::FileSystem::getGenericPath(Utils::FileSystem::getEsConfigPath() + "/collections");
-}
-
-bool systemSort(SystemData* sys1, SystemData* sys2)
-{
-	std::string name1 = Utils::String::toUpper(sys1->getName());
-	std::string name2 = Utils::String::toUpper(sys2->getName());
-	return name1.compare(name2) < 0;
 }
 
 bool CollectionSystemManager::isCustomCollection(const std::string collectionName)

@@ -153,7 +153,7 @@ void GridGameListView::populateList(const std::vector<FileData*>& files)
 	{
 		const ThemeData::ThemeElement* logoElem = groupTheme->getElement(getName(), "logo", "image");
 		if (logoElem && logoElem->has("path") && Utils::FileSystem::exists(logoElem->get<std::string>("path")))
-			mHeaderImage.setImage(logoElem->get<std::string>("path"));
+			mHeaderImage.setImage(logoElem->get<std::string>("path"), false, mHeaderImage.getMaxSizeInfo());
 	}
 
 	mHeaderText.setText(system->getFullName());
@@ -231,7 +231,7 @@ void GridGameListView::populateList(const std::vector<FileData*>& files)
 			for (auto file : files)
 			{
 				if (file->getFavorite() && showFavoriteIcon)
-					mGrid.add(file->getName(), getImagePath(file), file->getVideoPath(), file->getMarqueePath(), true, file->getType() != GAME, isVirtualFolder(file), file);
+					mGrid.add(_U("\uF006 ") + file->getName(), getImagePath(file), file->getVideoPath(), file->getMarqueePath(), true, file->getType() != GAME, isVirtualFolder(file), file);
 			}
 		}
 

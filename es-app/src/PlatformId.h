@@ -49,6 +49,7 @@ namespace PlatformIds
 		NINTENDO_VIRTUAL_BOY,
 		NINTENDO_GAME_AND_WATCH,
 		PC,
+		PC_88,
 		PC_98,
 		SEGA_32X,
 		SEGA_CD,
@@ -68,6 +69,7 @@ namespace PlatformIds
 		QUAKE,
 		SUPER_NINTENDO,
 		SCUMMVM,
+		SHARP_X1,
 		SHARP_X6800,
 		TURBOGRAFX_16, // (aka PC Engine) HuCards only
 		TURBOGRAFX_CD, // (aka PC Engine) CD-ROMs only
@@ -87,6 +89,7 @@ namespace PlatformIds
 		LUTRO,
 		MOONLIGHT,
 		MRBOOM,
+		CANNONBALL,
 		NAOMI,
 		NEOGEO_CD,
 		PCFX,
@@ -95,6 +98,7 @@ namespace PlatformIds
 		SATELLAVIEW,
 		SUFAMITURBO,
 		ZX81,
+		TIC80,
 
 		// Windows Specific
 		VISUALPINBALL,
@@ -110,7 +114,7 @@ namespace PlatformIds
 		APPLE2GS,
 		SPECTRAVIDEO,
 		PALMOS,
-		DAPHNEE,
+		DAPHNE,
 		SOLARUS,
 
 		PLATFORM_IGNORE, // do not allow scraping for this system

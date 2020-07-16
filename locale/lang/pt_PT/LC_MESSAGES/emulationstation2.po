@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: emulationstation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 22:51+0200\n"
+"POT-Creation-Date: 2020-07-09 21:20+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -70,6 +70,12 @@ msgstr "POR FAVOR AGUARDE"
 msgid "CONTROLLERS LINKS HAVE BEEN DELETED."
 msgstr "OS COMANDOS EMPARELHADOS FORAM ELIMINADOS."
 
+msgid "CLOSE"
+msgstr "FECHAR"
+
+msgid "Loading..."
+msgstr "A Carregar..."
+
 msgid "CONNECT TO NETPLAY"
 msgstr "CONECTAR-SE AOS JOGOS EM REDE"
 
@@ -79,9 +85,6 @@ msgstr "Selecione o jogo que deseja participar"
 msgid "REFRESH"
 msgstr "ATUALIZAR"
 
-msgid "CLOSE"
-msgstr "FECHAR"
-
 msgid "FAILED"
 msgstr "FALHOU"
 
@@ -89,7 +92,7 @@ msgid "LAUNCH"
 msgstr "EXECUTAR"
 
 msgid "UNAVAILABLE CORE"
-msgstr "CORE INDISPONÍVEIL"
+msgstr "CORE INDISPONÍVEL"
 
 msgid "AVAILABLE GAMES"
 msgstr "JOGOS DISPONÍVEIS"
@@ -114,6 +117,15 @@ msgstr "ORDENAR JOGOS POR"
 
 msgid "OTHER FILTERS"
 msgstr "OUTROS FILTROS"
+
+msgid "GAME MEDIAS"
+msgstr "MÍDIAS DE JOGOS"
+
+msgid "VIEW GAME MANUAL"
+msgstr "VER MANUAL DO JOGO"
+
+msgid "VIEW GAME MAP"
+msgstr "VER MAPA DO JOGO"
 
 msgid "COLLECTION"
 msgstr "COLEÇÃO"
@@ -146,7 +158,7 @@ msgid "ADD/REMOVE GAMES TO THIS GAME COLLECTION"
 msgstr "ADICIONAR/REMOVER JOGOS A ESTA COLEÇÃO"
 
 msgid "FINISH EDITING COLLECTION"
-msgstr "EDIÇÃO DE COLEÇÃO TERMINADA"
+msgstr "FINALIZAR EDIÇÃO DE COLEÇÃO"
 
 msgid "GAME OPTIONS"
 msgstr "OPÇÕES DE JOGO"
@@ -163,11 +175,11 @@ msgstr "EDITAR PASTA METADATA"
 msgid "EDIT THIS GAME'S METADATA"
 msgstr "EDITAR AS INFORMAÇÕES DO JOGO"
 
+msgid "RESET FILTERS"
+msgstr "REPOR FILTROS"
+
 msgid "FILTER GAMES BY TEXT"
 msgstr "FILTRAR JOGOS POR TEXTO"
-
-msgid "Loading..."
-msgstr "A Carregar..."
 
 msgid "THIS FUNCTION IS DISABLED WHEN SCRAPING IS RUNNING"
 msgstr "ESTA FUNÇÃO É DESATIVADA QUANDO A PROCURA ESTÁ EM CURSO"
@@ -182,7 +194,7 @@ msgid "FILTER GAMELIST BY"
 msgstr "FILTRAR LISTA DE JOGOS POR"
 
 msgid "RESET ALL FILTERS"
-msgstr "REINICIAR TODOS OS FILTROS"
+msgstr "REPOR TODOS OS FILTROS"
 
 msgid "FIND GAMES"
 msgstr "PROCURAR JOGOS"
@@ -222,6 +234,9 @@ msgstr "Arquitetura"
 
 msgid "Temperature"
 msgstr "Temperatura"
+
+msgid "Available memory"
+msgstr "Memória disponível"
 
 msgid "Battery"
 msgstr "Bateria"
@@ -283,6 +298,15 @@ msgstr "INFORMAÇÕES"
 msgid "QUIT"
 msgstr "SAIR"
 
+msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
+msgstr "A PROCURA ESTÁ EM CURSO. DESEJA PARAR ?"
+
+msgid "SCRAPER"
+msgstr "OBTER CAPAS"
+
+msgid "SCRAPE NOW"
+msgstr "INICIAR PROCURA"
+
 msgid "SCRAPE FROM"
 msgstr "OBTER A PARTIR DE:"
 
@@ -307,6 +331,9 @@ msgstr "CAIXA 2D"
 msgid "BOX 3D"
 msgstr "CAIXA 3D"
 
+msgid "FAN ART"
+msgstr "FAN ART"
+
 msgid "BOX SOURCE"
 msgstr "FONTE DA CAIXA"
 
@@ -317,10 +344,10 @@ msgid "LOGO SOURCE"
 msgstr "FONTE DO LOGOTIPO"
 
 msgid "WHEEL"
-msgstr "RODA"
+msgstr "LOGOTIPO"
 
 msgid "MARQUEE"
-msgstr "MARQUEE"
+msgstr "LETREIRO"
 
 msgid "SCRAPE RATINGS"
 msgstr "OBTER CLASSIFICAÇÕES"
@@ -328,17 +355,17 @@ msgstr "OBTER CLASSIFICAÇÕES"
 msgid "SCRAPE VIDEOS"
 msgstr "OBTER VÍDEOS"
 
+msgid "SCRAPE FANART"
+msgstr "OBTER FANART"
+
+msgid "SCRAPE MANUAL"
+msgstr "PROCURA MANUAL"
+
 msgid "USERNAME"
-msgstr "USUÁRIO"
+msgstr "NOME DE UTILIZADOR"
 
 msgid "PASSWORD"
-msgstr "SENHA"
-
-msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
-msgstr "A PROCURA ESTÁ EM CURSO. DESEJA PARAR ?"
-
-msgid "SCRAPE NOW"
-msgstr "INICIAR PROCURA"
+msgstr "PASSWORD"
 
 msgid "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?"
 msgstr "TEM A CERTEZA DE QUE DESEJA CONFIGURAR O COMANDO?"
@@ -365,10 +392,10 @@ msgid "VERSION"
 msgstr "VERSÃO"
 
 msgid "USER DISK USAGE"
-msgstr "USO DO DISCO DO UTILIZADOR"
+msgstr "DISCO DO UTILIZADOR"
 
 msgid "SYSTEM DISK USAGE"
-msgstr "USO DO DISCO DO SISTEMA"
+msgstr "DISCO DO SISTEMA"
 
 msgid "DEVELOPER"
 msgstr "DESENVOLVEDOR"
@@ -413,19 +440,19 @@ msgid "SEARCH FOR LOCAL ART"
 msgstr "PROCURAR POR IMAGENS NO DISCO"
 
 msgid "RESET FILE EXTENSIONS"
-msgstr "REINICIAR EXTENSÕES DO ARQUIVO"
+msgstr "REPOR EXTENSÕES DO ARQUIVO"
 
 msgid "REDETECT GAMES LANG/REGION"
-msgstr "RE-DETECTAR O IDIOMA DOS JOGOS"
+msgstr "REDETECTAR O IDIOMA/REGIÃO DOS JOGOS"
 
 msgid "COMPLETE QUIT MENU"
 msgstr "MENU DE SAÍDA COMPLETO"
 
 msgid "USE RETROARCH RGUI MENU"
-msgstr "USAR RETROARCH RGUI MENU"
+msgstr "USAR O MENU RETROARCH RGUI"
 
 msgid "AUTOCONFIGURE EMULATORS CONTROLLERS"
-msgstr ""
+msgstr "AUTOCONFIGURAR COMANDOS NOS EMULADORES"
 
 msgid "LOG LEVEL"
 msgstr "NÍVEL DO LOG"
@@ -448,6 +475,9 @@ msgstr "FORMATAR UM DISCO"
 msgid "DOWNLOADS"
 msgstr "TRANSFERÊNCIAS"
 
+msgid "CONTENT DOWNLOADER"
+msgstr ""
+
 msgid "THEMES"
 msgstr "TEMAS"
 
@@ -458,7 +488,7 @@ msgid "SOFTWARE UPDATES"
 msgstr "ATUALIZAÇÕES DO SISTEMA"
 
 msgid "CHECK FOR UPDATES"
-msgstr "A VERIFICAR SE HÁ ATUALIZAÇÕES"
+msgstr "VERIFICAR SE HÁ ATUALIZAÇÕES"
 
 msgid "UPDATE TYPE"
 msgstr "TIPO DE ATUALIZAÇÃO"
@@ -517,6 +547,18 @@ msgstr "DEFINIÇÕES DE JOGOS EM REDE"
 msgid "MISSING BIOS"
 msgstr "BIOS EM FALTA"
 
+msgid "MULTIMEDIA KEYS"
+msgstr "TECLAS MULTIMÉDIA"
+
+msgid "AUTO"
+msgstr "AUTOMÁTICO"
+
+msgid "ON"
+msgstr "LIGADO"
+
+msgid "OFF"
+msgstr "DESLIGADO"
+
 msgid "OVERCLOCK"
 msgstr "OVERCLOCK"
 
@@ -527,7 +569,7 @@ msgid "STORAGE DEVICE"
 msgstr "DISPOSITIVO DE ARMAZENAMENTO"
 
 msgid "BACKUP USER DATA"
-msgstr "BACKUP DADOS DO USUÁRIO"
+msgstr "BACKUP DADOS DO UTILIZADOR"
 
 msgid "INSTALL BATOCERA ON A NEW DISK"
 msgstr "INSTALAR BATOCERA EM UM NOVO DISCO"
@@ -542,7 +584,7 @@ msgid "ENFORCE SECURITY"
 msgstr "REFORÇAR A SEGURANÇA"
 
 msgid "ROOT PASSWORD"
-msgstr "SENHA ROOT"
+msgstr "PASSWORD ROOT"
 
 msgid "LATENCY REDUCTION"
 msgstr "REDUÇÃO DE LATÊNCIA"
@@ -550,20 +592,11 @@ msgstr "REDUÇÃO DE LATÊNCIA"
 msgid "RUN-AHEAD FRAMES"
 msgstr "SALTAR FRAMES"
 
-msgid "AUTO"
-msgstr "AUTOMÁTICO"
-
 msgid "USE RUN-AHEAD FRAMES"
 msgstr "USAR SALTO DE FRAMES"
 
 msgid "RUN-AHEAD USE SECOND INSTANCE"
 msgstr "USAR SALTO EM SEGUNDO CASO"
-
-msgid "ON"
-msgstr "LIGADO"
-
-msgid "OFF"
-msgstr "DESLIGADO"
 
 msgid "HARDCORE MODE"
 msgstr "MODO HARDCORE"
@@ -576,6 +609,9 @@ msgstr "MODO VERBOSE"
 
 msgid "AUTOMATIC SCREENSHOT"
 msgstr "SCREENSHOT AUTOMÁTICO"
+
+msgid "SHOW IN MAIN MENU"
+msgstr "MOSTRAR NO MENU PRINCIPAL"
 
 msgid "SETTINGS"
 msgstr "DEFINIÇÕES"
@@ -603,6 +639,12 @@ msgstr "REINDEXAR TODO OS JOGOS"
 
 msgid "INDEX MISSING GAMES"
 msgstr "INDEXAR JOGOS EM FALTA"
+
+msgid "TOOLS"
+msgstr "FERRAMENTAS"
+
+msgid "UPDATE GAMES LISTS"
+msgstr "ATUALIZAR LISTAS DE JOGOS"
 
 msgid "DEFAULT SETTINGS"
 msgstr "DEFINIÇÕES PADRÃO"
@@ -663,9 +705,6 @@ msgstr "PAUSA NO ECRÃ TRADUZIDO"
 
 msgid "PER SYSTEM ADVANCED CONFIGURATION"
 msgstr "DEFINIÇÕES AVANÇADAS POR SISTEMA"
-
-msgid "UPDATE GAMES LISTS"
-msgstr "ATUALIZAR LISTAS DE JOGOS"
 
 msgid "NO MISSING BIOS"
 msgstr "SEM BIOS EM FALTA"
@@ -729,7 +768,7 @@ msgid "detailed"
 msgstr "detalhado"
 
 msgid "DEFAULT GRID SIZE"
-msgstr "TAMANHO DA GRID PADRÃO"
+msgstr "TAMANHO PADRÃO DA GRADE"
 
 msgid "GAMELIST THEME OPTIONS"
 msgstr "OPÇÕES DE TEMAS NA LISTA DE JOGOS"
@@ -762,16 +801,13 @@ msgid "having multiple games"
 msgstr "tendo vários jogos"
 
 msgid "SHOW '..' PARENT FOLDER"
-msgstr "MOSTRAR '..' PASTA RAIZ"
+msgstr "MOSTRAR '..' PASTA PRINCIPAL"
 
 msgid "FILE EXTENSIONS"
 msgstr "EXTENSÕES DO ARQUIVO"
 
-msgid "TOOLS"
-msgstr "FERRAMENTAS"
-
 msgid "RESET GAMELIST CUSTOMISATIONS"
-msgstr "REINICIAR A LISTA DE JOGOS PERSONALIZADA"
+msgstr "REPOR A LISTA DE JOGOS PERSONALIZADA"
 
 msgid "APPEARENCE"
 msgstr "APARÊNCIA"
@@ -783,7 +819,7 @@ msgid "video"
 msgstr "vídeo"
 
 msgid "grid"
-msgstr "grid"
+msgstr "grade"
 
 msgid "UI MODE"
 msgstr "MODO DA INTERFACE"
@@ -818,6 +854,9 @@ msgstr "OPÇÕES DE EXIBIÇÃO"
 msgid "TRANSITION STYLE"
 msgstr "ESTILO DE TRANSIÇÃO"
 
+msgid "GAME LAUNCH TRANSITION"
+msgstr "TRANSIÇÃO DE CARREGAMENTO DO JOGO"
+
 msgid "CAROUSEL TRANSITIONS"
 msgstr "TRANSIÇÃO CARROSSEL"
 
@@ -847,6 +886,9 @@ msgstr "VOLUME"
 
 msgid "SYSTEM VOLUME"
 msgstr "VOLUME DO SISTEMA"
+
+msgid "MUSIC VOLUME"
+msgstr "VOLUME DA MÚSICA"
 
 msgid "SHOW OVERLAY WHEN VOLUME CHANGES"
 msgstr "MOSTRAR INDICADOR QUANDO MUDAR O VOLUME"
@@ -921,7 +963,7 @@ msgid "MANUAL SCRAPER"
 msgstr "PROCURAR CAPAS MANUALMENTE"
 
 msgid "SKIP TO NEXT SONG"
-msgstr ""
+msgstr "PASSAR PARA A PRÓXIMA MÚSICA"
 
 msgid "LAUNCH SCREENSAVER"
 msgstr "INICIAR PROTEÇÃO DE ECRÃ"
@@ -981,7 +1023,7 @@ msgid "DEVICE TO FORMAT"
 msgstr "DISPOSITIVO A FORMATAR"
 
 msgid "FILE SYSTEM"
-msgstr "SISTEMA DE ARQUIVO"
+msgstr "ARQUIVO DO SISTEMA"
 
 msgid "FORMAT NOW"
 msgstr "FORMATAR AGORA"
@@ -990,7 +1032,7 @@ msgid "SELECTED OPTIONS ARE INVALID"
 msgstr "AS OPÇÕES SELECIONADAS SÃO INVÁLIDAS"
 
 msgid "ARE YOU SURE YOU WANT TO FORMAT THIS DRIVE ?"
-msgstr "TEM A CERTEZA DE QUE DESEJA FORMATAR ESTA UNIDADE?"
+msgstr "TEM A CERTEZA DE QUE DESEJA FORMATAR ESTE DISCO?"
 
 msgid "COLLECTIONS TO DISPLAY"
 msgstr "COLEÇÕES A MOSTRAR"
@@ -1016,8 +1058,17 @@ msgstr "OPÇÕES"
 msgid "GROUP UNTHEMED CUSTOM COLLECTIONS"
 msgstr "AGRUPAR COLEÇÕES SEM TEMAS"
 
-msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
-msgstr "ORGANIZAR COLEÇÕES MODIFICADAS E SISTEMAS"
+msgid "SORT COLLECTIONS AND SYSTEMS"
+msgstr "ORDENAR COLEÇÕES E SISTEMAS"
+
+msgid "ALPHABETICALLY"
+msgstr "POR ORDEM ALFABÉTICA"
+
+msgid "BY MANUFACTURER"
+msgstr "PELO FABRICANTE"
+
+msgid "SORT SYSTEMS"
+msgstr "ORDENAR POR SISTEMAS"
 
 msgid "SHOW SYSTEM NAME IN COLLECTIONS"
 msgstr "MOSTRAR NOME DO SISTEMA NAS COLEÇÕES"
@@ -1102,30 +1153,34 @@ msgid_plural "%i GAMES SKIPPED."
 msgstr[0] "%i JOGO IGNORADO."
 msgstr[1] "%i JOGOS IGNORADOS."
 
-msgid "INSTALL BEZELS"
-msgstr "INSTALAR MOLDURAS"
+msgid "SELECT BEZELS TO INSTALL / REMOVE"
+msgstr ""
 
-msgid "UNINSTALL BEZELS"
-msgstr "DESINSTALAR MOLDURAS"
-
-msgid "INSTALL THE BEZEL PROJECT"
-msgstr "INSTALAR PROJETO MOLDURA"
-
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
-msgstr "SELECIONE O SISTEMA A (RE)INSTALAR AS MOLDURAS"
+msgid "UPDATE"
+msgstr ""
 
 #, c-format
 msgid "'%s' ADDED TO DOWNLOAD QUEUE"
 msgstr "'%s' ADICIONADO À LISTA DE TRANSFERÊNCIAS"
 
-msgid "UNINSTALL THE BEZEL PROJECT"
-msgstr "DESINSTALAR PROJETO DE MOLDURAS"
+msgid "REMOVE"
+msgstr ""
 
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
-msgstr "SELECIONE O SISTEMA A REMOVER AS MOLDURAS"
+msgid "BEZELS UNINSTALLED SUCCESSFULLY"
+msgstr ""
 
-msgid "BEZELS DELETED SUCCESSFULLY"
-msgstr "MOLDURAS DESINSTALADAS COM SUCESSO"
+#, c-format
+msgid "CURRENTLY IN DOWNLOAD QUEUE"
+msgstr ""
+
+msgid "SELECT CONTENT TO INSTALL / REMOVE"
+msgstr ""
+
+msgid "MISC"
+msgstr ""
+
+msgid "UNINSTALL ADDED TO QUEUE"
+msgstr ""
 
 msgid "SWAP IMAGE AFTER (SECS)"
 msgstr "TROCAR IMAGEM APÓS (SEG)"
@@ -1134,7 +1189,7 @@ msgid "SHOW GAME INFO"
 msgstr "MOSTRAR INFORMAÇÃO DO JOGO"
 
 msgid "USE MARQUEE AS GAME INFO"
-msgstr "USAR MARQUEE COM INFORMAÇÃO DO JOGO"
+msgstr "USAR LETREIRO COM INFORMAÇÃO DO JOGO"
 
 msgid "DECORATIONS"
 msgstr "DECORAÇÕES"
@@ -1170,7 +1225,7 @@ msgid "STRETCH VIDEO ON SCREENSAVER"
 msgstr "ESTICAR VÍDEO NO PROTETOR DE ECRÃ"
 
 msgid "MUTE VIDEO AUDIO"
-msgstr "MUTE AUDIO DO VIDEO"
+msgstr "SILENCIAR O SOM DOS VIDEOS"
 
 msgid "SCRAPE THESE GAMES"
 msgstr "OBTER DADOS DOS JOGOS"
@@ -1291,17 +1346,65 @@ msgstr "Vídeo"
 msgid "enter path to video"
 msgstr "insire o caminho para o vídeo"
 
-msgid "Marquee"
-msgstr "Marquee"
+msgid "Logo"
+msgstr "Logo"
 
-msgid "enter path to marquee"
-msgstr "insira o caminho para a marquee"
+msgid "enter path to logo"
+msgstr "insira o caminho para o logo"
 
-msgid "Thumbnail"
-msgstr "Miniatura"
+msgid "Box"
+msgstr "caixa"
 
-msgid "enter path to thumbnail"
-msgstr "digite o caminho da miniatura"
+msgid "enter path to box"
+msgstr "insira o caminho para a caixa"
+
+msgid "Fan art"
+msgstr "Fan art"
+
+msgid "enter path to fanart"
+msgstr "insira o caminho para o fanart"
+
+msgid "Title shot"
+msgstr "Captura de ecrã"
+
+msgid "enter path to title shot"
+msgstr "insira o caminho para a captura de ecrã"
+
+msgid "Manual"
+msgstr "Manual"
+
+msgid "enter path to manual"
+msgstr "insira o caminho para o manual"
+
+msgid "Map"
+msgstr "Mapa"
+
+msgid "enter path to map"
+msgstr "insira o caminho para o mapa"
+
+msgid "Cartridge"
+msgstr "Cartucho"
+
+msgid "enter path to cartridge"
+msgstr "insira o caminho para o cartucho"
+
+msgid "Alt BoxArt"
+msgstr "Caixa Alternativa"
+
+msgid "enter path to alt boxart"
+msgstr "insira o caminho da caixa alternativa"
+
+msgid "Wheel"
+msgstr "Logotipo"
+
+msgid "enter path to wheel"
+msgstr "insira o caminho do logotipo"
+
+msgid "Mix"
+msgstr "Mix"
+
+msgid "enter path to mix"
+msgstr "insira o caminho para o mix"
 
 msgid "Rating"
 msgstr "AVALIAÇÃO"
@@ -1316,7 +1419,7 @@ msgid "enter release date"
 msgstr "digite a data de lançamento"
 
 msgid "Developer"
-msgstr "Desenvolvedor"
+msgstr "Produtora"
 
 msgid "enter game developer"
 msgstr "digite o nome da produtora"
@@ -1399,30 +1502,24 @@ msgstr "Idiomas"
 msgid "Region"
 msgstr "Região"
 
-msgid "favorite"
-msgstr "favorito"
-
 msgid "SCRAPING"
 msgstr "A PROCURAR"
 
-msgid "Searching"
-msgstr "Em andamento"
-
 msgid "SCRAPE FAILED"
 msgstr "FALHA NA PROCURA"
-
-msgid "Downloading"
-msgstr "A transferir"
 
 msgid "SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES."
 msgstr ""
 "A PROCURA TERMINOU. ATUALIZE A LISTA DE JOGOS PARA APLICAR AS ALTERAÇÕES."
 
 msgid "ERROR: EVERY SYSTEM IS HIDDEN, RE-DISPLAYING ALL OF THEM NOW"
-msgstr "ERRO: TODOS OS SISTEMAS ESTÃO OCULTOS, RE-MOSTRAR TODOS AGORA"
+msgstr "ERRO: TODOS OS SISTEMAS ESTÃO OCULTOS, REINICIAR TODOS AGORA"
 
 msgid "DO YOU WANT TO START KODI MEDIA CENTER ?"
 msgstr "DESEJA INICIAR O KODI MEDIA CENTER?"
+
+msgid "GO TO MANUFACTURER"
+msgstr "IR PARA FABRICANTE"
 
 #, c-format
 msgid "%i COLLECTION"
@@ -1527,10 +1624,10 @@ msgid "GENRE, DESCENDING"
 msgstr "GÉNERO, DECRESCENTE"
 
 msgid "DEVELOPER, ASCENDING"
-msgstr "DESENVOLVEDOR, CRESCENTE"
+msgstr "PRODUTORA, CRESCENTE"
 
 msgid "DEVELOPER, DESCENDING"
-msgstr "DESENVOLVEDOR, DECRESCENTE"
+msgstr "PRODUTORA, DECRESCENTE"
 
 msgid "PUBLISHER, ASCENDING"
 msgstr "EDITORA, CRESCENTE"
@@ -1559,6 +1656,12 @@ msgstr "TEMA INSTALADO COM SUCESSO"
 msgid "BEZELS INSTALLED SUCCESSFULLY"
 msgstr "MOLDURAS INSTALADAS COM SUCESSO"
 
+msgid "PACKAGE INSTALLED SUCCESSFULLY"
+msgstr ""
+
+msgid "PACKAGE REMOVED SUCCESSFULLY"
+msgstr ""
+
 msgid "FAVORITES"
 msgstr "FAVORITOS"
 
@@ -1569,19 +1672,19 @@ msgid "PLAYERS"
 msgstr "JOGADORES"
 
 msgid "PUBLISHER / DEVELOPER"
-msgstr "EDITORA / DESENVOLVEDOR"
+msgstr "EDITORA / PRODUTORA"
 
 msgid "RATING"
-msgstr "Classificação"
+msgstr "CLASSIFICAÇÃO"
 
 msgid "REGION"
-msgstr ""
+msgstr "REGIÃO"
 
 msgid "KIDGAME"
 msgstr "JOGO INFANTIL"
 
 msgid "ALREADY PLAYED"
-msgstr "JÁ JOGOU"
+msgstr "JÁ JOGADO"
 
 msgid "HASHING GAMES"
 msgstr "HASHING DOS JOGOS"
@@ -1592,6 +1695,9 @@ msgstr "Coleções"
 msgid "Extracting"
 msgstr "A extrair"
 
+msgid "Searching"
+msgstr "Em andamento"
+
 msgid "NO GAMES FOUND - SKIP"
 msgstr "NENHUM JOGO ENCONTRADO - PULAR"
 
@@ -1600,6 +1706,9 @@ msgstr "OCORREU UM ERRO"
 
 msgid "RETRY"
 msgstr "TENTE NOVAMENTE"
+
+msgid "Downloading"
+msgstr "A transferir"
 
 msgid "ACCEPT RESULT"
 msgstr "ACEITAR RESULTADOS"
@@ -1870,6 +1979,45 @@ msgstr "EM PROGRESSO..."
 msgid "up/down"
 msgstr "cima/baixo"
 
+#~ msgid "INSTALL BEZELS"
+#~ msgstr "INSTALAR MOLDURAS"
+
+#~ msgid "UNINSTALL BEZELS"
+#~ msgstr "DESINSTALAR MOLDURAS"
+
+#~ msgid "INSTALL THE BEZEL PROJECT"
+#~ msgstr "INSTALAR PROJETO MOLDURA"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
+#~ msgstr "SELECIONE O SISTEMA A (RE)INSTALAR AS MOLDURAS"
+
+#~ msgid "UNINSTALL THE BEZEL PROJECT"
+#~ msgstr "DESINSTALAR PROJETO DE MOLDURAS"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
+#~ msgstr "SELECIONE O SISTEMA A REMOVER AS MOLDURAS"
+
+#~ msgid "BEZELS DELETED SUCCESSFULLY"
+#~ msgstr "MOLDURAS DESINSTALADAS COM SUCESSO"
+
+#~ msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
+#~ msgstr "ORGANIZAR COLEÇÕES MODIFICADAS E SISTEMAS"
+
+#~ msgid "Marquee"
+#~ msgstr "Letreiro"
+
+#~ msgid "enter path to marquee"
+#~ msgstr "insira o caminho para o letreiro"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Miniatura"
+
+#~ msgid "enter path to thumbnail"
+#~ msgstr "digite o caminho da miniatura"
+
+#~ msgid "favorite"
+#~ msgstr "favorito"
+
 #~ msgid "This collection contains %i game, including %s."
 #~ msgid_plural "This collection contains %i games, including %s."
 #~ msgstr[0] "Esta coleção contém %i jogo, incluindo %s."
@@ -1905,7 +2053,7 @@ msgstr "cima/baixo"
 #~ "Esta coleção contém %1$i jogos, incluindo %2$s entre outros títulos."
 
 #~ msgid "GRID SIZE"
-#~ msgstr "TAMANHO DA GRID"
+#~ msgstr "TAMANHO DA GRADE"
 
 #~ msgid "AUTO UPDATES"
 #~ msgstr "ATUALIZAÇÕES AUTOMÁTICAS"
@@ -2240,9 +2388,6 @@ msgstr "cima/baixo"
 
 #~ msgid "NO CONTROLLERS FOUND"
 #~ msgstr "NENHUM COMANDO DETECTADO"
-
-#~ msgid "SCRAPER"
-#~ msgstr "OBTER CAPAS"
 
 #~ msgid "NONE (700Mhz)"
 #~ msgstr "DESLIGADO (700Mhz)"

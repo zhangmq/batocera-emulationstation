@@ -5,6 +5,7 @@
 #include "utils/StringUtil.h"
 #include "Log.h"
 #include "math/Misc.h"
+#include "LocaleES.h"
 
 #ifdef WIN32
 #include <Windows.h>
@@ -205,8 +206,8 @@ bool Font::FontTexture::findEmpty(const Vector2i& size, Vector2i& cursor_out)
 
 void Font::FontTexture::initTexture()
 {
-	assert(textureId == 0);
-	textureId = Renderer::createTexture(Renderer::Texture::ALPHA, false, false, textureSize.x(), textureSize.y(), nullptr);
+	if (textureId == 0)
+		textureId = Renderer::createTexture(Renderer::Texture::ALPHA, false, false, textureSize.x(), textureSize.y(), nullptr);
 }
 
 void Font::FontTexture::deinitTexture()
@@ -246,61 +247,22 @@ void Font::getTextureForNewGlyph(const Vector2i& glyphSize, FontTexture*& tex_ou
 
 std::vector<std::string> getFallbackFontPaths()
 {
-#ifdef WIN32
-	// Windows
-
-	// get this system's equivalent of "C:\Windows" (might be on a different drive or in a different folder)
-	// so we can check the Fonts subdirectory for fallback fonts
-	TCHAR winDir[MAX_PATH];
-	GetWindowsDirectory(winDir, MAX_PATH);
-	std::string fontDir = winDir;
-	fontDir += "\\Fonts\\";
-
-	const char* fontNames[] = {
+	std::vector<std::string> fallbackFonts = 
+	{
 		":/fontawesome-webfont.ttf",
 		":/DroidSansFallbackFull.ttf",// japanese, chinese, present on Debian
-		":/NanumMyeongjo.ttf", // korean font
-		"arial.ttf",   // latin
-		"meiryo.ttc", // japanese
-		"simhei.ttf" // chinese				
+		":/NanumMyeongjo.ttf", // korean font		
+		":/Cairo.ttf" // arabic
 	};
 
-	//prepend to font file names
-	std::vector<std::string> fontPaths;
-	fontPaths.reserve(sizeof(fontNames) / sizeof(fontNames[0]));
+	std::vector<std::string> paths;
 
-	for(unsigned int i = 0; i < sizeof(fontNames) / sizeof(fontNames[0]); i++)
-	{
-		std::string path = Utils::String::startsWith(fontNames[i], ":/") ? fontNames[i] : fontDir + fontNames[i];
-		if(ResourceManager::getInstance()->fileExists(path))
-			fontPaths.push_back(path);
-	}
+	for (auto font : fallbackFonts)
+		if (ResourceManager::getInstance()->fileExists(font))
+			paths.push_back(font);
 
-	fontPaths.shrink_to_fit();
-	return fontPaths;
-
-#else
-	// Linux
-
-	// batocera
-	const char* paths[] = {
-		":/DroidSansFallbackFull.ttf",// japanese, chinese, present on Debian
-		":/fontawesome_webfont.ttf",
-		":/fontawesome-webfont.ttf",
-		":/NanumMyeongjo.ttf", // korean font
-	};
-
-	std::vector<std::string> fontPaths;
-	for(unsigned int i = 0; i < sizeof(paths) / sizeof(paths[0]); i++)
-	{
-		if(ResourceManager::getInstance()->fileExists(paths[i]))
-			fontPaths.push_back(paths[i]);
-	}
-
-	fontPaths.shrink_to_fit();
-	return fontPaths;
-
-#endif
+	paths.shrink_to_fit();
+	return paths;
 }
 
 FT_Face Font::getFaceForChar(unsigned int id)
@@ -511,6 +473,65 @@ void Font::renderGradientTextCache(TextCache* cache, unsigned int colorTop, unsi
 	}
 }
 
+std::string tryFastBidi(const std::string& text)
+{
+	std::string ret = "";
+
+	size_t lastCursor = 0;
+	size_t i = 0;
+	while (i < text.length())
+	{
+		const char&  c = text[i];
+		
+		if ((c & 0xE0) == 0xC0)
+		{
+			if ((c & 0x10) == 0x10)
+			{
+				ret.insert(lastCursor, text.substr(i + 1, 1));
+				ret.insert(lastCursor, text.substr(i, 1));
+				i += 2;
+			}
+			else
+			{
+				ret += text[i++];
+				ret += text[i++];
+				lastCursor = i;
+			}
+		}
+		else if ((c & 0xF0) == 0xE0)
+		{
+			ret += text[i++];
+			ret += text[i++];
+			ret += text[i++];
+			lastCursor = i;
+		}
+		else if ((c & 0xF8) == 0xF0)
+		{
+			ret += text[i++];
+			ret += text[i++];
+			ret += text[i++];
+			ret += text[i++];
+			lastCursor = i;
+		}
+		else
+		{
+			if (c == 32 && 
+				i + 1 < text.length() && (text[i+1] & 0xE0) == 0xC0 && (text[i + 1] & 0x10) == 0x10 && 
+				i > 0 && (text[i - 1] & 0xE0) != 0xC0 && (text[i -1 ] & 0x10) != 0x10)
+			{
+				ret.insert(lastCursor, text.substr(i, 1));
+				i++;
+			}
+			else
+			{
+				ret += text[i++];
+				lastCursor = i;
+			}
+		}
+	}
+
+	return ret;
+}
 
 Vector2f Font::sizeText(std::string text, float lineSpacing)
 {
@@ -671,9 +692,9 @@ float Font::getNewlineStartOffset(const std::string& text, const unsigned int& c
 	}
 }
 
-TextCache* Font::buildTextCache(const std::string& text, Vector2f offset, unsigned int color, float xLen, Alignment alignment, float lineSpacing)
+TextCache* Font::buildTextCache(const std::string& _text, Vector2f offset, unsigned int color, float xLen, Alignment alignment, float lineSpacing)
 {
-	float x = offset[0] + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0);
+	float x = offset[0] + (xLen != 0 ? getNewlineStartOffset(_text, 0, xLen, alignment) : 0);
 	
 	float yTop = getGlyph('S')->bearing.y();
 	float yBot = getHeight(lineSpacing);
@@ -681,6 +702,8 @@ TextCache* Font::buildTextCache(const std::string& text, Vector2f offset, unsign
 
 	// vertices by texture
 	std::map< FontTexture*, std::vector<Renderer::Vertex> > vertMap;
+
+	std::string text = EsLocale::isRTL() ? tryFastBidi(_text) : _text;
 
 	size_t cursor = 0;
 	while(cursor < text.length())

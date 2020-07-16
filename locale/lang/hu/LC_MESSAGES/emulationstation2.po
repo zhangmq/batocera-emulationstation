@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: emulationstation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 22:51+0200\n"
+"POT-Creation-Date: 2020-07-09 21:20+0200\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,6 +67,12 @@ msgstr ""
 msgid "CONTROLLERS LINKS HAVE BEEN DELETED."
 msgstr "KONTROLLER PÁROSÍTÁSOK TÖRÖLVE."
 
+msgid "CLOSE"
+msgstr "BEZÁR"
+
+msgid "Loading..."
+msgstr ""
+
 msgid "CONNECT TO NETPLAY"
 msgstr ""
 
@@ -75,9 +81,6 @@ msgstr ""
 
 msgid "REFRESH"
 msgstr ""
-
-msgid "CLOSE"
-msgstr "BEZÁR"
 
 msgid "FAILED"
 msgstr ""
@@ -110,6 +113,15 @@ msgid "SORT GAMES BY"
 msgstr "JÁTÉKOK RENDEZÉSE"
 
 msgid "OTHER FILTERS"
+msgstr ""
+
+msgid "GAME MEDIAS"
+msgstr ""
+
+msgid "VIEW GAME MANUAL"
+msgstr ""
+
+msgid "VIEW GAME MAP"
 msgstr ""
 
 msgid "COLLECTION"
@@ -160,10 +172,10 @@ msgstr ""
 msgid "EDIT THIS GAME'S METADATA"
 msgstr "JÁTÉK METAADATAINAK SZERKESZTÉSE"
 
-msgid "FILTER GAMES BY TEXT"
+msgid "RESET FILTERS"
 msgstr ""
 
-msgid "Loading..."
+msgid "FILTER GAMES BY TEXT"
 msgstr ""
 
 msgid "THIS FUNCTION IS DISABLED WHEN SCRAPING IS RUNNING"
@@ -218,6 +230,9 @@ msgid "Architecture"
 msgstr ""
 
 msgid "Temperature"
+msgstr ""
+
+msgid "Available memory"
 msgstr ""
 
 msgid "Battery"
@@ -280,6 +295,15 @@ msgstr ""
 msgid "QUIT"
 msgstr "KILÉPÉS"
 
+msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
+msgstr ""
+
+msgid "SCRAPER"
+msgstr "SCRAPER"
+
+msgid "SCRAPE NOW"
+msgstr "LEKÉRÉS INDÍTÁSA"
+
 msgid "SCRAPE FROM"
 msgstr "LEKÉRÉS INNEN"
 
@@ -304,6 +328,9 @@ msgstr ""
 msgid "BOX 3D"
 msgstr ""
 
+msgid "FAN ART"
+msgstr ""
+
 msgid "BOX SOURCE"
 msgstr ""
 
@@ -325,17 +352,17 @@ msgstr "ÉRTÉKELÉSEK LEKÉRÉSE"
 msgid "SCRAPE VIDEOS"
 msgstr ""
 
+msgid "SCRAPE FANART"
+msgstr ""
+
+msgid "SCRAPE MANUAL"
+msgstr ""
+
 msgid "USERNAME"
 msgstr "FELHASZNÁLÓNÉV"
 
 msgid "PASSWORD"
 msgstr "JELSZÓ"
-
-msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
-msgstr ""
-
-msgid "SCRAPE NOW"
-msgstr "LEKÉRÉS INDÍTÁSA"
 
 msgid "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?"
 msgstr ""
@@ -445,6 +472,9 @@ msgstr ""
 msgid "DOWNLOADS"
 msgstr ""
 
+msgid "CONTENT DOWNLOADER"
+msgstr ""
+
 msgid "THEMES"
 msgstr ""
 
@@ -514,6 +544,18 @@ msgstr ""
 msgid "MISSING BIOS"
 msgstr ""
 
+msgid "MULTIMEDIA KEYS"
+msgstr ""
+
+msgid "AUTO"
+msgstr "AUTO"
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
 msgid "OVERCLOCK"
 msgstr "OVERCLOCK"
 
@@ -547,19 +589,10 @@ msgstr ""
 msgid "RUN-AHEAD FRAMES"
 msgstr ""
 
-msgid "AUTO"
-msgstr "AUTO"
-
 msgid "USE RUN-AHEAD FRAMES"
 msgstr ""
 
 msgid "RUN-AHEAD USE SECOND INSTANCE"
-msgstr ""
-
-msgid "ON"
-msgstr ""
-
-msgid "OFF"
 msgstr ""
 
 msgid "HARDCORE MODE"
@@ -572,6 +605,9 @@ msgid "VERBOSE MODE"
 msgstr ""
 
 msgid "AUTOMATIC SCREENSHOT"
+msgstr ""
+
+msgid "SHOW IN MAIN MENU"
 msgstr ""
 
 msgid "SETTINGS"
@@ -600,6 +636,12 @@ msgstr ""
 
 msgid "INDEX MISSING GAMES"
 msgstr ""
+
+msgid "TOOLS"
+msgstr ""
+
+msgid "UPDATE GAMES LISTS"
+msgstr "JÁTÉKLISTA FRISSÍTÉSE"
 
 msgid "DEFAULT SETTINGS"
 msgstr ""
@@ -660,9 +702,6 @@ msgstr ""
 
 msgid "PER SYSTEM ADVANCED CONFIGURATION"
 msgstr ""
-
-msgid "UPDATE GAMES LISTS"
-msgstr "JÁTÉKLISTA FRISSÍTÉSE"
 
 msgid "NO MISSING BIOS"
 msgstr ""
@@ -765,9 +804,6 @@ msgstr ""
 msgid "FILE EXTENSIONS"
 msgstr ""
 
-msgid "TOOLS"
-msgstr ""
-
 msgid "RESET GAMELIST CUSTOMISATIONS"
 msgstr ""
 
@@ -813,6 +849,9 @@ msgstr ""
 msgid "TRANSITION STYLE"
 msgstr "ÁTMENET STÍLUSA"
 
+msgid "GAME LAUNCH TRANSITION"
+msgstr ""
+
 msgid "CAROUSEL TRANSITIONS"
 msgstr ""
 
@@ -842,6 +881,9 @@ msgstr ""
 
 msgid "SYSTEM VOLUME"
 msgstr "HANGERŐ"
+
+msgid "MUSIC VOLUME"
+msgstr ""
 
 msgid "SHOW OVERLAY WHEN VOLUME CHANGES"
 msgstr ""
@@ -1011,7 +1053,16 @@ msgstr "BEÁLLÍTÁSOK"
 msgid "GROUP UNTHEMED CUSTOM COLLECTIONS"
 msgstr ""
 
-msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
+msgid "SORT COLLECTIONS AND SYSTEMS"
+msgstr ""
+
+msgid "ALPHABETICALLY"
+msgstr ""
+
+msgid "BY MANUFACTURER"
+msgstr ""
+
+msgid "SORT SYSTEMS"
 msgstr ""
 
 msgid "SHOW SYSTEM NAME IN COLLECTIONS"
@@ -1093,29 +1144,33 @@ msgid_plural "%i GAMES SKIPPED."
 msgstr[0] "%i JÁTÉK KIHAGYVA."
 msgstr[1] "%i JÁTÉK KIHAGYVA."
 
-msgid "INSTALL BEZELS"
+msgid "SELECT BEZELS TO INSTALL / REMOVE"
 msgstr ""
 
-msgid "UNINSTALL BEZELS"
-msgstr ""
-
-msgid "INSTALL THE BEZEL PROJECT"
-msgstr ""
-
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
+msgid "UPDATE"
 msgstr ""
 
 #, c-format
 msgid "'%s' ADDED TO DOWNLOAD QUEUE"
 msgstr ""
 
-msgid "UNINSTALL THE BEZEL PROJECT"
+msgid "REMOVE"
 msgstr ""
 
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
+msgid "BEZELS UNINSTALLED SUCCESSFULLY"
 msgstr ""
 
-msgid "BEZELS DELETED SUCCESSFULLY"
+#, c-format
+msgid "CURRENTLY IN DOWNLOAD QUEUE"
+msgstr ""
+
+msgid "SELECT CONTENT TO INSTALL / REMOVE"
+msgstr ""
+
+msgid "MISC"
+msgstr ""
+
+msgid "UNINSTALL ADDED TO QUEUE"
 msgstr ""
 
 msgid "SWAP IMAGE AFTER (SECS)"
@@ -1275,17 +1330,65 @@ msgstr ""
 msgid "enter path to video"
 msgstr ""
 
-msgid "Marquee"
+msgid "Logo"
 msgstr ""
 
-msgid "enter path to marquee"
+msgid "enter path to logo"
 msgstr ""
 
-msgid "Thumbnail"
-msgstr "Bélyegkép"
+msgid "Box"
+msgstr ""
 
-msgid "enter path to thumbnail"
-msgstr "bélyegkép elérésének megadása"
+msgid "enter path to box"
+msgstr ""
+
+msgid "Fan art"
+msgstr ""
+
+msgid "enter path to fanart"
+msgstr ""
+
+msgid "Title shot"
+msgstr ""
+
+msgid "enter path to title shot"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "enter path to manual"
+msgstr ""
+
+msgid "Map"
+msgstr ""
+
+msgid "enter path to map"
+msgstr ""
+
+msgid "Cartridge"
+msgstr ""
+
+msgid "enter path to cartridge"
+msgstr ""
+
+msgid "Alt BoxArt"
+msgstr ""
+
+msgid "enter path to alt boxart"
+msgstr ""
+
+msgid "Wheel"
+msgstr ""
+
+msgid "enter path to wheel"
+msgstr ""
+
+msgid "Mix"
+msgstr ""
+
+msgid "enter path to mix"
+msgstr ""
 
 msgid "Rating"
 msgstr "Értékelés"
@@ -1383,19 +1486,10 @@ msgstr ""
 msgid "Region"
 msgstr "Régió"
 
-msgid "favorite"
-msgstr ""
-
 msgid "SCRAPING"
 msgstr ""
 
-msgid "Searching"
-msgstr ""
-
 msgid "SCRAPE FAILED"
-msgstr ""
-
-msgid "Downloading"
 msgstr ""
 
 msgid "SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES."
@@ -1406,6 +1500,9 @@ msgstr ""
 
 msgid "DO YOU WANT TO START KODI MEDIA CENTER ?"
 msgstr "ELINDÍTOD A KODI MEDIA CENTERT?"
+
+msgid "GO TO MANUFACTURER"
+msgstr ""
 
 #, c-format
 msgid "%i COLLECTION"
@@ -1542,6 +1639,12 @@ msgstr ""
 msgid "BEZELS INSTALLED SUCCESSFULLY"
 msgstr ""
 
+msgid "PACKAGE INSTALLED SUCCESSFULLY"
+msgstr ""
+
+msgid "PACKAGE REMOVED SUCCESSFULLY"
+msgstr ""
+
 msgid "FAVORITES"
 msgstr ""
 
@@ -1575,6 +1678,9 @@ msgstr ""
 msgid "Extracting"
 msgstr ""
 
+msgid "Searching"
+msgstr ""
+
 msgid "NO GAMES FOUND - SKIP"
 msgstr "NINCS JÁTÉK - KIHAGYÁS"
 
@@ -1583,6 +1689,9 @@ msgstr ""
 
 msgid "RETRY"
 msgstr "ÚJRA"
+
+msgid "Downloading"
+msgstr ""
 
 msgid "ACCEPT RESULT"
 msgstr "EREDMÉNYEK MENTÉSE"
@@ -1851,6 +1960,12 @@ msgstr "DOLGOZOM..."
 msgid "up/down"
 msgstr ""
 
+#~ msgid "Thumbnail"
+#~ msgstr "Bélyegkép"
+
+#~ msgid "enter path to thumbnail"
+#~ msgstr "bélyegkép elérésének megadása"
+
 #~ msgid "STOP EDITING"
 #~ msgstr "SZERKESZTÉS VÉGE"
 
@@ -2031,9 +2146,6 @@ msgstr ""
 
 #~ msgid "NO CONTROLLERS FOUND"
 #~ msgstr "NEM TALÁLHATÓ KONTROLLER"
-
-#~ msgid "SCRAPER"
-#~ msgstr "SCRAPER"
 
 #~ msgid "NONE (700Mhz)"
 #~ msgstr "ALAP (700Mhz)"

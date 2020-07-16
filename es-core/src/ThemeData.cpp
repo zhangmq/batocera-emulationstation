@@ -14,7 +14,7 @@
 #include "LocaleES.h"
 
 std::vector<std::string> ThemeData::sSupportedViews { { "system" }, { "basic" }, { "detailed" }, { "grid" }, { "video" }, { "menu" }, { "screen" }, { "splash" } };
-std::vector<std::string> ThemeData::sSupportedFeatures { { "video" }, { "carousel" }, { "z-index" }, { "visible" } };
+std::vector<std::string> ThemeData::sSupportedFeatures { { "video" }, { "carousel" }, { "z-index" }, { "visible" },{ "manufacturer" } };
 
 std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> ThemeData::sElementMap {
 
@@ -313,8 +313,6 @@ ThemeData* ThemeData::mDefaultTheme = nullptr;
 // helper
 unsigned int getHexColor(const char* str)
 {
-
-
 //	ThemeException error;
 	if (!str)
 	{
@@ -345,21 +343,22 @@ std::string ThemeData::resolvePlaceholders(const char* in)
 	if (in == nullptr || in[0] == 0)
 		return in;
 
+	auto begin = strstr(in, "${");
+	if (begin == nullptr)
+		return in;
+
+	auto end = strstr(begin, "}");
+	if (end == nullptr)
+		return in;
+
 	std::string inStr(in);
-//	if(inStr.empty())
-//		return inStr;
 
-	const size_t variableBegin = inStr.find("${");
-	if (variableBegin == std::string::npos)
-		return inStr;
-
-	const size_t variableEnd   = inStr.find("}", variableBegin);
-	if(variableEnd == std::string::npos)
-		return inStr;
+	const size_t variableBegin = begin - in;
+	const size_t variableEnd = end - in;
 
 	std::string prefix  = inStr.substr(0, variableBegin);
 	std::string replace = inStr.substr(variableBegin + 2, variableEnd - (variableBegin + 2));
-	std::string suffix  = resolvePlaceholders(inStr.substr(variableEnd + 1).c_str());
+	std::string suffix = resolvePlaceholders(end + 1);
 
 	return prefix + mVariables[replace] + suffix;
 }
@@ -390,14 +389,14 @@ ThemeData::ThemeData()
 	mVersion = 0;
 }
 
-void ThemeData::loadFile(const std::string system, std::map<std::string, std::string> sysDataMap, const std::string& path)
+void ThemeData::loadFile(const std::string system, std::map<std::string, std::string> sysDataMap, const std::string& path, bool fromFile)
 {
 	mPaths.push_back(path);
 
 	ThemeException error;
 	error.setFiles(mPaths);
 
-	if (!Utils::FileSystem::exists(path))
+	if (fromFile && !Utils::FileSystem::exists(path))
 		throw error << "File does not exist!";
 	
 	mVersion = 0;
@@ -410,7 +409,7 @@ void ThemeData::loadFile(const std::string system, std::map<std::string, std::st
 	mVariables["lang"] = mLanguage;
 
 	pugi::xml_document doc;
-	pugi::xml_parse_result res = doc.load_file(path.c_str());
+	pugi::xml_parse_result res = fromFile ? doc.load_file(path.c_str()) : doc.load(path.c_str());
 	if(!res)
 		throw error << "XML parsing error: \n    " << res.description();
 
@@ -429,7 +428,7 @@ void ThemeData::loadFile(const std::string system, std::map<std::string, std::st
 	parseVariables(root);
 	parseTheme(root);
 	
-	if (system != "splash")
+	if (system != "splash" && system != "imageviewer")
 	{
 		mMenuTheme = nullptr;
 		mDefaultTheme = this;
@@ -460,6 +459,39 @@ std::string ThemeData::resolveSystemVariable(const std::string& systemThemeFolde
 
 	std::string result = path;
 	result.replace(start_pos, 7, systemThemeFolder);
+
+	if (!Utils::FileSystem::exists(result))
+	{
+		std::string compatibleFolder = systemThemeFolder;
+
+		if (compatibleFolder == "sg-1000")
+			compatibleFolder = "sg1000";
+		else if (compatibleFolder == "msx")
+			compatibleFolder = "msx1";
+		else if (compatibleFolder == "atarilynx")
+			compatibleFolder = "lynx";
+		else if (compatibleFolder == "atarijaguar")
+			compatibleFolder = "jaguar";
+		else if (compatibleFolder == "gameandwatch")
+			compatibleFolder = "gw";
+		else if (compatibleFolder == "amiga")
+			compatibleFolder = "amiga600";
+		else if (compatibleFolder == "amiga500")
+			compatibleFolder = "amiga600";
+		else if (compatibleFolder == "auto-favorites")
+			compatibleFolder = "favorites";
+		else if (compatibleFolder == "thomson")
+			compatibleFolder = "to8";
+		else if (compatibleFolder == "prboom")
+			compatibleFolder = "doom"; 
+
+		if (compatibleFolder != systemThemeFolder)
+		{
+			result = path;
+			result.replace(start_pos, 7, compatibleFolder);
+		}
+	}
+
 	return result;
 }
 
@@ -591,13 +623,32 @@ void ThemeData::parseInclude(const pugi::xml_node& node)
 		return;
 
 	std::string relPath = resolvePlaceholders(node.text().as_string());
-	std::string path = Utils::FileSystem::resolveRelativePath(relPath, Utils::FileSystem::getParent(mPaths.back()), true);
-	path = resolveSystemVariable(mSystemThemeFolder, path);
+	if (relPath.empty())
+		return;
+
+	std::string path = Utils::FileSystem::resolveRelativePath(resolveSystemVariable(mSystemThemeFolder, relPath), Utils::FileSystem::getParent(mPaths.back()), true);
 
 	if (!ResourceManager::getInstance()->fileExists(path))
 	{
-		LOG(LogWarning) << "Included file \"" << relPath << "\" not found! (resolved to \"" << path << "\")";
-		return;
+		if (relPath.find("$") != std::string::npos && relPath.find("${") == std::string::npos)
+		{
+			path = Utils::FileSystem::resolveRelativePath(resolveSystemVariable("default", relPath), Utils::FileSystem::getParent(mPaths.back()), true);
+			if (ResourceManager::getInstance()->fileExists(path))
+			{
+				if (mPaths.size() == 1)
+					mSystemThemeFolder = "default";
+			}
+			else
+			{
+				LOG(LogWarning) << "Included file \"" << relPath << "\" not found! (resolved to \"" << path << "\")";
+				return;
+			}
+		}
+		else
+		{
+			LOG(LogWarning) << "Included file \"" << relPath << "\" not found! (resolved to \"" << path << "\")";
+			return;
+		}
 	}
 
 	mPaths.push_back(path);
@@ -636,6 +687,13 @@ void ThemeData::parseFeature(const pugi::xml_node& node)
 
 	const std::string supportedAttr = node.attribute("supported").as_string();
 
+	if (supportedAttr == "manufacturer")
+	{
+		auto it = mVariables.find("system.manufacturer");
+		if (it == mVariables.cend() || (*it).second.empty())
+			return;
+	}
+
 	if (std::find(sSupportedFeatures.cbegin(), sSupportedFeatures.cend(), supportedAttr) != sSupportedFeatures.cend())
 		parseViews(node);
 }
@@ -650,8 +708,7 @@ void ThemeData::parseVariable(const pugi::xml_node& node)
 		return;
 
 	std::string val = node.text().as_string();
-	if (val.empty())
-		return;
+	//if (val.empty()) return;
 	
 	mVariables.erase(key);
 	mVariables.insert(std::pair<std::string, std::string>(key, val));	
@@ -665,7 +722,7 @@ void ThemeData::parseVariables(const pugi::xml_node& root)
 	for (pugi::xml_node variables = root.child("variables"); variables; variables = variables.next_sibling("variables"))
 	{
 		if (!parseFilterAttributes(variables))
-			return;
+			continue;
 
 		for (pugi::xml_node_iterator it = variables.begin(); it != variables.end(); ++it)
 			parseVariable(*it);
@@ -715,7 +772,7 @@ bool ThemeData::parseFilterAttributes(const pugi::xml_node& node)
 
 	if (!parseLanguage(node))
 		return false;
-
+	
 	if (node.attribute("tinyScreen"))
 	{
 		const std::string tinyScreenAttr = node.attribute("tinyScreen").as_string();
@@ -745,7 +802,7 @@ void ThemeData::parseTheme(const pugi::xml_node& root)
 	if (root.attribute("defaultView"))
 		mDefaultView = root.attribute("defaultView").as_string();
 
-	if (mVersion <= 4)
+	if (mVersion <= 6)
 	{
 		// Unfortunately, recalbox does not do things in order, features have to be loaded after
 		for (pugi::xml_node node = root.child("include"); node; node = node.next_sibling("include"))
@@ -756,6 +813,10 @@ void ThemeData::parseTheme(const pugi::xml_node& root)
 
 		for (pugi::xml_node node = root.child("customView"); node; node = node.next_sibling("customView"))
 			parseCustomView(node, root);
+
+		// Unfortunately, recalbox & retropie don't process elements in order, features have to be loaded last
+		for (pugi::xml_node node = root.child("feature"); node; node = node.next_sibling("feature"))
+			parseFeature(node);
 	}
 	else
 	{
@@ -774,12 +835,10 @@ void ThemeData::parseTheme(const pugi::xml_node& root)
 				parseCustomView(node, root);
 			else if (name == "subset")
 				parseSubsetElement(node);
+			else if (name == "feature")
+				parseFeature(node);
 		}
 	}
-
-	// Unfortunately, recalbox does not do things in order, features have to be loaded after
-	for (pugi::xml_node node = root.child("feature"); node; node = node.next_sibling("feature"))
-		parseFeature(node);
 }
 
 void ThemeData::parseSubsetElement(const pugi::xml_node& root)
@@ -1093,6 +1152,9 @@ void ThemeData::parseElement(const pugi::xml_node& root, const std::map<std::str
 			break;
 		case PATH:
 		{
+			if (str.empty())
+				break;
+
 			std::string path = Utils::FileSystem::resolveRelativePath(str, Utils::FileSystem::getParent(mPaths.back()), true);
 			
 			if (Utils::String::startsWith(path, "{random"))

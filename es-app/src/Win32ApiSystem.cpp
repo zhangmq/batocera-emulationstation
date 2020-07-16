@@ -49,8 +49,19 @@ bool Win32ApiSystem::isScriptingSupported(ScriptId script)
 	if (script == ApiSystem::KODI)
 		return (Utils::FileSystem::exists("C:\\Program Files\\Kodi\\kodi.exe") || Utils::FileSystem::exists("C:\\Program Files (x86)\\Kodi\\kodi.exe"));
 
-	if (script == ApiSystem::DECORATIONS && !Utils::FileSystem::exists(getEmulatorLauncherPath("decorations")))
+	if (script == ApiSystem::DECORATIONS)
+	{
+		if (Utils::FileSystem::exists(getEmulatorLauncherPath("decorations")))
+			return true;
+
+		if (Utils::FileSystem::exists(getEmulatorLauncherPath("system.decorations")))
+			return true;
+
+		if (Utils::FileSystem::exists(Utils::FileSystem::getEsConfigPath() + "/decorations"))
+			return true;
+
 		return false;
+	}
 
 	if (script == ApiSystem::SHADERS && !Utils::FileSystem::exists(getEmulatorLauncherPath("shaders")))
 		return false;
@@ -82,6 +93,13 @@ bool Win32ApiSystem::isScriptingSupported(ScriptId script)
 	case ApiSystem::DECORATIONS:
 	case ApiSystem::SHADERS:
 		executables.push_back("emulatorLauncher");
+		break;
+	case ApiSystem::PDFEXTRACTION:
+		executables.push_back("pdftoppm");
+		executables.push_back("pdfinfo");		
+		break;
+	case ApiSystem::BATOCERASTORE:
+		executables.push_back("batocera-store");
 		break;
 	}
 
@@ -383,11 +401,31 @@ std::string Win32ApiSystem::getCRC32(std::string fileName, bool fromZipContents)
 	else if (Utils::FileSystem::exists("c:\\src\\7za.exe"))
 		cmd = Utils::String::replace(cmd, "7zr ", "c:\\src\\7za.exe ");
 
+	bool useUnzip = false;
+
+	if (fromZipContents && ext == ".zip" && Utils::FileSystem::exists("c:\\src\\unzip.exe"))
+	{
+		useUnzip = true;
+		cmd = "c:\\src\\unzip.exe -l -v \"" + fileName + "\"";
+	}
+
 	std::string output;
 	if (executeCMD((char*)cmd.c_str(), output))
 	{
 		for (std::string all : Utils::String::splitAny(output, "\r\n"))
 		{
+			if (useUnzip)
+			{
+				if (!Utils::String::startsWith(all, "Archive"))
+				{
+					auto split = Utils::String::split(all, ' ', true);
+					if (split.size() >= 8 && split[6].size() == 8 && split[3].find("%") != std::string::npos)
+						return Utils::String::toUpper(split[6]);
+				}
+
+				continue;
+			}
+
 			int idx = all.find("CRC = ");
 			if (idx != std::string::npos)
 				crc = all.substr(idx + 6);
@@ -576,11 +614,11 @@ std::vector<std::string> Win32ApiSystem::getAvailableStorageDevices()
 	return res;
 }
 
-std::vector<std::string> Win32ApiSystem::getBatoceraBezelsList()
+std::vector<BatoceraBezel> Win32ApiSystem::getBatoceraBezelsList()
 {
 	LOG(LogDebug) << "ApiSystem::getBatoceraBezelsList";
 
-	std::vector<std::string> res;
+	std::vector<BatoceraBezel> res;
 
 	HttpReq request("https://batocera.org/upgrades/bezels.txt");
 	if (request.wait())
@@ -592,11 +630,16 @@ std::vector<std::string> Win32ApiSystem::getBatoceraBezelsList()
 			if (parts.size() < 2)
 				continue;
 
+			BatoceraBezel bz;
+			bz.name = parts[0];
+			bz.url = parts[1];
+			bz.folderPath = parts.size() < 3 ? "" : parts[2];
+
 			std::string theBezelProject = getEmulatorLauncherPath("decorations") + "/thebezelproject/games/" + parts[0];
-			if (Utils::FileSystem::exists(theBezelProject))
-				res.push_back("[I]\t" + line);
-			else
-				res.push_back("[A]\t" + line);
+			bz.isInstalled = Utils::FileSystem::exists(theBezelProject);
+
+			if (bz.name != "?")
+				res.push_back(bz);
 		}
 	}
 
@@ -608,15 +651,11 @@ std::pair<std::string, int> Win32ApiSystem::installBatoceraBezel(std::string bez
 	LOG(LogDebug) << "ApiSystem::installBatoceraBezel";
 
 	for (auto bezel : getBatoceraBezelsList())
-	{
-		auto parts = Utils::String::splitAny(bezel, " \t");
-		if (parts.size() < 2)
-			continue;
-
-		if (parts[1] == bezelsystem)
+	{		
+		if (bezel.name == bezelsystem)
 		{
-			std::string themeUrl = parts.size() > 1 ? parts[2] : "";
-			std::string subFolder = parts.size() > 2 ? parts[3] : "";
+			std::string themeUrl = bezel.url;
+			std::string subFolder = bezel.folderPath;
 
 			std::string themeFileName = Utils::FileSystem::getFileName(themeUrl);
 			std::string zipFile = getEmulatorLauncherPath("decorations") + "/" + themeFileName + ".zip";
@@ -666,7 +705,7 @@ std::pair<std::string, int> Win32ApiSystem::installBatoceraBezel(std::string bez
 	return std::pair<std::string, int>("", 1);
 }
 
-std::pair<std::string, int> Win32ApiSystem::uninstallBatoceraBezel(BusyComponent* ui, std::string bezelsystem)
+std::pair<std::string, int> Win32ApiSystem::uninstallBatoceraBezel(std::string bezelsystem, const std::function<void(const std::string)>& func)
 {
 	std::string theBezelProject = getEmulatorLauncherPath("decorations") + "/thebezelproject/games/" + bezelsystem;
 	Utils::FileSystem::deleteDirectoryFiles(theBezelProject);
@@ -700,14 +739,15 @@ std::string Win32ApiSystem::getFreeSpaceInfo(const std::string drive)
 
 	if (fResult)
 	{
-		unsigned long total = i64TotalBytes / (1024L * 1024L);
-		unsigned long free = i64FreeBytes / (1024L * 1024L);
-		unsigned long used = total - free;
+		unsigned long long total = i64TotalBytes;
+		unsigned long long free = i64FreeBytes;
+		unsigned long long used = total - free;
 		unsigned long percent = 0;
 		std::ostringstream oss;
-		if (total != 0) {  //for small SD card ;) with share < 1GB
+		if (total != 0) 
+		{  //for small SD card ;) with share < 1GB
 			percent = used * 100 / total;
-			oss << used << "GB/" << total << "GB (" << percent << "%)";
+			oss << Utils::FileSystem::megaBytesToString(used / (1024L * 1024L)) << "/" << Utils::FileSystem::megaBytesToString(total / (1024L * 1024L)) << " (" << percent << "%)";
 		}
 		else
 			oss << "N/A";

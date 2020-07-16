@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: batocera-emulationstation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 22:51+0200\n"
+"POT-Creation-Date: 2020-07-09 21:20+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ckau\n"
 "Language-Team: Russian <https://4pda.ru/forum/index.php?showtopic=802556>\n"
@@ -70,6 +70,12 @@ msgstr "ПОДОЖДИТЕ"
 msgid "CONTROLLERS LINKS HAVE BEEN DELETED."
 msgstr "BLUETOOTH КОНТРОЛЛЕРЫ УДАЛЕНЫ"
 
+msgid "CLOSE"
+msgstr "ЗАКРЫТЬ"
+
+msgid "Loading..."
+msgstr "Загрузка..."
+
 msgid "CONNECT TO NETPLAY"
 msgstr "ПОДКЛЮЧИТЬСЯ К NETPLAY"
 
@@ -78,9 +84,6 @@ msgstr "Выберите игру, в которую хотите присоед
 
 msgid "REFRESH"
 msgstr "ОБНОВИТЬ"
-
-msgid "CLOSE"
-msgstr "ЗАКРЫТЬ"
 
 msgid "FAILED"
 msgstr "НЕ УДАЛОСЬ"
@@ -114,6 +117,15 @@ msgstr "СОРТИРОВКА ПО"
 
 msgid "OTHER FILTERS"
 msgstr "ДРУГИЕ ФИЛЬТРЫ"
+
+msgid "GAME MEDIAS"
+msgstr ""
+
+msgid "VIEW GAME MANUAL"
+msgstr ""
+
+msgid "VIEW GAME MAP"
+msgstr ""
 
 msgid "COLLECTION"
 msgstr "КОЛЛЕКЦИЯ"
@@ -163,11 +175,11 @@ msgstr "РЕДАКТИРОВАТЬ МЕТАДАННЫЕ ПАПКИ"
 msgid "EDIT THIS GAME'S METADATA"
 msgstr "РЕДАКТИРОВАТЬ МЕТАДАННЫЕ"
 
+msgid "RESET FILTERS"
+msgstr ""
+
 msgid "FILTER GAMES BY TEXT"
 msgstr "ПОИСК"
-
-msgid "Loading..."
-msgstr "Загрузка..."
 
 msgid "THIS FUNCTION IS DISABLED WHEN SCRAPING IS RUNNING"
 msgstr "ВО ВРЕМЯ ЗАГРУЗКИ ЭТА ФУНКЦИЯ ОТКЛЮЧЕНА"
@@ -222,6 +234,9 @@ msgstr "Архитектура"
 
 msgid "Temperature"
 msgstr "Температура"
+
+msgid "Available memory"
+msgstr "Доступно памяти"
 
 msgid "Battery"
 msgstr "Батарея"
@@ -283,6 +298,15 @@ msgstr "ДАННЫЕ"
 msgid "QUIT"
 msgstr "ВЫХОД"
 
+msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
+msgstr "ДАННЫЕ ЗАГРУЖАЮТСЯ. ОСТАНОВИТЬ?"
+
+msgid "SCRAPER"
+msgstr ""
+
+msgid "SCRAPE NOW"
+msgstr "ЗАГРУЗИТЬ ДАННЫЕ"
+
 msgid "SCRAPE FROM"
 msgstr "ЗАГРУЗКА ИЗ"
 
@@ -307,6 +331,9 @@ msgstr "ОБЛОЖКИ 2D"
 msgid "BOX 3D"
 msgstr "ОБЛОЖКИ 3D"
 
+msgid "FAN ART"
+msgstr ""
+
 msgid "BOX SOURCE"
 msgstr "СТИЛЬ ОБЛОЖКИ"
 
@@ -328,17 +355,17 @@ msgstr "ЗАГРУЗКА РЕЙТИНГОВ"
 msgid "SCRAPE VIDEOS"
 msgstr "ЗАГРУЗКА ВИДЕО"
 
+msgid "SCRAPE FANART"
+msgstr ""
+
+msgid "SCRAPE MANUAL"
+msgstr ""
+
 msgid "USERNAME"
 msgstr "ИМЯ ПОЛЬЗОВАТЕЛЯ"
 
 msgid "PASSWORD"
 msgstr "ПАРОЛЬ"
-
-msgid "SCRAPING IS RUNNING. DO YOU WANT TO STOP IT ?"
-msgstr "ДАННЫЕ ЗАГРУЖАЮТСЯ. ОСТАНОВИТЬ?"
-
-msgid "SCRAPE NOW"
-msgstr "ЗАГРУЗИТЬ ДАННЫЕ"
 
 msgid "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?"
 msgstr "ВЫ УВЕРЕНЫ, ЧТО ХОТИТЕ НАСТРОИТЬ УПРАВЛЕНИЕ?"
@@ -425,7 +452,7 @@ msgid "USE RETROARCH RGUI MENU"
 msgstr "ИСП. МЕНЮ RETROARCH RGUI"
 
 msgid "AUTOCONFIGURE EMULATORS CONTROLLERS"
-msgstr ""
+msgstr "АВТОНАСТРОЙКАА КОНТРОЛЛЕРОВ"
 
 msgid "LOG LEVEL"
 msgstr "УРОВЕНЬ ЖУРНАЛА"
@@ -447,6 +474,9 @@ msgstr "ФОРМАТИРОВАТЬ"
 
 msgid "DOWNLOADS"
 msgstr "ЗАГРУЗКИ"
+
+msgid "CONTENT DOWNLOADER"
+msgstr ""
 
 msgid "THEMES"
 msgstr "ТЕМЫ"
@@ -517,6 +547,18 @@ msgstr "НАСТРОЙКИ NETPLAY"
 msgid "MISSING BIOS"
 msgstr "ОТСУТСТВУЮЩИЕ БИОСЫ"
 
+msgid "MULTIMEDIA KEYS"
+msgstr ""
+
+msgid "AUTO"
+msgstr "АВТО"
+
+msgid "ON"
+msgstr "ВКЛ"
+
+msgid "OFF"
+msgstr "ВЫКЛ"
+
 msgid "OVERCLOCK"
 msgstr "РАЗГОН"
 
@@ -550,20 +592,11 @@ msgstr "УМЕНЬШЕНИЕ ЗАДЕРЖКИ"
 msgid "RUN-AHEAD FRAMES"
 msgstr "КАДРОВ ОБГОНА (RUN-AHEAD)"
 
-msgid "AUTO"
-msgstr "АВТО"
-
 msgid "USE RUN-AHEAD FRAMES"
 msgstr "ИСП. КДРЫ ОБГОНА (RUN-AHEAD)"
 
 msgid "RUN-AHEAD USE SECOND INSTANCE"
 msgstr "ИСП. ВТОРУЮ ИНСТАНЦИЮ ДЛЯ ОБГОНА"
-
-msgid "ON"
-msgstr "ВКЛ"
-
-msgid "OFF"
-msgstr "ВЫКЛ"
 
 msgid "HARDCORE MODE"
 msgstr "ХАРДКОР РЕЖИМ"
@@ -576,6 +609,9 @@ msgstr "ПОДРОБНЫЙ РЕЖИМ"
 
 msgid "AUTOMATIC SCREENSHOT"
 msgstr "АВТОМАТИЧЕСКИЙ СКРИНШОТ"
+
+msgid "SHOW IN MAIN MENU"
+msgstr ""
 
 msgid "SETTINGS"
 msgstr "НАСТРОЙКИ"
@@ -603,6 +639,12 @@ msgstr "ПЕРЕИНДЕКСАЦИЯ ВСЕХ ИГР"
 
 msgid "INDEX MISSING GAMES"
 msgstr "ИНДЕКСАЦИЯ ОТСУТСТВУЮЩИХ ИГР"
+
+msgid "TOOLS"
+msgstr "ИНСТРУМЕНТЫ"
+
+msgid "UPDATE GAMES LISTS"
+msgstr "ОБНОВИТЬ СПИСКИ ИГР"
 
 msgid "DEFAULT SETTINGS"
 msgstr "НАСТРОЙКИ ПО УМОЛЧАНИЮ"
@@ -663,9 +705,6 @@ msgstr "ПАУЗА В ОКНЕ ПЕРЕВОДА"
 
 msgid "PER SYSTEM ADVANCED CONFIGURATION"
 msgstr "ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ СИСТЕМЫ"
-
-msgid "UPDATE GAMES LISTS"
-msgstr "ОБНОВИТЬ СПИСКИ ИГР"
 
 msgid "NO MISSING BIOS"
 msgstr "НЕТ ОТСУТСТВУЮЩИХ БИОСОВ"
@@ -768,9 +807,6 @@ msgstr "ПОКАЗАТЬ '..' РОДИТЕЛЬСКОЙ ПАПКИ"
 msgid "FILE EXTENSIONS"
 msgstr "РАСШИРЕНИЕ ФАЙЛА"
 
-msgid "TOOLS"
-msgstr "ИНСТРУМЕНТЫ"
-
 msgid "RESET GAMELIST CUSTOMISATIONS"
 msgstr "СБРОСИТЬ НАСТРОЙКИ СПИСКА ИГР"
 
@@ -820,6 +856,9 @@ msgstr "НАСТРОЙКИ ЭКРАНА"
 msgid "TRANSITION STYLE"
 msgstr "СТИЛЬ ПЕРЕХОДОВ"
 
+msgid "GAME LAUNCH TRANSITION"
+msgstr ""
+
 msgid "CAROUSEL TRANSITIONS"
 msgstr "АНИМАЦИЯ КАРУСЕЛИ"
 
@@ -849,6 +888,9 @@ msgstr "ГРОМКОСТЬ"
 
 msgid "SYSTEM VOLUME"
 msgstr "ГРОМКОСТЬ"
+
+msgid "MUSIC VOLUME"
+msgstr ""
 
 msgid "SHOW OVERLAY WHEN VOLUME CHANGES"
 msgstr "ПОКАЗАТЬ ОВЕРЛЕЙ ПРИ ИЗМ. ГРОМКОСТИ"
@@ -923,7 +965,7 @@ msgid "MANUAL SCRAPER"
 msgstr "РУЧНАЯ ЗАГРУЗКА"
 
 msgid "SKIP TO NEXT SONG"
-msgstr ""
+msgstr "ПРОПУСТИТЬ ПЕСНЮ"
 
 msgid "LAUNCH SCREENSAVER"
 msgstr "ЗАСТАВКА"
@@ -932,13 +974,13 @@ msgid "RESTART SYSTEM"
 msgstr "ПЕРЕЗАГРУЗИТЬ СИСТЕМУ"
 
 msgid "REALLY RESTART?"
-msgstr "ПЕРЕЗАГРУЗИТЬ СИСТЕМУ СЕЧАС?"
+msgstr "ПЕРЕЗАГРУЗИТЬ СИСТЕМУ СЕЙЧАС?"
 
 msgid "SHUTDOWN SYSTEM"
 msgstr "ВЫКЛЮЧИТЬ СИСТЕМУ"
 
 msgid "REALLY SHUTDOWN?"
-msgstr "ВЫКЛЮЧИТЬ СИСТЕМУ СЕЧАС?"
+msgstr "ВЫКЛЮЧИТЬ СИСТЕМУ СЕЙЧАС?"
 
 msgid "FAST SHUTDOWN SYSTEM"
 msgstr "БЫСТРО ВЫКЛЮЧИТЬ СИСТЕМУ"
@@ -1018,8 +1060,17 @@ msgstr "ПАРАМЕТРЫ"
 msgid "GROUP UNTHEMED CUSTOM COLLECTIONS"
 msgstr "СГРУППИРОВАТЬ СВОИ КОЛЛЕКЦИИ"
 
-msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
-msgstr "СОРТИРОВАТЬ КОЛЛЕКЦИИ И СИСТЕМЫ"
+msgid "SORT COLLECTIONS AND SYSTEMS"
+msgstr ""
+
+msgid "ALPHABETICALLY"
+msgstr ""
+
+msgid "BY MANUFACTURER"
+msgstr ""
+
+msgid "SORT SYSTEMS"
+msgstr ""
 
 msgid "SHOW SYSTEM NAME IN COLLECTIONS"
 msgstr "ОТОБРАЖАТЬ СИСТЕМУ В НАЗВАНИИ"
@@ -1105,30 +1156,34 @@ msgstr[0] "%i ИГРА ПРОПУЩЕНА."
 msgstr[1] "%i ИГРЫ ПРОПУЩЕНЫ."
 msgstr[2] "%i ИГР ПРОПУЩЕНО."
 
-msgid "INSTALL BEZELS"
-msgstr "УСТАНОВИТЬ РАМКИ (ОВЕРЛЕИ)"
+msgid "SELECT BEZELS TO INSTALL / REMOVE"
+msgstr ""
 
-msgid "UNINSTALL BEZELS"
-msgstr "УДАЛИТЬ РАМКИ (ОВЕРЛЕИ)"
-
-msgid "INSTALL THE BEZEL PROJECT"
-msgstr "УСТАНОВИТЬ НАБОР РАМОК"
-
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
-msgstr "В КАКОЙ СИСТЕМЕ ПЕРЕУСТАНОВИТЬ РАМКИ?"
+msgid "UPDATE"
+msgstr ""
 
 #, c-format
 msgid "'%s' ADDED TO DOWNLOAD QUEUE"
 msgstr "'%s' ДОБАВЛЕНА В ОЧЕРЕДЬ ЗАГРУЗКИ"
 
-msgid "UNINSTALL THE BEZEL PROJECT"
-msgstr "УДАЛИТЬ НАБОР РАМОК"
+msgid "REMOVE"
+msgstr ""
 
-msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
-msgstr "ИЗ КАКОЙ СИСТЕМЫ УДАЛИТЬ РАМКИ?"
+msgid "BEZELS UNINSTALLED SUCCESSFULLY"
+msgstr ""
 
-msgid "BEZELS DELETED SUCCESSFULLY"
-msgstr "РАМКИ УСПЕШНО УДАЛЕНЫ"
+#, c-format
+msgid "CURRENTLY IN DOWNLOAD QUEUE"
+msgstr ""
+
+msgid "SELECT CONTENT TO INSTALL / REMOVE"
+msgstr ""
+
+msgid "MISC"
+msgstr ""
+
+msgid "UNINSTALL ADDED TO QUEUE"
+msgstr ""
 
 msgid "SWAP IMAGE AFTER (SECS)"
 msgstr "СМЕНА ИЗОБРАЖЕНИЯ ПОСЛЕ (СЕК)"
@@ -1293,17 +1348,65 @@ msgstr "Видео"
 msgid "enter path to video"
 msgstr "введите путь к видео"
 
-msgid "Marquee"
-msgstr "Банер"
+msgid "Logo"
+msgstr ""
 
-msgid "enter path to marquee"
-msgstr "введите путь к банеру"
+msgid "enter path to logo"
+msgstr ""
 
-msgid "Thumbnail"
-msgstr "Эскиз"
+msgid "Box"
+msgstr ""
 
-msgid "enter path to thumbnail"
-msgstr "введите путь к эскизу"
+msgid "enter path to box"
+msgstr ""
+
+msgid "Fan art"
+msgstr ""
+
+msgid "enter path to fanart"
+msgstr ""
+
+msgid "Title shot"
+msgstr ""
+
+msgid "enter path to title shot"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "enter path to manual"
+msgstr ""
+
+msgid "Map"
+msgstr ""
+
+msgid "enter path to map"
+msgstr ""
+
+msgid "Cartridge"
+msgstr ""
+
+msgid "enter path to cartridge"
+msgstr ""
+
+msgid "Alt BoxArt"
+msgstr ""
+
+msgid "enter path to alt boxart"
+msgstr ""
+
+msgid "Wheel"
+msgstr ""
+
+msgid "enter path to wheel"
+msgstr ""
+
+msgid "Mix"
+msgstr ""
+
+msgid "enter path to mix"
+msgstr ""
 
 msgid "Rating"
 msgstr "Рейтинг"
@@ -1401,20 +1504,11 @@ msgstr "Язык"
 msgid "Region"
 msgstr "Регион"
 
-msgid "favorite"
-msgstr "избранное"
-
 msgid "SCRAPING"
 msgstr "SCRAPING"
 
-msgid "Searching"
-msgstr "Поиск"
-
 msgid "SCRAPE FAILED"
 msgstr "ЗАГРУЗКА НЕ УДАЛАСЬ"
-
-msgid "Downloading"
-msgstr "Загрузка"
 
 msgid "SCRAPING FINISHED. REFRESH UPDATE GAMES LISTS TO APPLY CHANGES."
 msgstr "ЗАГРУЗКА ЗАВЕРШЕНА. ОБНОВИТЕ СПИСОК ИГР, ЧТОБЫ ПРИМЕНИТЬ ИЗМЕНЕНИЯ."
@@ -1424,6 +1518,9 @@ msgstr "ОШИБКА: ВСЕ СИСТЕМЫ СКРЫТЫ, "
 
 msgid "DO YOU WANT TO START KODI MEDIA CENTER ?"
 msgstr "ВЫ ХОТИТЕ ЗАПУСТИТЬ МЕДИА-ЦЕНТР KODI?"
+
+msgid "GO TO MANUFACTURER"
+msgstr ""
 
 #, c-format
 msgid "%i COLLECTION"
@@ -1563,6 +1660,12 @@ msgstr "ТЕМА УСПЕШНО УСТАНОВЛЕНА"
 msgid "BEZELS INSTALLED SUCCESSFULLY"
 msgstr "РАМКИ УСПЕШНО УСТАНОВЛЕНЫ"
 
+msgid "PACKAGE INSTALLED SUCCESSFULLY"
+msgstr ""
+
+msgid "PACKAGE REMOVED SUCCESSFULLY"
+msgstr ""
+
 msgid "FAVORITES"
 msgstr "ИЗБРАННОЕ"
 
@@ -1596,6 +1699,9 @@ msgstr "Коллекции"
 msgid "Extracting"
 msgstr "Распакова"
 
+msgid "Searching"
+msgstr "Поиск"
+
 msgid "NO GAMES FOUND - SKIP"
 msgstr "ИГРЫ НЕ НАЙДЕНЫ — ПРОПУСТИТЬ"
 
@@ -1604,6 +1710,9 @@ msgstr "ПРОИЗОШЛА ОШИБКА"
 
 msgid "RETRY"
 msgstr "ПОВТОРИТЬ"
+
+msgid "Downloading"
+msgstr "Загрузка"
 
 msgid "ACCEPT RESULT"
 msgstr "ПРИНЯТЬ РЕЗУЛЬТАТ"
@@ -1886,6 +1995,45 @@ msgstr "ОБРАБОТКА..."
 
 msgid "up/down"
 msgstr "вверх/вниз"
+
+#~ msgid "INSTALL BEZELS"
+#~ msgstr "УСТАНОВИТЬ РАМКИ (ОВЕРЛЕИ)"
+
+#~ msgid "UNINSTALL BEZELS"
+#~ msgstr "УДАЛИТЬ РАМКИ (ОВЕРЛЕИ)"
+
+#~ msgid "INSTALL THE BEZEL PROJECT"
+#~ msgstr "УСТАНОВИТЬ НАБОР РАМОК"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE (RE)INSTALLED"
+#~ msgstr "В КАКОЙ СИСТЕМЕ ПЕРЕУСТАНОВИТЬ РАМКИ?"
+
+#~ msgid "UNINSTALL THE BEZEL PROJECT"
+#~ msgstr "УДАЛИТЬ НАБОР РАМОК"
+
+#~ msgid "SELECT SYSTEM WHERE BEZELS WILL BE REMOVED"
+#~ msgstr "ИЗ КАКОЙ СИСТЕМЫ УДАЛИТЬ РАМКИ?"
+
+#~ msgid "BEZELS DELETED SUCCESSFULLY"
+#~ msgstr "РАМКИ УСПЕШНО УДАЛЕНЫ"
+
+#~ msgid "SORT CUSTOM COLLECTIONS AND SYSTEMS"
+#~ msgstr "СОРТИРОВАТЬ КОЛЛЕКЦИИ И СИСТЕМЫ"
+
+#~ msgid "Marquee"
+#~ msgstr "Банер"
+
+#~ msgid "enter path to marquee"
+#~ msgstr "введите путь к банеру"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Эскиз"
+
+#~ msgid "enter path to thumbnail"
+#~ msgstr "введите путь к эскизу"
+
+#~ msgid "favorite"
+#~ msgstr "избранное"
 
 #~ msgid "DISK USAGE"
 #~ msgstr "ИСПОЛЬЗОВАНИЕ ДИСКА"

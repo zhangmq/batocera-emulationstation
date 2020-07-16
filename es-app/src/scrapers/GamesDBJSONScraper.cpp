@@ -99,24 +99,42 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
 	{ TANDY, "4941" },	
 	{ SUPERGRAFX, "34" }, // The code is TurboGrafx 16, but they manage SUPERGRAFX into this one....
 
-	{ AMIGACD32, "4947" },
-	// { AMIGACDTV, ?? },
-	// { ATOMISWAVE, ?? },
-	{ CAVESTORY, "1" },
-	// { GX4000, ?? },
-	// { LUTRO, ?? },
-	// { NAOMI, ?? },
-	{ NEOGEO_CD, "24" },
+	{ AMIGACD32, "130" },
+	{ AMIGACDTV, "129" },
+	{ ATOMISWAVE, "53" },
+	{ CAVESTORY, "135" },
+	{ GX4000, "87" },
+	{ LUTRO, "206" },
+	{ NAOMI, "56" },
+	{ NEOGEO_CD, "70" },
 	{ PCFX, "4930" },
 	{ POKEMINI, "4957" },
 	{ PRBOOM, "1" },
 	{ SATELLAVIEW, "6" },
 	{ SUFAMITURBO, "6" },
-//	{ ZX81, ?? },
-	{ MOONLIGHT, "1" }, // "PC"
+	{ ZX81, "77" },
+	{ MOONLIGHT, "138" }, // "PC"
+	
+	// Windows
+	{ VISUALPINBALL, "198" },
+	{ FUTUREPINBALL, "199" },
+
+	// Misc
+	{ ORICATMOS, "131" },
+	{ CHANNELF, "80" },
+	{ THOMSON_TO_MO, "141" },
+	{ SAMCOUPE, "213" },
+	{ OPENBOR, "214" },
+	{ UZEBOX, "216" },
+	{ APPLE2GS, "217" },
+	{ SPECTRAVIDEO, "218" },
+	{ PALMOS, "219" },
+	{ DAPHNE, "49" },
+	{ SOLARUS, "223" }
 };
 
-void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params,
+
+void TheGamesDBScraper::generateRequests(const ScraperSearchParams& params,
 	std::queue<std::unique_ptr<ScraperRequest>>& requests, std::vector<ScraperSearchResult>& results)
 {
 	resources.prepare();
@@ -312,42 +330,33 @@ void processGame(const Value& game, const Value& boxart, std::vector<ScraperSear
 	ScraperSearchResult result;
 
 	result.mdl.set("name", getStringOrThrow(game, "game_title"));
+
 	if (game.HasMember("overview") && game["overview"].IsString())
-	{
 		result.mdl.set("desc", game["overview"].GetString());
-	}
+
 	if (game.HasMember("release_date") && game["release_date"].IsString())
-	{
-		result.mdl.set(
-			"releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(game["release_date"].GetString(), "%Y-%m-%d")));
-	}
+		result.mdl.set("releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(game["release_date"].GetString(), "%Y-%m-%d")));
+
 	if (game.HasMember("developers") && game["developers"].IsArray())
-	{
 		result.mdl.set("developer", getDeveloperString(game["developers"]));
-	}
+
 	if (game.HasMember("publishers") && game["publishers"].IsArray())
-	{
 		result.mdl.set("publisher", getPublisherString(game["publishers"]));
-	}
+
 	if (game.HasMember("genres") && game["genres"].IsArray())
-	{
-
 		result.mdl.set("genre", getGenreString(game["genres"]));
-	}
+
 	if (game.HasMember("players") && game["players"].IsInt())
-	{
 		result.mdl.set("players", std::to_string(game["players"].GetInt()));
-	}
-
-
+	
 	if (boxart.HasMember("data") && boxart["data"].IsObject())
 	{
 		std::string id = std::to_string(getIntOrThrow(game, "id"));
 		if (boxart["data"].HasMember(id.c_str()))
 		{
 		    std::string image = getBoxartImage(boxart["data"][id.c_str()]);
-		    result.thumbnailUrl = baseImageUrlThumb + "/" + image;
-		    result.imageUrl = baseImageUrlLarge + "/" + image;
+			result.urls[MetaDataId::Image] = ScraperSearchItem(baseImageUrlLarge + "/" + image);
+			result.urls[MetaDataId::Thumbnail] = ScraperSearchItem(baseImageUrlThumb + "/" + image);
 		}
 	}
 

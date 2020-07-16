@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#include <algorithm>
 
 #if !defined(WIN32)
 #include <ifaddrs.h>
@@ -34,6 +35,7 @@
 #include <fstream>
 #include <SDL.h>
 #include <Sound.h>
+#include "utils/ThreadPool.h"
 
 #if WIN32
 #include <Windows.h>
@@ -106,16 +108,16 @@ std::string ApiSystem::getFreeSpaceInfo(const std::string mountpoint)
 	struct statvfs fiData;
 	if ((statvfs(mountpoint.c_str(), &fiData)) < 0)
 		return "";
-
-	unsigned long total = (fiData.f_blocks * (fiData.f_bsize / 1024)) / (1024L * 1024L);
-	unsigned long free = (fiData.f_bfree * (fiData.f_bsize / 1024)) / (1024L * 1024L);
-	unsigned long used = total - free;
+		
+	unsigned long long total = (unsigned long long) fiData.f_blocks * (unsigned long long) (fiData.f_bsize);
+	unsigned long long free = (unsigned long long) fiData.f_bfree * (unsigned long long) (fiData.f_bsize);
+	unsigned long long used = total - free;
 	unsigned long percent = 0;
 	
 	if (total != 0) 
 	{  //for small SD card ;) with share < 1GB
 		percent = used * 100 / total;
-		oss << used << "GB/" << total << "GB (" << percent << "%)";
+		oss << Utils::FileSystem::megaBytesToString(used / (1024L * 1024L)) << "/" << Utils::FileSystem::megaBytesToString(total / (1024L * 1024L)) << " (" << percent << "%)";
 	}
 	else
 		oss << "N/A";	
@@ -197,7 +199,7 @@ std::pair<std::string, int> ApiSystem::updateSystem(const std::function<void(con
 			func(std::string(line));		
 	}
 
-	int exitCode = pclose(pipe);
+	int exitCode = WEXITSTATUS(pclose(pipe));
 
 	if (flog != NULL)
 	{
@@ -233,7 +235,7 @@ std::pair<std::string, int> ApiSystem::backupSystem(BusyComponent* ui, std::stri
 	if (flog != NULL) 
 		fclose(flog);
 
-	int exitCode = pclose(pipe);
+	int exitCode = WEXITSTATUS(pclose(pipe));
 	return std::pair<std::string, int>(std::string(line), exitCode);
 }
 
@@ -256,7 +258,7 @@ std::pair<std::string, int> ApiSystem::installSystem(BusyComponent* ui, std::str
 		ui->setText(std::string(line));
 	}
 
-	int exitCode = pclose(pipe);
+	int exitCode = WEXITSTATUS(pclose(pipe));
 
 	if (flog != NULL)
 	{
@@ -294,7 +296,7 @@ std::pair<std::string, int> ApiSystem::scrape(BusyComponent* ui)
 	if (flog != nullptr)
 		fclose(flog);
 
-	int exitCode = pclose(pipe);
+	int exitCode = WEXITSTATUS(pclose(pipe));
 	return std::pair<std::string, int>(std::string(line), exitCode);
 }
 
@@ -893,29 +895,32 @@ std::pair<std::string, int> ApiSystem::installBatoceraTheme(std::string thname, 
 	return executeScript("batocera-es-theme install " + thname, func);
 }
 
-std::vector<std::string> ApiSystem::getBatoceraBezelsList() 
+std::vector<BatoceraBezel> ApiSystem::getBatoceraBezelsList()
 {
 	LOG(LogInfo) << "ApiSystem::getBatoceraBezelsList";
 
-	std::vector<std::string> res;
+	std::vector<BatoceraBezel> res;
 
-	std::string command = "batocera-es-thebezelproject list";
-	FILE *pipe = popen(command.c_str(), "r");
-	if (pipe == NULL)
-		return res;
-
-	char line[1024];
-	char *pch;
-
-	while (fgets(line, 1024, pipe)) 
+	auto lines = executeEnumerationScript("batocera-es-thebezelproject list");
+	for (auto line : lines)
 	{
-		strtok(line, "\n");
-		// provide only themes that are [A]vailable or [I]nstalled as a result
-		// (Eliminate [?] and other non-installable lines of text)
-		if ((strncmp(line, "[A]", 3) == 0) || (strncmp(line, "[I]", 3) == 0))
-			res.push_back(std::string(line));
+		auto parts = Utils::String::splitAny(line, " \t");
+		if (parts.size() < 2)
+			continue;
+
+		if (!Utils::String::startsWith(parts[0], "[I]") && !Utils::String::startsWith(parts[0], "[A]"))
+			continue;
+
+		BatoceraBezel bz;
+		bz.isInstalled = (Utils::String::startsWith(parts[0], "[I]"));
+		bz.name = parts[1];
+		bz.url = parts.size() < 3 ? "" : (parts[2] == "-" ? parts[3] : parts[2]);
+		bz.folderPath = parts.size() < 4 ? "" : parts[3];
+
+		if (bz.name != "?")
+			res.push_back(bz);
 	}
-	pclose(pipe);
+
 	return res;
 }
 
@@ -924,40 +929,29 @@ std::pair<std::string, int> ApiSystem::installBatoceraBezel(std::string bezelsys
 	return executeScript("batocera-es-thebezelproject install " + bezelsystem, func);
 }
 
-std::pair<std::string, int> ApiSystem::uninstallBatoceraBezel(BusyComponent* ui, std::string bezelsystem) 
+std::pair<std::string, int> ApiSystem::uninstallBatoceraBezel(std::string bezelsystem, const std::function<void(const std::string)>& func)
 {
-	LOG(LogInfo) << "ApiSystem::uninstallBatoceraBezel " << bezelsystem;
-
-	std::string updatecommand = "batocera-es-thebezelproject remove " + bezelsystem;
-	
-	FILE *pipe = popen(updatecommand.c_str(), "r");
-	if (pipe == NULL)
-		return std::pair<std::string, int>(std::string("Error starting 'batocera-es-thebezelproject remove' command."), -1);
-
-	char line[1024] = "";
-
-	while (fgets(line, 1024, pipe)) 
-	{
-		strtok(line, "\n");
-		// Long theme names/URL can crash the GUI MsgBox
-		// "48" found by trials and errors. Ideally should be fixed
-		// in es-core MsgBox -- FIXME
-		if (strlen(line) > 48)
-			line[47] = '\0';
-		ui->setText(std::string(line));
-	}
-
-	int exitCode = pclose(pipe);
-	return std::pair<std::string, int>(std::string(line), exitCode);
+	return executeScript("batocera-es-thebezelproject remove " + bezelsystem, func);
 }
 
 std::string ApiSystem::getCRC32(std::string fileName, bool fromZipContents)
 {
+	bool useUnzip = false;
+
 	std::string cmd = "7zr h \"" + fileName + "\"";
 	
 	std::string ext = Utils::String::toLower(Utils::FileSystem::getExtension(fileName));
-	if (fromZipContents && (ext == ".7z" || ext == ".zip"))
-		cmd = "7zr l -slt \"" + fileName + "\"";
+
+	if (fromZipContents)
+	{
+		if (ext == ".7z")
+			cmd = "7zr l -slt \"" + fileName + "\"";
+		else
+		{
+			useUnzip = true;
+			cmd = "unzip -l -v \"" + fileName + "\"";
+		}
+	}
 
 	std::string crc;
 	std::string fn = Utils::FileSystem::getFileName(fileName);
@@ -970,13 +964,31 @@ std::string ApiSystem::getCRC32(std::string fileName, bool fromZipContents)
 	while (fgets(line, 1024, pipe)) 
 	{
 		strtok(line, "\n");
+
+		if (!crc.empty())
+			continue;
+
 		std::string all = line;
 
+		if (useUnzip)
+		{
+			// Parse unzip results
+			if (!Utils::String::startsWith(all, "Archive"))
+			{
+				auto split = Utils::String::split(all, ' ', true);
+				if (split.size() >= 8 && split[6].size() == 8 && split[3].find("%") != std::string::npos)
+					crc = Utils::String::toUpper(split[6]);
+			}
+
+			continue;
+		}
+
+		// Parse 7zr results
 		int idx = all.find("CRC = ");
 		if (idx != std::string::npos)
 			crc = all.substr(idx + 6);
 		else if (all.find(fn) == (all.size() - fn.size()) && all.length() > 8 && all[9] == ' ')
-			crc = all.substr(0, 8);
+			crc = all.substr(0, 8);		
 	}
 	
 	pclose(pipe);
@@ -1128,7 +1140,7 @@ std::pair<std::string, int> ApiSystem::executeScript(const std::string command, 
 			func(std::string(line));
 	}
 
-	int exitCode = pclose(pipe);
+	int exitCode = WEXITSTATUS(pclose(pipe));
 	return std::pair<std::string, int>(line, exitCode);
 }
 
@@ -1145,6 +1157,59 @@ bool ApiSystem::executeScript(const std::string command)
 
 bool ApiSystem::isScriptingSupported(ScriptId script)
 {
+	std::vector<std::string> executables;
+
+	switch (script)
+	{
+	case ApiSystem::KODI:
+		executables.push_back("kodi");
+		break;
+	case ApiSystem::RETROACHIVEMENTS:
+		executables.push_back("batocera-retroachievements-info");
+		break;
+	case ApiSystem::WIFI:
+		executables.push_back("batocera-wifi");
+		break;
+	case ApiSystem::BLUETOOTH:
+		executables.push_back("batocera-bluetooth");
+		break;
+	case ApiSystem::RESOLUTION:
+		executables.push_back("batocera-resolution");
+		break;
+	case ApiSystem::BIOSINFORMATION:
+		executables.push_back("batocera-systems");
+		break;
+	case ApiSystem::DISKFORMAT:
+		executables.push_back("batocera-format");
+		break;
+	case ApiSystem::OVERCLOCK:
+		executables.push_back("batocera-overclock");
+		break;
+	case ApiSystem::NETPLAY:
+		executables.push_back("7zr");
+		executables.push_back("unzip");
+		break;
+	case ApiSystem::PDFEXTRACTION:
+		executables.push_back("pdftoppm");
+		executables.push_back("pdfinfo");
+		break;
+	case ApiSystem::BATOCERASTORE:
+		executables.push_back("batocera-store");
+		break;
+	}
+
+	if (executables.size() == 0)
+		return true;
+
+	for (auto executable : executables)
+#ifdef _ENABLEEMUELEC
+		if (!Utils::FileSystem::exists("/emuelec/scripts/batocera/" + executable))
+			return false;
+#else
+		if (!Utils::FileSystem::exists("/usr/bin/" + executable))
+			return false;
+
+#endif
 	return true;
 }
 
@@ -1211,4 +1276,187 @@ std::vector<std::string> ApiSystem::getFormatFileSystems()
 int ApiSystem::formatDisk(const std::string disk, const std::string format, const std::function<void(const std::string)>& func)
 {
 	return executeScript("batocera-format format " + disk + " " + format, func).second;
+}
+
+int ApiSystem::getPdfPageCount(const std::string fileName)
+{
+	auto lines = executeEnumerationScript("pdfinfo \"" + fileName + "\"");
+	for (auto line : lines)
+	{
+		auto splits = Utils::String::split(line, ':', true);
+		if (splits.size() == 2 && splits[0] == "Pages")
+			return atoi(Utils::String::trim(splits[1]).c_str());
+	}
+
+	return 0;
+}
+
+std::vector<std::string> ApiSystem::extractPdfImages(const std::string fileName, int pageIndex, int pageCount)
+{
+	auto pdfFolder = Utils::FileSystem::getGenericPath(Utils::FileSystem::getEsConfigPath() + "/pdftmp/");
+	Utils::FileSystem::createDirectory(pdfFolder);
+
+	std::vector<std::string> ret;
+
+	if (pageIndex < 0)
+	{
+		Utils::FileSystem::deleteDirectoryFiles(pdfFolder);
+
+		int hardWareCoreCount = std::thread::hardware_concurrency();
+		if (hardWareCoreCount > 1)
+		{
+			int lastTime = SDL_GetTicks();
+
+			int numberOfPagesToProcess = 1;
+			if (hardWareCoreCount < 8)
+				numberOfPagesToProcess = 2;
+
+			int pc = getPdfPageCount(fileName);
+			if (pc > 0)
+			{
+				Utils::ThreadPool pool(1);
+
+				for (int i = 0; i < pc; i += numberOfPagesToProcess)
+					pool.queueWorkItem([this, fileName, i, numberOfPagesToProcess] { extractPdfImages(fileName, i + 1, numberOfPagesToProcess); });
+
+				pool.wait();
+
+				int time = SDL_GetTicks() - lastTime;
+				std::string timeText = std::to_string(time) + "ms";
+
+				for (auto file : Utils::FileSystem::getDirContent(pdfFolder, false))
+				{
+					auto ext = Utils::String::toLower(Utils::FileSystem::getExtension(file));
+					if (ext != ".jpg" && ext != ".png" && ext != ".ppm")
+						continue;
+
+					ret.push_back(file);
+				}
+
+				std::sort(ret.begin(), ret.end());
+			}
+
+			return ret;
+		}
+	}
+
+	int lastTime = SDL_GetTicks();
+
+	std::string page;
+
+	std::string prefix = "extract";
+	if (pageIndex >= 0)
+	{
+		char buffer[12];
+		sprintf(buffer, "%08d", (uint32_t)pageIndex);
+
+		prefix = "page-" + std::string(buffer)+"-pdf";
+		page = " -f " + std::to_string(pageIndex) + " -l " + std::to_string(pageIndex + pageCount - 1);
+	}
+
+
+#if WIN32
+	executeEnumerationScript("pdftoppm -r 150"+ page +" \"" + fileName + "\" \""+ pdfFolder +"/" + prefix +"\"");
+#else
+	executeEnumerationScript("pdftoppm -jpeg -r 150 -cropbox" + page + " \"" + fileName + "\" \"" + pdfFolder + "/" + prefix + "\"");
+#endif
+
+	int time = SDL_GetTicks() - lastTime;
+	std::string text = std::to_string(time);
+
+	for (auto file : Utils::FileSystem::getDirContent(pdfFolder, false))
+	{
+		auto ext = Utils::String::toLower(Utils::FileSystem::getExtension(file));
+		if (ext != ".jpg" && ext != ".png" && ext != ".ppm")
+			continue;
+
+		if (pageIndex >= 0 && !Utils::String::startsWith(Utils::FileSystem::getFileName(file), prefix))
+			continue;
+
+		ret.push_back(file);
+	}
+
+	std::sort(ret.begin(), ret.end());
+	return ret;
+}
+
+
+std::vector<PacmanPackage> ApiSystem::getBatoceraStorePackages()
+{
+	std::vector<PacmanPackage> packages;
+
+	LOG(LogDebug) << "ApiSystem::getBatoceraStorePackages";
+
+	auto res = executeEnumerationScript("batocera-store list");
+	std::string data = Utils::String::join(res, "\n");
+	if (data.empty())
+	{
+		LOG(LogError) << "Package list is empty";
+		return packages;
+	}
+
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load(data.c_str());
+	if (!result)
+	{
+		LOG(LogError) << "Unable to parse packages";
+		return packages;
+	}
+
+	pugi::xml_node root = doc.child("packages");
+	if (!root)
+	{
+		LOG(LogError) << "Could not find <packages> node";
+		return packages;
+	}
+
+	for (pugi::xml_node pkgNode = root.child("package"); pkgNode; pkgNode = pkgNode.next_sibling("package"))
+	{
+		PacmanPackage package;
+
+		for (pugi::xml_node node = pkgNode.first_child(); node; node = node.next_sibling())
+		{
+			std::string tag = node.name();
+			if (tag == "name")
+				package.name = node.text().get();
+			if (tag == "repository")
+				package.repository = node.text().get();
+			if (tag == "available_version")
+				package.available_version = node.text().get();
+			if (tag == "description")
+				package.description = node.text().get();
+			if (tag == "group")
+				package.group = node.text().get(); // groups.push_back(
+			if (tag == "license")
+				package.licenses.push_back(node.text().get());
+			if (tag == "packager")
+				package.packager = node.text().get();
+			if (tag == "status")
+				package.status = node.text().get();
+			if (tag == "repository")
+				package.repository = node.text().get();
+			if (tag == "url")
+				package.url = node.text().get();			
+
+			if (tag == "download_size")
+				package.download_size = node.text().as_llong();
+			if (tag == "installed_size")
+				package.installed_size = node.text().as_llong();
+		}
+
+		if (!package.name.empty())
+			packages.push_back(package);		
+	}
+
+	return packages;
+}
+
+std::pair<std::string, int> ApiSystem::installBatoceraStorePackage(std::string name, const std::function<void(const std::string)>& func)
+{
+	return executeScript("batocera-store install " + name, func);
+}
+
+std::pair<std::string, int> ApiSystem::uninstallBatoceraStorePackage(std::string name, const std::function<void(const std::string)>& func)
+{
+	return executeScript("batocera-store remove " + name, func);
 }

@@ -26,6 +26,7 @@ Splash::Splash(Window* window, const std::string image, bool fullScreenBackGroun
 	auto theme = std::make_shared<ThemeData>();
 
 	std::string themeFilePath = fullScreenBackGround ? ":/splash.xml" : ":/gamesplash.xml";
+	themeFilePath = ResourceManager::getInstance()->getResourcePath(themeFilePath);
 
 	std::map<std::string, ThemeSet> themeSets = ThemeData::getThemeSets();
 	auto themeset = themeSets.find(Settings::getInstance()->getString("ThemeSet"));
@@ -61,12 +62,6 @@ Splash::Splash(Window* window, const std::string image, bool fullScreenBackGroun
 	if (backGroundImageTheme && backGroundImageTheme->has("linearSmooth"))
 		linearSmooth = backGroundImageTheme->get<bool>("linearSmooth");
 	
-	mTexture = TextureResource::get(imagePath, false, linearSmooth, true, false, false);
-	
-	if (!fullScreenBackGround)
-		ResourceManager::getInstance()->removeReloadable(mTexture);
-
-	mBackground.setImage(mTexture); 
 
 	if (fullScreenBackGround && !useOldSplashLayout)
 	{
@@ -116,6 +111,14 @@ Splash::Splash(Window* window, const std::string image, bool fullScreenBackGroun
 
 	if (backGroundImageTheme)
 		mBackground.applyTheme(theme, "splash", "background", ThemeFlags::ALL ^ (ThemeFlags::PATH));
+
+	auto maxSize = mBackground.getMaxSizeInfo();
+	mTexture = TextureResource::get(imagePath, false, linearSmooth, true, false, false, &maxSize);
+
+	if (!fullScreenBackGround)
+		ResourceManager::getInstance()->removeReloadable(mTexture);
+
+	mBackground.setImage(mTexture);
 
 	if (theme->getElement("splash", "label", "text"))
 		mText.applyTheme(theme, "splash", "label", ThemeFlags::ALL ^ (ThemeFlags::TEXT));
