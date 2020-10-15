@@ -1,17 +1,31 @@
 #if defined(USE_OPENGLES_10)
 
 #include "renderers/Renderer.h"
-#include "math/Transform4x4f.h"
 #include "Log.h"
 #include "Settings.h"
+#include "math/Transform4x4f.h"
 
 #include <GLES/gl.h>
 #include <SDL.h>
 #include <vector>
+#include <unistd.h>
+#include <fcntl.h>
+
+#include <go2/display.h>
+#include <go2/input.h>
+#include <go2/audio.h>
+#include <drm/drm_fourcc.h>
+
+static go2_input_t* input = nullptr;
+static go2_surface_t* titlebarSurface = nullptr;
+static unsigned int frame = 0;
 
 namespace Renderer
 {
-	static SDL_GLContext sdlContext = nullptr;
+	//static SDL_GLContext sdlContext = nullptr;
+
+	static go2_context_t* context = nullptr;
+	static go2_presenter_t* presenter = nullptr;
 
 	static GLenum convertBlendFactor(const Blend::Factor _blendFactor)
 	{
@@ -63,8 +77,7 @@ namespace Renderer
 
 	void setupWindow()
 	{
-		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
-
+#if 0
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE,     8);
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,   8);
 		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,    8);
@@ -72,14 +85,34 @@ namespace Renderer
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 0);
+#endif
 	} // setupWindow
 
 	void createContext()
 	{
-		sdlContext = SDL_GL_CreateContext(getSDLWindow());
-		SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
+		// sdlContext = SDL_GL_CreateContext(getSDLWindow());
+		// SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
+		input = go2_input_create();
+
+		go2_context_attributes_t attr;
+		attr.major = 1;
+		attr.minor = 0;
+		attr.red_bits = 8;
+		attr.green_bits = 8;
+		attr.blue_bits = 8;
+		attr.alpha_bits = 8;
+		attr.depth_bits = 24;
+		attr.stencil_bits = 0;
+
+		go2_display_t* display = getDisplay();
+
+		titlebarSurface = go2_surface_create(display, 480, 16, DRM_FORMAT_RGB565);
+
+		context = go2_context_create(display, 480, 320, &attr);
+		go2_context_make_current(context);
+
+		presenter = go2_presenter_create(display, DRM_FORMAT_RGB565, 0xff080808);
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -91,9 +124,19 @@ namespace Renderer
 
 	void destroyContext()
 	{
-		SDL_GL_DeleteContext(sdlContext);
-		sdlContext = nullptr;
+		//SDL_GL_DeleteContext(sdlContext);
+		//sdlContext = nullptr;
+		go2_context_destroy(context);
+		context = nullptr;
 
+		go2_presenter_destroy(presenter);
+		presenter = nullptr;
+
+		go2_surface_destroy(titlebarSurface);
+		titlebarSurface = nullptr;
+
+		go2_input_destroy(input);
+		input = nullptr;
 	} // destroyContext
 
 	unsigned int createTexture(const Texture::Type _type, const bool _linear, const bool _repeat, const unsigned int _width, const unsigned int _height, void* _data)
@@ -102,9 +145,6 @@ namespace Renderer
 		unsigned int texture;
 
 		glGenTextures(1, &texture);
-		if (glGetError() != GL_NO_ERROR)
-			return 0;
-
 		bindTexture(texture);
 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE);
@@ -117,11 +157,6 @@ namespace Renderer
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, type, _width, _height, 0, type, GL_UNSIGNED_BYTE, _data);
-		if (glGetError() != GL_NO_ERROR)
-		{
-			glDeleteTextures(1, &texture);
-			return 0;
-		}
 
 		return texture;
 
@@ -244,11 +279,12 @@ namespace Renderer
 
 	void setSwapInterval()
 	{
+#if 0
 		// vsync
 		if(Settings::getInstance()->getBool("VSync"))
 		{
-			// SDL_GL_SetSwapInterval(0) for immediate updates (no vsync, default), 
-			// 1 for updates synchronized with the vertical retrace, 
+			// SDL_GL_SetSwapInterval(0) for immediate updates (no vsync, default),
+			// 1 for updates synchronized with the vertical retrace,
 			// or -1 for late swap tearing.
 			// SDL_GL_SetSwapInterval returns 0 on success, -1 on error.
 			// if vsync is requested, try normal vsync; if that doesn't work, try late swap tearing
@@ -258,14 +294,44 @@ namespace Renderer
 		}
 		else
 			SDL_GL_SetSwapInterval(0);
-
+#endif
 	} // setSwapInterval
 
 	void swapBuffers()
 	{
-		SDL_GL_SwapWindow(getSDLWindow());
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+#ifdef WIN32		
+		glFlush();
+		glFinish();
+		Sleep(0);
+#endif
 
+		//SDL_GL_SwapWindow(getSDLWindow());
+
+		if (context)
+		{
+				
+
+			go2_context_swap_buffers(context);
+			go2_surface_t* surface = go2_context_surface_lock(context);
+
+			go2_surface_blit(titlebarSurface, 0, 0, 480, 16,
+							 surface, 0, 0, 480, 16,
+							 GO2_ROTATION_DEGREES_0);
+
+			go2_presenter_post(presenter,
+						surface,
+						0, 0, 480, 320,
+						0, 0, 320, 480,
+						GO2_ROTATION_DEGREES_270);
+			go2_context_surface_unlock(context, surface);
+		}
+
+#ifdef WIN32		
+		Sleep(0);
+#endif
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//printf("Frame %d\n", frame++);
 	} // swapBuffers
 
 #define ROUNDING_PIECES 8.0f

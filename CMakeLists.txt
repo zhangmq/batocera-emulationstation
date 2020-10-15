@@ -3,15 +3,9 @@ cmake_minimum_required(VERSION 2.8)
 option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer)" ${RPI})
-option(CEC "CEC" ON)
-option(BCM "BCM host" OFF)
-
-# batocera
-option(ENABLE_FILEMANAGER "Set to ON to enable f1 shortcut for filesystem")
-option(DISABLE_KODI "Set to ON to disable kodi in menu")
-
+option(CEC "Set to ON to enable CEC" ${CEC})
 # emuelec
-option(ENABLE_EMUELEC "Set to ON to enable EmuELEC changes" ${ENABLE_EMUELEC})
+option(ENABLE_EMUELEC "Set to ON to enable EmuELEC changes" ON)
 
 project(emulationstation-all)
 
@@ -22,25 +16,9 @@ LIST(APPEND CMAKE_MODULE_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages
 )
 
-
 # emuelec
 if("${ENABLE_EMUELEC}" STREQUAL "1")
   add_definitions(-D_ENABLEEMUELEC)
-endif()
-
-# batocera / kodi menu
-# disable kodi
-if("${DISABLE_KODI}" STREQUAL "1")
-  MESSAGE("kodi disabled")
-else()
-  add_definitions(-D_ENABLE_KODI_)
-endif()
-
-# batocera / file manager f1 button
-# disable file manager
-if("${ENABLE_FILEMANAGER}" STREQUAL "1")
-  MESSAGE("file manager enabled")
-  add_definitions(-D_ENABLE_FILEMANAGER_)
 endif()
 
 if(CEC)
@@ -48,11 +26,6 @@ if(CEC)
 else()
   MESSAGE("CEC disabled")
 endif()
-
-if(BCM)
-    set(BCMHOST found)
-endif()
-
 #-------------------------------------------------------------------------------
 #set up OpenGL system variable
 if(GLES)
@@ -74,9 +47,9 @@ elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib/libMali.so")
 #-------------------------------------------------------------------------------
 #check if we're running on olinuxino / odroid / etc
 elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/libMali.so" OR
-    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/libmali.so" OR # batocera
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/libMali.so" OR
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/aarch64-linux-gnu/libMali.so" OR
+    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/local/lib/aarch64-linux-gnu/libmali.so" OR
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/mali-egl/libmali.so" OR
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/libmali.so")
     MESSAGE("libMali.so found")
@@ -85,28 +58,32 @@ else()
     set(GLSystem "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
 endif(GLES)
 
-#set_property(CACHE GLSystem PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
+set_property(CACHE GLSystem PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 
 #finding necessary packages
 #-------------------------------------------------------------------------------
-#if(${GLSystem} MATCHES "Desktop OpenGL")
-#    find_package(OpenGL REQUIRED)
-#else()
-#    find_package(OpenGLES REQUIRED)
-#endif()
+if(${GLSystem} MATCHES "Desktop OpenGL")
+    find_package(OpenGL REQUIRED)
+else()
+    find_package(OpenGLES REQUIRED)
+endif()
 find_package(Freetype REQUIRED)
 find_package(FreeImage REQUIRED)
-# batocera / background musics
-find_package(SDL2MIXER REQUIRED)
-# batocera / customisations
 find_package(SDL2 REQUIRED)
+find_package(SDL2MIXER REQUIRED)
 find_package(CURL REQUIRED)
 find_package(VLC REQUIRED)
 find_package(RapidJSON REQUIRED)
 
+#add libCEC support
 if(CEC)
-  find_package(libCEC)
+    find_package(libCEC REQUIRED)
 endif()
+
+# i18n
+# if(MSVC)
+# 	find_package(Intl REQUIRED)
+# endif()
 
 #add ALSA for Linux
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -123,10 +100,8 @@ if(DEFINED VERO4K)
     add_definitions(-D_VERO4K_)
 endif()
 
-if(CEC)
-  if(DEFINED libCEC_FOUND)
+if(DEFINED libCEC_FOUND)
     add_definitions(-DHAVE_LIBCEC)
-  endif()
 endif()
 
 #-------------------------------------------------------------------------------
@@ -157,23 +132,19 @@ else()
 endif()
 endif()
 
-add_definitions(-DUSE_OPENGLES_10)
-
-#if(${GLSystem} MATCHES "Desktop OpenGL")
-#    add_definitions(-DUSE_OPENGL_21)
-#else()
-#    add_definitions(-DUSE_OPENGLES_10)
-#endif()
+if(${GLSystem} MATCHES "Desktop OpenGL")
+    add_definitions(-DUSE_OPENGL_21)
+else()
+    add_definitions(-DUSE_OPENGLES_10)
+endif()
 
 #-------------------------------------------------------------------------------
 #add include directories
 set(COMMON_INCLUDE_DIRS
     ${FREETYPE_INCLUDE_DIRS}
     ${FreeImage_INCLUDE_DIRS}
-    # batocera / background musics
-    ${SDLMIXER_INCLUDE_DIR}
-    # batocera / customisations    
     ${SDL2_INCLUDE_DIR}
+	${SDLMIXER_INCLUDE_DIR}
     ${CURL_INCLUDE_DIR}
     ${VLC_INCLUDE_DIR}
     ${RAPIDJSON_INCLUDE_DIRS}
@@ -181,18 +152,17 @@ set(COMMON_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src
 )
 
-if(NOT DEFINED MSVC)
- LIST(APPEND COMMON_INCLUDE_DIRS
-      )
-endif()
+# if(MSVC)
+#         LIST(APPEND COMMON_INCLUDE_DIRS
+#             ${Intl_INCLUDE_DIRS}
+#         )
+# endif()
 
 #add libCEC_INCLUDE_DIR
-if(CEC)
-  if(DEFINED libCEC_FOUND)
+if(DEFINED libCEC_FOUND)
     LIST(APPEND COMMON_INCLUDE_DIRS
-      ${libCEC_INCLUDE_DIR}
-      )
-  endif()
+        ${libCEC_INCLUDE_DIR}
+    )
 endif()
 
 #add ALSA for Linux
@@ -230,7 +200,6 @@ endif()
 #define libraries and directories
 if(DEFINED BCMHOST)
     link_directories(
-        # batocera / customisations
         "${CMAKE_FIND_ROOT_PATH}/opt/vc/lib"
     )
 elseif(DEFINED VERO4K)
@@ -241,37 +210,34 @@ endif()
 
 set(COMMON_LIBRARIES
     ${FREETYPE_LIBRARIES}
-    ${FreeImage_LIBRARIES}
+    ${FreeImage_LIBRARIES}	
     ${SDL2_LIBRARY}
-    # batocera / background musics
-    ${SDLMIXER_LIBRARY}
-    # batocera / customisations    
+	${SDLMIXER_LIBRARY}
     ${CURL_LIBRARIES}
     ${VLC_LIBRARIES}
     pugixml
     nanosvg
     id3v2
+    go2
 )
 
-if(NOT DEFINED MSVC)
- LIST(APPEND COMMON_LIBRARIES
-      )
-endif()
+# if(MSVC)
+#         LIST(APPEND COMMON_LIBRARIES
+#             ${Intl_LIBRARIES}
+#         )
+# endif()
 
 #add libCEC_LIBRARIES
-if(CEC)
-  if(DEFINED libCEC_FOUND)
-    if(DEFINED BCMHOST)
-      LIST(APPEND COMMON_LIBRARIES
-        vchiq_arm
-	vchostif
-	)
-    endif()
+if(DEFINED libCEC_FOUND)
+if(DEFINED BCMHOST)
     LIST(APPEND COMMON_LIBRARIES
-      dl
-      ${libCEC_LIBRARIES}
-      )
-  endif()
+        vchiq_arm
+    )
+endif()
+    LIST(APPEND COMMON_LIBRARIES
+        dl
+        ${libCEC_LIBRARIES}
+    )
 endif()
 
 #add ALSA for Linux
@@ -310,20 +276,6 @@ else()
     endif()
 endif()
 
-# batocera / i18n
-# i18n
-find_program (MSGFMT_EXECUTABLE msgfmt)
-find_program (MSGMERGE_EXECUTABLE msgmerge)
-find_program (XGETTEXT_EXECUTABLE xgettext)
-find_package(Intl)
-
-if(MSGFMT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND XGETTEXT_EXECUTABLE AND Intl_FOUND)
-  message (STATUS "Native language support enabled.")
-  add_definitions(-DHAVE_INTL)
-else()
-  message (STATUS "Native language support disabled.")
-endif()
-
 #-------------------------------------------------------------------------------
 # set up build directories
 set(dir ${CMAKE_CURRENT_SOURCE_DIR})
@@ -337,8 +289,3 @@ set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 add_subdirectory("external")
 add_subdirectory("es-core")
 add_subdirectory("es-app")
-
-if(MSGFMT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND XGETTEXT_EXECUTABLE AND Intl_FOUND)
-  add_subdirectory (locale)
-endif()
-

@@ -10,12 +10,18 @@
 #include <SDL.h>
 #include <stack>
 
+#include <go2/display.h>
+
+#if WIN32
+#include <Windows.h>
+#endif
+
 namespace Renderer
 {
 	static std::stack<Rect> clipStack;
 	static std::stack<Rect> nativeClipStack;
 
-	static SDL_Window*      sdlWindow          = nullptr;
+	//static SDL_Window*      sdlWindow          = nullptr;
 	static int              windowWidth        = 0;
 	static int              windowHeight       = 0;
 	static int              screenWidth        = 0;
@@ -24,19 +30,21 @@ namespace Renderer
 	static int              screenOffsetY      = 0;
 	static int              screenRotate       = 0;
 	static bool             initialCursorState = 1;
+	static go2_display_t*   display            = nullptr;
 
 	static Vector2i			sdlWindowPosition = Vector2i(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED);
 
 	static void setIcon()
 	{
+#if 0
 		size_t                     width   = 0;
 		size_t                     height  = 0;
 		ResourceData               resData = ResourceManager::getInstance()->getFileData(":/window_icon_256.png");
-		unsigned char*             rawData = ImageIO::loadFromMemoryRGBA32(resData.ptr.get(), resData.length, width, height);
+		std::vector<unsigned char> rawData = ImageIO::loadFromMemoryRGBA32(resData.ptr.get(), resData.length, width, height);
 
-		if(rawData != nullptr)
+		if(!rawData.empty())
 		{
-			ImageIO::flipPixelsVert(rawData, width, height);
+			ImageIO::flipPixelsVert(rawData.data(), width, height);
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 			unsigned int rmask = 0xFF000000;
@@ -50,33 +58,45 @@ namespace Renderer
 			unsigned int amask = 0xFF000000;
 #endif
 			// try creating SDL surface from logo data
-			SDL_Surface* logoSurface = SDL_CreateRGBSurfaceFrom((void*)rawData, (int)width, (int)height, 32, (int)(width * 4), rmask, gmask, bmask, amask);
-			
+			SDL_Surface* logoSurface = SDL_CreateRGBSurfaceFrom((void*)rawData.data(), (int)width, (int)height, 32, (int)(width * 4), rmask, gmask, bmask, amask);
+
 			if(logoSurface != nullptr)
 			{
 				SDL_SetWindowIcon(sdlWindow, logoSurface);
 				SDL_FreeSurface(logoSurface);
 			}
-
-			delete rawData;
 		}
-
+#endif
 	} // setIcon
 
 	static bool createWindow()
 	{
 		LOG(LogInfo) << "Creating window...";
 
-		if(SDL_Init(SDL_INIT_VIDEO) != 0)
+		if(SDL_Init(SDL_INIT_EVENTS) != 0)
 		{
 			LOG(LogError) << "Error initializing SDL!\n	" << SDL_GetError();
 			return false;
 		}
 
+#if 0
 		initialCursorState = (SDL_ShowCursor(0) != 0);
+
+		if (!Settings::getInstance()->getBool("Windowed"))
+			SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "1");
 
 		SDL_DisplayMode dispMode;
 		SDL_GetDesktopDisplayMode(0, &dispMode);
+
+#if WIN32
+		if (!Settings::getInstance()->getBool("Windowed") && !Settings::getInstance()->getInt("WindowWidth"))
+		{
+			::SetProcessDPIAware();			
+			dispMode.w = ::GetSystemMetrics(SM_CXSCREEN);
+			dispMode.h = ::GetSystemMetrics(SM_CYSCREEN);
+		}
+#endif
+
 		windowWidth   = Settings::getInstance()->getInt("WindowWidth")   ? Settings::getInstance()->getInt("WindowWidth")   : dispMode.w;
 		windowHeight  = Settings::getInstance()->getInt("WindowHeight")  ? Settings::getInstance()->getInt("WindowHeight")  : dispMode.h;
 		screenWidth   = Settings::getInstance()->getInt("ScreenWidth")   ? Settings::getInstance()->getInt("ScreenWidth")   : windowWidth;
@@ -120,15 +140,17 @@ namespace Renderer
 
 		unsigned int windowFlags = (Settings::getInstance()->getBool("Windowed") ? 0 : (Settings::getInstance()->getBool("FullscreenBorderless") ? SDL_WINDOW_BORDERLESS : SDL_WINDOW_FULLSCREEN)) | getWindowFlags();
 
-#if WIN32
 		if (Settings::getInstance()->getBool("AlwaysOnTop"))
 			windowFlags |= SDL_WINDOW_ALWAYS_ON_TOP;
 
 		windowFlags |= SDL_WINDOW_ALLOW_HIGHDPI;
-#endif
 
-		if((sdlWindow = SDL_CreateWindow("EmulationStation", sdlWindowPosition.x(), sdlWindowPosition.y(), windowWidth, windowHeight, windowFlags)) == nullptr)
-		{
+		if((sdlWindow = SDL_CreateWindow("EmulationStation", 
+			sdlWindowPosition.x(),
+			sdlWindowPosition.y(), 
+			windowWidth, windowHeight,
+			windowFlags)) == nullptr)
+			{
 			LOG(LogError) << "Error creating SDL window!\n\t" << SDL_GetError();
 			return false;
 		}
@@ -138,7 +160,20 @@ namespace Renderer
 		createContext();
 		setIcon();
 		setSwapInterval();
+#endif
 
+		display = go2_display_create();
+		windowWidth = 480;
+		windowHeight = 320;
+		screenWidth = 480;
+		screenHeight = 320 - 16;
+		screenOffsetX = 0;
+		screenOffsetY = 0 + 16;
+		screenRotate = 0;
+
+		setupWindow();
+		createContext();
+	
 		return true;
 
 	} // createWindow
@@ -148,26 +183,28 @@ namespace Renderer
 		if (Settings::getInstance()->getBool("Windowed") && Settings::getInstance()->getInt("WindowWidth") && Settings::getInstance()->getInt("WindowHeight"))
 		{
 			int x; int y;
-			SDL_GetWindowPosition(sdlWindow, &x, &y);
+			//SDL_GetWindowPosition(sdlWindow, &x, &y);
 			sdlWindowPosition = Vector2i(x, y); // Save position to restore it later
 		}
 
 		destroyContext();
-
+#if 0
 		SDL_DestroyWindow(sdlWindow);
 		sdlWindow = nullptr;
 
 		SDL_ShowCursor(initialCursorState);
-
+#endif
+		go2_display_destroy(display);
+		display = nullptr;
+		
 		SDL_Quit();
 
 	} // destroyWindow
 
 	void activateWindow()
 	{
-		SDL_RestoreWindow(sdlWindow);
-		SDL_RaiseWindow(sdlWindow);
-		SDL_SetWindowInputFocus(sdlWindow);		
+		//SDL_RaiseWindow(sdlWindow);
+		//SDL_SetWindowInputFocus(sdlWindow);		
 	}
 
 	bool init()
@@ -296,45 +333,6 @@ namespace Renderer
 
 	} // popClipRect
 
-	void drawRect(const float _x, const float _y, const float _w, const float _h, const unsigned int _color, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
-	{
-		drawRect(_x, _y, _w, _h, _color, _color, true, _srcBlendFactor, _dstBlendFactor);
-	} // drawRect
-
-	void drawRect(const float _x, const float _y, const float _w, const float _h, const unsigned int _color, const unsigned int _colorEnd, bool horizontalGradient, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
-	{
-		const unsigned int color    = convertColor(_color);
-		const unsigned int colorEnd = convertColor(_colorEnd);
-		Vertex             vertices[4];
-
-		vertices[0] = { { _x     ,_y      }, { 0.0f, 0.0f }, color };
-		vertices[1] = { { _x     ,_y + _h }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
-		vertices[2] = { { _x + _w,_y      }, { 0.0f, 0.0f }, horizontalGradient ? color : colorEnd };
-		vertices[3] = { { _x + _w,_y + _h }, { 0.0f, 0.0f }, colorEnd };
-
-		// round vertices
-		for(int i = 0; i < 4; ++i)
-			vertices[i].pos.round();
-
-		bindTexture(0);
-		drawTriangleStrips(vertices, 4, _srcBlendFactor, _dstBlendFactor);
-
-	} // drawRect
-
-	SDL_Window* getSDLWindow()     { return sdlWindow; }
-	int         getWindowWidth()   { return windowWidth; }
-	int         getWindowHeight()  { return windowHeight; }
-	int         getScreenWidth()   { return screenWidth; }
-	int         getScreenHeight()  { return screenHeight; }
-	int         getScreenOffsetX() { return screenOffsetX; }
-	int         getScreenOffsetY() { return screenOffsetY; }
-	int         getScreenRotate()  { return screenRotate; }
-
-	bool        isSmallScreen()    
-	{ 		
-		return screenWidth < 400 || screenHeight < 400; 
-	};
-
 	bool isClippingEnabled() { return !clipStack.empty(); }
 
 	bool valueInRange(int value, int min, int max)
@@ -373,16 +371,48 @@ namespace Renderer
 		if (clipStack.empty())
 			return true;
 
-		if (nativeClipStack.empty())
-		{
-			LOG(LogDebug) << "Renderer::isVisibleOnScreen used without any clip stack!";
-			return true;
-		}
-
 		screen = nativeClipStack.top();
 		return rectOverlap(screen, box);
 	}
 
+	void drawRect(const float _x, const float _y, const float _w, const float _h, const unsigned int _color, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
+	{
+		drawRect(_x, _y, _w, _h, _color, _color, true, _srcBlendFactor, _dstBlendFactor);
+	} // drawRect
+
+	void drawRect(const float _x, const float _y, const float _w, const float _h, const unsigned int _color, const unsigned int _colorEnd, bool horizontalGradient, const Blend::Factor _srcBlendFactor, const Blend::Factor _dstBlendFactor)
+	{
+
+		const unsigned int color    = convertColor(_color);
+		const unsigned int colorEnd = convertColor(_colorEnd);
+		Vertex             vertices[4];
+
+		vertices[0] = { { _x     ,_y      }, { 0.0f, 0.0f }, color };
+		vertices[1] = { { _x     ,_y + _h }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
+		vertices[2] = { { _x + _w,_y      }, { 0.0f, 0.0f }, horizontalGradient ? color : colorEnd };
+		vertices[3] = { { _x + _w,_y + _h }, { 0.0f, 0.0f }, colorEnd };
+
+		// round vertices
+		for(int i = 0; i < 4; ++i)
+			vertices[i].pos.round();
+
+		bindTexture(0);
+		drawTriangleStrips(vertices, 4, _srcBlendFactor, _dstBlendFactor);
+
+	} // drawRect
+
+	//SDL_Window* getSDLWindow()     { return sdlWindow; }
+	int         getWindowWidth()   { return windowWidth; }
+	int         getWindowHeight()  { return windowHeight; }
+	int         getScreenWidth()   { return screenWidth; }
+	int         getScreenHeight()  { return screenHeight; }
+	int         getScreenOffsetX() { return screenOffsetX; }
+	int         getScreenOffsetY() { return screenOffsetY; }
+	int         getScreenRotate()  { return screenRotate; }
+
+	go2_display_t* getDisplay()    { return display; }
+
+	bool        isSmallScreen()    { return screenWidth < 400 || screenHeight < 400; };
 
 	unsigned int mixColors(unsigned int first, unsigned int second, float percent)
 	{
@@ -403,5 +433,4 @@ namespace Renderer
 
 		return (alpha << 24) | (blue << 16) | (green << 8) | red;
 	}
-
 } // Renderer::
