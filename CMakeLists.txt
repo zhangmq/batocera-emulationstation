@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 2.8)
 
 option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
-option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
-option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer)" ${RPI})
-option(CEC "CEC" ON)
+option(GL "Set to ON if targeting Desktop OpenGL" OFF)
+option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer)" OFF)
+option(CEC "CEC" OFF)
 option(BCM "BCM host" OFF)
 
 # batocera
-option(ENABLE_FILEMANAGER "Set to ON to enable f1 shortcut for filesystem")
-option(DISABLE_KODI "Set to ON to disable kodi in menu")
+option(ENABLE_FILEMANAGER "Set to ON to enable f1 shortcut for filesystem" OFF)
+option(DISABLE_KODI "Set to ON to disable kodi in menu" ON)
 
 # emuelec
-option(ENABLE_EMUELEC "Set to ON to enable EmuELEC changes" ${ENABLE_EMUELEC})
+option(ENABLE_EMUELEC "Set to ON to enable EmuELEC changes" ON)
 
 project(emulationstation-all)
 
@@ -74,9 +74,9 @@ elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib/libMali.so")
 #-------------------------------------------------------------------------------
 #check if we're running on olinuxino / odroid / etc
 elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/libMali.so" OR
-    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/libmali.so" OR # batocera
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/libMali.so" OR
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/aarch64-linux-gnu/libMali.so" OR
+    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/local/lib/aarch64-linux-gnu/libmali.so" OR
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/mali-egl/libmali.so" OR
     EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/libmali.so")
     MESSAGE("libMali.so found")
@@ -96,10 +96,10 @@ else()
 endif()
 find_package(Freetype REQUIRED)
 find_package(FreeImage REQUIRED)
+find_package(SDL2 REQUIRED)
 # batocera / background musics
 find_package(SDL2MIXER REQUIRED)
 # batocera / customisations
-find_package(SDL2 REQUIRED)
 find_package(CURL REQUIRED)
 find_package(VLC REQUIRED)
 find_package(RapidJSON REQUIRED)
@@ -168,10 +168,10 @@ endif()
 set(COMMON_INCLUDE_DIRS
     ${FREETYPE_INCLUDE_DIRS}
     ${FreeImage_INCLUDE_DIRS}
+    ${SDL2_INCLUDE_DIR}
     # batocera / background musics
     ${SDLMIXER_INCLUDE_DIR}
     # batocera / customisations    
-    ${SDL2_INCLUDE_DIR}
     ${CURL_INCLUDE_DIR}
     ${VLC_INCLUDE_DIR}
     ${RAPIDJSON_INCLUDE_DIRS}
@@ -179,10 +179,10 @@ set(COMMON_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src
 )
 
-if(NOT DEFINED MSVC)
- LIST(APPEND COMMON_INCLUDE_DIRS
-      )
-endif()
+#if(NOT DEFINED MSVC)
+# LIST(APPEND COMMON_INCLUDE_DIRS
+#      )
+#endif()
 
 #add libCEC_INCLUDE_DIR
 if(CEC)
@@ -249,12 +249,13 @@ set(COMMON_LIBRARIES
     pugixml
     nanosvg
     id3v2
+    go2
 )
 
-if(NOT DEFINED MSVC)
- LIST(APPEND COMMON_LIBRARIES
-      )
-endif()
+#if(NOT DEFINED MSVC)
+# LIST(APPEND COMMON_LIBRARIES
+#      )
+#endif()
 
 #add libCEC_LIBRARIES
 if(CEC)
