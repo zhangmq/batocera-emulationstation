@@ -190,7 +190,7 @@ void AudioManager::playRandomMusic(bool continueIfPlaying)
 	// check in User music directory
 	if (musics.empty())
 #ifdef _ENABLEEMUELEC
-		getMusicIn("/storage/roms/BGM", musics);
+		getMusicIn("/roms/BGM", musics);
 #else
 		getMusicIn("/userdata/music", musics);
 #endif
@@ -198,7 +198,7 @@ void AudioManager::playRandomMusic(bool continueIfPlaying)
 	// check in system sound directory
 	if (musics.empty())
 #ifdef _ENABLEEMUELEC
-		getMusicIn("/storage/.config/emuelec/BGM", musics);
+		getMusicIn("/home/odroid/.config/emuelec/BGM", musics);
 #else
 		getMusicIn("/usr/share/batocera/music", musics);
 #endif

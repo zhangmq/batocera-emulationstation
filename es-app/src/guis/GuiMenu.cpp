@@ -240,15 +240,15 @@ void GuiMenu::openEmuELECSettings()
 					runSystemCommand("echo "+selectedVideoMode+" > /sys/class/display/mode", "", nullptr);
 					SystemConf::getInstance()->set("ee_videomode", selectedVideoMode);
 					LOG(LogInfo) << "Setting video to " << selectedVideoMode;
-					runSystemCommand("/storage/.config/emuelec/scripts/setres.sh", "", nullptr);
+					runSystemCommand("/home/odroid/.config/emuelec/scripts/setres.sh", "", nullptr);
 					SystemConf::getInstance()->saveSystemConf();
 				//	v_need_reboot = true;
 				}, _("NO"),nullptr));
 		
 		} else { 
-			if(Utils::FileSystem::exists("/storage/.config/EE_VIDEO_MODE")) {
-				runSystemCommand("echo $(cat /storage/.config/EE_VIDEO_MODE) > /sys/class/display/mode", "", nullptr);
-				LOG(LogInfo) << "Setting custom video mode from /storage/.config/EE_VIDEO_MODE to " << runSystemCommand("cat /storage/.config/EE_VIDEO_MODE", "", nullptr);
+			if(Utils::FileSystem::exists("/home/odroid/.config/EE_VIDEO_MODE")) {
+				runSystemCommand("echo $(cat /home/odroid/.config/EE_VIDEO_MODE) > /sys/class/display/mode", "", nullptr);
+				LOG(LogInfo) << "Setting custom video mode from /home/odroid/.config/EE_VIDEO_MODE to " << runSystemCommand("cat /home/odroid/.config/EE_VIDEO_MODE", "", nullptr);
 				SystemConf::getInstance()->set("ee_videomode", selectedVideoMode);
 				SystemConf::getInstance()->saveSystemConf();
 				//v_need_reboot = true;
@@ -261,7 +261,7 @@ void GuiMenu::openEmuELECSettings()
 				//v_need_reboot = true;
 					} else {
 					runSystemCommand("echo " + SystemConf::getInstance()->get("ee_videomode")+ " > /sys/class/display/mode", "", nullptr);
-					std::string msg = "/storage/.config/EE_VIDEO_MODE or /flash/EE_VIDEO_MODE not found";
+					std::string msg = "/home/odroid/.config/EE_VIDEO_MODE or /flash/EE_VIDEO_MODE not found";
 					window->pushGui(new GuiMsgBox(window, msg,
 				"OK", [selectedVideoMode] {
 					LOG(LogInfo) << "EE_VIDEO_MODE was not found! Setting video mode to " + SystemConf::getInstance()->get("ee_videomode");
@@ -307,10 +307,10 @@ void GuiMenu::openEmuELECSettings()
 			if (bluetoothd_enabled->changed()) {
 			if (bluetoothd_enabled->getState() == false) {
 				runSystemCommand("systemctl stop bluetooth", "", nullptr); 
-				runSystemCommand("rm /storage/.cache/services/bluez.conf", "", nullptr); 
+				runSystemCommand("rm /home/odroid/.cache/services/bluez.conf", "", nullptr); 
 			} else { 
-				runSystemCommand("mkdir -p /storage/.cache/services/", "", nullptr);
-				runSystemCommand("touch /storage/.cache/services/bluez.conf", "", nullptr);
+				runSystemCommand("mkdir -p /home/odroid/.cache/services/", "", nullptr);
+				runSystemCommand("touch /home/odroid/.cache/services/bluez.conf", "", nullptr);
 				runSystemCommand("systemctl start bluetooth", "", nullptr);
 			}
                 bool bluetoothenabled = bluetoothd_enabled->getState();
@@ -327,10 +327,10 @@ void GuiMenu::openEmuELECSettings()
 			if (sshd_enabled->changed()) {
 			if (sshd_enabled->getState() == false) {
 				runSystemCommand("systemctl stop sshd", "", nullptr); 
-				runSystemCommand("rm /storage/.cache/services/sshd.conf", "", nullptr); 
+				runSystemCommand("rm /home/odroid/.cache/services/sshd.conf", "", nullptr); 
 			} else { 
-				runSystemCommand("mkdir -p /storage/.cache/services/", "", nullptr);
-				runSystemCommand("touch /storage/.cache/services/sshd.conf", "", nullptr);
+				runSystemCommand("mkdir -p /home/odroid/.cache/services/", "", nullptr);
+				runSystemCommand("touch /home/odroid/.cache/services/sshd.conf", "", nullptr);
 				runSystemCommand("systemctl start sshd", "", nullptr);
 			}
                 bool sshenabled = sshd_enabled->getState();
@@ -420,7 +420,7 @@ void GuiMenu::openEmuELECSettings()
 	GuiSettings *danger_zone = new GuiSettings(mWindow, _("DANGER ZONE!").c_str());
 	// backup configs
 	row.makeAcceptInputHandler([window] {
-		window->pushGui(new GuiMsgBox(window, _("WARNING THIS WILL RESTART EMULATIONSTATION!\n\nAFTER THE SCRIPT IS DONE REMEMBER TO COPY THE FILE /storage/downloads/ee_backup_config.zip TO SOME PLACE SAFE OR IT WILL BE DELETED ON NEXT REBOOT!\n\nBACKUP CURRENT CONFIG AND RESTART?"), _("YES"),
+		window->pushGui(new GuiMsgBox(window, _("WARNING THIS WILL RESTART EMULATIONSTATION!\n\nAFTER THE SCRIPT IS DONE REMEMBER TO COPY THE FILE /roms/downloads/ee_backup_config.zip TO SOME PLACE SAFE OR IT WILL BE DELETED ON NEXT REBOOT!\n\nBACKUP CURRENT CONFIG AND RESTART?"), _("YES"),
 				[] { 
 				runSystemCommand("systemd-run /emuelec/scripts/emuelec-utils backup backup", "", nullptr);
 				}, _("NO"), nullptr));
@@ -4618,7 +4618,7 @@ std::vector<DecorationSetInfo> GuiMenu::getDecorationsSets(SystemData* system)
 #else
 #ifdef _ENABLEEMUELEC
 	std::vector<std::string> paths = {
-		"/storage/roms/bezels",
+		"/roms/bezels",
 		"/tmp/overlays/bezels"
 	};
 #else

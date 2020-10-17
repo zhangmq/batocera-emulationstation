@@ -84,7 +84,7 @@ unsigned long ApiSystem::getFreeSpaceGB(std::string mountpoint)
 
 std::string ApiSystem::getFreeSpaceUserInfo() {
 #ifdef _ENABLEEMUELEC
-  return getFreeSpaceInfo("/storage");
+  return getFreeSpaceInfo("/roms");
 #else
   return getFreeSpaceInfo("/userdata");
 #endif
@@ -129,7 +129,7 @@ std::string ApiSystem::getFreeSpaceInfo(const std::string mountpoint)
 bool ApiSystem::isFreeSpaceLimit() 
 {
 #ifdef _ENABLEEMUELEC
-	return getFreeSpaceGB("/storage/") < 2;
+	return getFreeSpaceGB("/roms/") < 2;
 #else
 	return getFreeSpaceGB("/userdata/") < 2;
 #endif
@@ -139,7 +139,7 @@ std::string ApiSystem::getVersion()
 {
 	LOG(LogDebug) << "ApiSystem::getVersion";
 #ifdef _ENABLEEMUELEC
-	std::ifstream ifs("/storage/.config/EE_VERSION");
+	std::ifstream ifs("/home/odroid/.config/EE_VERSION");
 #else
 	std::ifstream ifs("/usr/share/batocera/batocera.version");
 #endif
@@ -177,7 +177,7 @@ std::pair<std::string, int> ApiSystem::updateSystem(const std::function<void(con
 
 #ifdef _ENABLEEMUELEC	
 	std::string updatecommand = "emuelec-upgrade";
-	std::string updatelog = "/storage/.config/emuelec/logs/emuelec-upgrade.log";
+	std::string updatelog = "/home/odroid/.config/emuelec/logs/emuelec-upgrade.log";
 #else
 	std::string updatecommand = "batocera-upgrade";
 	std::string updatelog = "/userdata/system/logs/batocera-upgrade.log";
@@ -278,7 +278,7 @@ std::pair<std::string, int> ApiSystem::scrape(BusyComponent* ui)
 		return std::pair<std::string, int>(std::string("Cannot call scrape command"), -1);
 	char line[1024] = "";
 #ifdef _ENABLEEMUELEC
-	FILE* flog = fopen("/storage/.config/emuelec/logs/emuelec-scraper.log", "w");
+	FILE* flog = fopen("/home/odroid/.config/emuelec/logs/emuelec-scraper.log", "w");
 #else	
 	FILE* flog = fopen("/userdata/system/logs/batocera-scraper.log", "w");
 #endif

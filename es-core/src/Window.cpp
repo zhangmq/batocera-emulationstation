@@ -154,8 +154,8 @@ bool Window::init(bool initRenderer)
       if(Utils::FileSystem::exists("/emuelec/bin/fbfix")) {
       system("/emuelec/bin/fbfix");      
   } else { 
-	  if(Utils::FileSystem::exists("/storage/.kodi/addons/script.emuelec.Amlogic-ng.launcher/bin/fbfix")) {
-	   system("/storage/.kodi/addons/script.emuelec.Amlogic-ng.launcher/bin/fbfix");
+	  if(Utils::FileSystem::exists("/home/odroid/.kodi/addons/script.emuelec.Amlogic-ng.launcher/bin/fbfix")) {
+	   system("/home/odroid/.kodi/addons/script.emuelec.Amlogic-ng.launcher/bin/fbfix");
 	  }
   }
 #endif

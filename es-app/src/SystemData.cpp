@@ -1187,7 +1187,7 @@ std::string SystemData::getGamelistPath(bool forWrite) const
 		return filePath;
 
 #ifdef _ENABLEEMUELEC	
-	return "/storage/.emulationstation/gamelists/" + mMetadata.name + "/gamelist.xml";
+	return "/home/odroid/.emulationstation/gamelists/" + mMetadata.name + "/gamelist.xml";
 #else
 	return "/etc/emulationstation/gamelists/" + mMetadata.name + "/gamelist.xml";
 #endif

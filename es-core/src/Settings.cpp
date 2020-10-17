@@ -168,7 +168,7 @@ void Settings::setDefaults()
 	// mStringMap["SlideshowScreenSaverBackgroundAudioFile"] = "/userdata/music/slideshow_bg.wav"; // batocera
 	mBoolMap["SlideshowScreenSaverCustomImageSource"] = false;
 #ifdef _ENABLEEMUELEC
-	mStringMap["SlideshowScreenSaverImageDir"] = "/storage/screenshots"; // emuelec
+	mStringMap["SlideshowScreenSaverImageDir"] = "/roms/screenshots"; // emuelec
 #else
 	mStringMap["SlideshowScreenSaverImageDir"] = "/userdata/screenshots"; // batocera
 #endif
@@ -180,7 +180,7 @@ void Settings::setDefaults()
 
 	mBoolMap["SlideshowScreenSaverCustomVideoSource"] = false;
 #ifdef _ENABLEEMUELEC
-	mStringMap["SlideshowScreenSaverVideoDir"] = "/storage/roms/mplayer"; // emuelec
+	mStringMap["SlideshowScreenSaverVideoDir"] = "/roms/mplayer"; // emuelec
     mStringMap["SlideshowScreenSaverVideoFilter"] = ".mp4,.avi,.mkv,.flv,.mpg,.mov";
 	mBoolMap["SlideshowScreenSaverVideoRecurse"] = true;
 #else
@@ -224,7 +224,7 @@ void Settings::setDefaults()
 
 	// Audio out device for volume control
 	#if defined _RPI_ || defined _ENABLEEMUELEC
-		mStringMap["AudioDevice"] = "PCM";
+		mStringMap["AudioDevice"] = "Playback";
 	#else
 		mStringMap["AudioDevice"] = "Master";
 	#endif

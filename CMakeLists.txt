@@ -25,6 +25,7 @@ LIST(APPEND CMAKE_MODULE_PATH
 
 # emuelec
 if("${ENABLE_EMUELEC}" STREQUAL "1")
+  MESSAGE("emeelec enabled")
   add_definitions(-D_ENABLEEMUELEC)
 endif()
 

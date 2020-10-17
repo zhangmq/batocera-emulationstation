@@ -315,8 +315,10 @@ int setLocale(char * argv1)
 	std::locale::global(std::locale("en-US"));
 #else
 	if (Utils::FileSystem::exists("./locale/lang")) // for local builds
+	{	
+		printf("find locale");
 		EsLocale::init("", "./locale/lang");	
-	else
+	} else
 		EsLocale::init("", "/usr/share/locale");	
 #endif
 
@@ -430,6 +432,11 @@ int main(int argc, char* argv[])
 	if(!parseArgs(argc, argv))
 		return 0;
 
+#ifdef _ENABLEEMUELEC
+	printf("check define : _ENABLEEMUELEC ON");
+#else
+	printf("check define : _ENABLEEMUELEC OFF");
+#endif
 	// auto vec = ApiSystem::getInstance()->extractPdfImages("h://Addams Family, The-manual.pdf");
 
 	// only show the console on Windows if HideConsole is false
