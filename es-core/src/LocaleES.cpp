@@ -65,6 +65,8 @@ std::string EsLocale::init(std::string locale, std::string path) {
 
 	cs = bind_textdomain_codeset(PACKAGE_LANG, "UTF-8");
 
+	printf("codeset: %s \n", cs);
+
 	if (cs == NULL) {
 		/* outch not enough memory, no real thing to do */
 		printf("locale: %s \n", locale.c_str());

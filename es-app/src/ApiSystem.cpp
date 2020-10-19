@@ -1162,6 +1162,8 @@ std::vector<std::string> ApiSystem::getWifiNetworks(bool scan)
 
 std::vector<std::string> ApiSystem::executeEnumerationScript(const std::string command)
 {
+	printf("executeEnumerationScript: %s \n", command.c_str());
+	
 	LOG(LogDebug) << "ApiSystem::executeEnumerationScript -> " << command;
 
 	std::vector<std::string> res;
@@ -1183,6 +1185,8 @@ std::vector<std::string> ApiSystem::executeEnumerationScript(const std::string c
 
 std::pair<std::string, int> ApiSystem::executeScript(const std::string command, const std::function<void(const std::string)>& func)
 {
+	printf("executeScript: %s %s \n", command.c_str(), func.c_str());
+	
 	LOG(LogInfo) << "ApiSystem::executeScript -> " << command;
 
 	FILE *pipe = popen(command.c_str(), "r");

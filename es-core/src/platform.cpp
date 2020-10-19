@@ -184,7 +184,9 @@ bool isFastShutdown()
 /* < emuelec */
 std::string getShOutput(const std::string& mStr)
 {
-    std::string result, file;
+    printf("getShOutput: %s \n", mStr.c_str());
+	
+	std::string result, file;
     FILE* pipe{popen(mStr.c_str(), "r")};
     char buffer[256];
 

@@ -306,12 +306,12 @@ void GuiMenu::openEmuELECSettings()
 		s->addSaveFunc([bluetoothd_enabled] {
 			if (bluetoothd_enabled->changed()) {
 			if (bluetoothd_enabled->getState() == false) {
-				runSystemCommand("systemctl stop bluetooth", "", nullptr); 
+				runSystemCommand("sudo systemctl stop bluetooth", "", nullptr); 
 				runSystemCommand("rm /home/odroid/.cache/services/bluez.conf", "", nullptr); 
 			} else { 
 				runSystemCommand("mkdir -p /home/odroid/.cache/services/", "", nullptr);
 				runSystemCommand("touch /home/odroid/.cache/services/bluez.conf", "", nullptr);
-				runSystemCommand("systemctl start bluetooth", "", nullptr);
+				runSystemCommand("sudo systemctl start bluetooth", "", nullptr);
 			}
                 bool bluetoothenabled = bluetoothd_enabled->getState();
                 SystemConf::getInstance()->set("ee_bluetooth.enabled", bluetoothenabled ? "1" : "0");
@@ -326,12 +326,12 @@ void GuiMenu::openEmuELECSettings()
 		s->addSaveFunc([sshd_enabled] {
 			if (sshd_enabled->changed()) {
 			if (sshd_enabled->getState() == false) {
-				runSystemCommand("systemctl stop sshd", "", nullptr); 
+				runSystemCommand("sudo systemctl stop sshd", "", nullptr); 
 				runSystemCommand("rm /home/odroid/.cache/services/sshd.conf", "", nullptr); 
 			} else { 
 				runSystemCommand("mkdir -p /home/odroid/.cache/services/", "", nullptr);
 				runSystemCommand("touch /home/odroid/.cache/services/sshd.conf", "", nullptr);
-				runSystemCommand("systemctl start sshd", "", nullptr);
+				runSystemCommand("sudo systemctl start sshd", "", nullptr);
 			}
                 bool sshenabled = sshd_enabled->getState();
                 SystemConf::getInstance()->set("ee_ssh.enabled", sshenabled ? "1" : "0");
@@ -1623,7 +1623,7 @@ void GuiMenu::openSystemSettings_batocera()
 			window->pushGui(new GuiMsgBox(window, msg, _("YES"), [selectedLanguage] {
 			SystemConf::getInstance()->set("system.language", selectedLanguage);
 			SystemConf::getInstance()->saveSystemConf();
-					runSystemCommand("systemctl restart emustation", "", nullptr); 
+					runSystemCommand("sudo systemctl restart emulationstation", "", nullptr); 
 			}, "NO",nullptr));
 #else
 			if (SystemConf::getInstance()->set("system.language", language_choice->getSelected()))
@@ -3561,7 +3561,6 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool quickAccessMenu)
 	s->addEntry(_("RESTART EMULATIONSTATION"), false, [window] {
 		window->pushGui(new GuiMsgBox(window, _("REALLY RESTART EMULATIONSTATION?"), _("YES"),
 			[] {
-    		   /*runSystemCommand("systemctl restart emustation.service", "", nullptr);*/
     		   Scripting::fireEvent("quit", "restart");
 			   quitES(QuitMode::QUIT);
 		}, _("NO"), nullptr));
@@ -3572,7 +3571,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool quickAccessMenu)
 			[] {
 			remove("/var/lock/start.games");
             runSystemCommand("touch /var/lock/start.retro", "", nullptr);
-			runSystemCommand("systemctl start retroarch.service", "", nullptr);
+			runSystemCommand("sudo systemctl start retroarch.service", "", nullptr);
 			Scripting::fireEvent("quit", "retroarch");
 			quitES(QuitMode::QUIT);
 		}, _("NO"), nullptr));
@@ -3584,7 +3583,7 @@ void GuiMenu::openQuitMenu_batocera_static(Window *window, bool quickAccessMenu)
 			Scripting::fireEvent("quit", "nand");
 			runSystemCommand("rebootfromnand", "", nullptr);
 			runSystemCommand("sync", "", nullptr);
-			runSystemCommand("systemctl reboot", "", nullptr);
+			runSystemCommand("sudo systemctl reboot", "", nullptr);
 			quitES(QuitMode::QUIT);
 		}, _("NO"), nullptr));
 	}, "iconAdvanced");

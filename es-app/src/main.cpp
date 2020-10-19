@@ -318,7 +318,7 @@ int setLocale(char * argv1)
 	
 	if (Utils::FileSystem::exists("./locale/lang")) // for local builds
 	{	
-		printf("find locale");
+		printf("find locale \n");
 		EsLocale::init("", "./locale/lang");	
 	} else
 		EsLocale::init("", "/usr/share/locale");	
@@ -436,9 +436,9 @@ int main(int argc, char* argv[])
 		return 0;
 
 #ifdef _ENABLEEMUELEC
-	printf("check define : _ENABLEEMUELEC ON");
+	printf("check define : _ENABLEEMUELEC ON \n");
 #else
-	printf("check define : _ENABLEEMUELEC OFF");
+	printf("check define : _ENABLEEMUELEC OFF \n");
 #endif
 	// auto vec = ApiSystem::getInstance()->extractPdfImages("h://Addams Family, The-manual.pdf");
 
