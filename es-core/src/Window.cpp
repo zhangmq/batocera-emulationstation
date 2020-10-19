@@ -151,8 +151,8 @@ bool Window::init(bool initRenderer)
 	if (peekGui())
 #ifdef _ENABLEEMUELEC	
 		// emuelec
-      if(Utils::FileSystem::exists("/emuelec/bin/fbfix")) {
-      system("/emuelec/bin/fbfix");      
+      if(Utils::FileSystem::exists("/home/odroid/.config/emuelec/bin/fbfix")) {
+      system("/home/odroid/.config/emuelec/bin/fbfix");      
   } else { 
 	  if(Utils::FileSystem::exists("/home/odroid/.kodi/addons/script.emuelec.Amlogic-ng.launcher/bin/fbfix")) {
 	   system("/home/odroid/.kodi/addons/script.emuelec.Amlogic-ng.launcher/bin/fbfix");

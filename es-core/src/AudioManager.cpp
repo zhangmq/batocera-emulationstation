@@ -100,7 +100,7 @@ void AudioManager::deinit()
 
 #ifdef _ENABLEEMUELEC	
 	LOG(LogInfo) << "Attempting to close SDL AUDIO";
-	runSystemCommand("/emuelec/scripts/emuelec-utils audio alsa", "", nullptr); 
+	runSystemCommand("/home/odroid/.config/emuelec/scripts/emuelec-utils audio alsa", "", nullptr); 
 #endif
 
 	//completely tear down SDL audio. else SDL hogs audio resources and emulators might fail to start...

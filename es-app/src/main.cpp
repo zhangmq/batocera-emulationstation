@@ -314,12 +314,15 @@ int setLocale(char * argv1)
 #if WIN32
 	std::locale::global(std::locale("en-US"));
 #else
+	printf("path: %s \n", Utils::FileSystem::getExePath().c_str());
+	
 	if (Utils::FileSystem::exists("./locale/lang")) // for local builds
 	{	
 		printf("find locale");
 		EsLocale::init("", "./locale/lang");	
 	} else
 		EsLocale::init("", "/usr/share/locale");	
+
 #endif
 
 	return 0;

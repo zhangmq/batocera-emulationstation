@@ -109,7 +109,7 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 
 #ifdef _ENABLEEMUELEC
 	if (isFullUI)
-		addEntry(_("EMUELEC SETTINGS").c_str(), true, [this] { openEmuELECSettings(); }); /* < emuelec */
+		//addEntry(_("EMUELEC SETTINGS").c_str(), true, [this] { openEmuELECSettings(); }); /* < emuelec */
 #endif
 
 	if (isFullUI &&
@@ -217,7 +217,7 @@ void GuiMenu::openEmuELECSettings()
 		videomode.push_back("576cvbs");
 		videomode.push_back("Custom");
 		videomode.push_back("-- AUTO-DETECTED RESOLUTIONS --");
-   for(std::stringstream ss(getShOutput(R"(/emuelec/scripts/emuelec-utils resolutions)")); getline(ss, a, ','); ) {
+   for(std::stringstream ss(getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils resolutions)")); getline(ss, a, ','); ) {
         videomode.push_back(a);
 	}
 		for (auto it = videomode.cbegin(); it != videomode.cend(); it++) {
@@ -422,7 +422,7 @@ void GuiMenu::openEmuELECSettings()
 	row.makeAcceptInputHandler([window] {
 		window->pushGui(new GuiMsgBox(window, _("WARNING THIS WILL RESTART EMULATIONSTATION!\n\nAFTER THE SCRIPT IS DONE REMEMBER TO COPY THE FILE /roms/downloads/ee_backup_config.zip TO SOME PLACE SAFE OR IT WILL BE DELETED ON NEXT REBOOT!\n\nBACKUP CURRENT CONFIG AND RESTART?"), _("YES"),
 				[] { 
-				runSystemCommand("systemd-run /emuelec/scripts/emuelec-utils backup backup", "", nullptr);
+				runSystemCommand("systemd-run /home/odroid/.config/emuelec/scripts/emuelec-utils backup backup", "", nullptr);
 				}, _("NO"), nullptr));
 	});
 	row.addElement(std::make_shared<TextComponent>(window, _("BACKUP EMUELEC CONFIGS"), Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
@@ -432,7 +432,7 @@ void GuiMenu::openEmuELECSettings()
 	row.makeAcceptInputHandler([window] {
 		window->pushGui(new GuiMsgBox(window, _("WARNING: SYSTEM WILL RESET SCRIPTS AND BINARIES !\nUPDATE, DOWNLOADS, THEMES, BLUETOOTH PAIRINGS AND ROMS FOLDER WILL NOT BE AFFECTED.\n\nRESET SCRIPTS AND BINARIES TO DEFAULT AND RESTART?"), _("YES"),
 				[] { 
-				runSystemCommand("systemd-run /emuelec/scripts/emuelec-utils clearconfig EMUS", "", nullptr);
+				runSystemCommand("systemd-run /home/odroid/.config/emuelec/scripts/emuelec-utils clearconfig EMUS", "", nullptr);
 				}, _("NO"), nullptr));
 	});
 	row.addElement(std::make_shared<TextComponent>(window, _("RESET EMUELEC SCRIPTS AND BINARIES TO DEFAULT"), Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
@@ -442,7 +442,7 @@ void GuiMenu::openEmuELECSettings()
 	row.makeAcceptInputHandler([window] {
 		window->pushGui(new GuiMsgBox(window, _("WARNING: RETROARCH CONFIG WILL RESET TO DEFAULT\n\nPER-CORE CONFIGURATIONS WILL NOT BE AFFECTED BUT NO BACKUP WILL BE CREATED!\n\nRESET RETROARCH CONFIG TO DEFAULT?"), _("YES"),
 				[] { 
-				runSystemCommand("systemd-run /emuelec/scripts/emuelec-utils clearconfig retroarch", "", nullptr);
+				runSystemCommand("systemd-run /home/odroid/.config/emuelec/scripts/emuelec-utils clearconfig retroarch", "", nullptr);
 				}, _("NO"), nullptr));
 	});
 	row.addElement(std::make_shared<TextComponent>(window, _("RESET RETROARCH CONFIG TO DEFAULT"), Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
@@ -452,7 +452,7 @@ void GuiMenu::openEmuELECSettings()
 	row.makeAcceptInputHandler([window] {
 		window->pushGui(new GuiMsgBox(window, _("WARNING: ALL CONFIGURATIONS WILL BE RESET AND NO BACKUP WILL BE CREATED!\n\nIF YOU WANT TO KEEP YOUR SETTINGS MAKE A BACKUP AND SAVE IT ON AN EXTERNAL DRIVE BEFORE RUNING THIS OPTION!\n\nRESET SYSTEM TO DEFAULT CONFIG AND RESTART?"), _("YES"),
 				[] { 
-				runSystemCommand("systemd-run /emuelec/scripts/emuelec-utils clearconfig ALL", "", nullptr);
+				runSystemCommand("systemd-run /home/odroid/.config/emuelec/scripts/emuelec-utils clearconfig ALL", "", nullptr);
 				}, _("NO"), nullptr));
 	});
 	row.addElement(std::make_shared<TextComponent>(window, _("RESET SYSTEM TO DEFAULT CONFIG"), Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
@@ -683,7 +683,7 @@ void GuiMenu::addVersionInfo()
 		else
 #endif
 #ifdef _ENABLEEMUELEC	
-		mVersion.setText("EMUELEC ES V" + ApiSystem::getInstance()->getVersion() + buildDate + " IP:" + getShOutput(R"(/emuelec/scripts/emuelec-utils getip)"));
+		mVersion.setText("EMUELEC ES V" + ApiSystem::getInstance()->getVersion() + buildDate + " IP:" + getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils getip)"));
 #else
 		mVersion.setText("BATOCERA.LINUX ES V" + ApiSystem::getInstance()->getVersion() + buildDate);
 #endif
@@ -1216,9 +1216,9 @@ void GuiMenu::openSystemSettings_batocera()
 	auto emuelec_timezones = std::make_shared<OptionListComponent<std::string> >(mWindow, _("TIMEZONE"), false);
 	std::string currentTimezone = SystemConf::getInstance()->get("system.timezone");
 	if (currentTimezone.empty())
-		currentTimezone = std::string(getShOutput(R"(/emuelec/scripts/emuelec-utils current_timezone)"));
+		currentTimezone = std::string(getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils current_timezone)"));
 	std::string a;
-	for(std::stringstream ss(getShOutput(R"(/emuelec/scripts/emuelec-utils timezones)")); getline(ss, a, ','); ) {
+	for(std::stringstream ss(getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils timezones)")); getline(ss, a, ','); ) {
 		emuelec_timezones->add(a, a, currentTimezone == a); // emuelec
 	}
 	s->addWithLabel(_("TIMEZONE"), emuelec_timezones);
@@ -1665,7 +1665,7 @@ void GuiMenu::openLatencyReductionConfiguration(Window* mWindow, std::string con
 {
 	GuiSettings* guiLatency = new GuiSettings(mWindow, _("LATENCY REDUCTION").c_str());
 #ifdef _ENABLEEMUELEC
-	auto runaheadValue = getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".runahead'");
+	auto runaheadValue = getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".runahead'");
 #else
 	auto runaheadValue = SystemConf::getInstance()->get(configName + ".runahead");
 #endif
@@ -1686,7 +1686,7 @@ void GuiMenu::openLatencyReductionConfiguration(Window* mWindow, std::string con
 
 	// second instance
 #ifdef _ENABLEEMUELEC
-	auto secondinstanceValue = getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".secondinstance'");
+	auto secondinstanceValue = getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".secondinstance'");
 #else
 	auto secondinstanceValue = SystemConf::getInstance()->get(configName + ".secondinstance");
 #endif
@@ -1703,8 +1703,8 @@ void GuiMenu::openLatencyReductionConfiguration(Window* mWindow, std::string con
 	guiLatency->addSaveFunc([configName, runahead_enabled, secondinstance_enabled]
 	{
 #ifdef _ENABLEEMUELEC
-		getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".runahead' " + runahead_enabled->getSelected());
-		getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".secondinstance' " + secondinstance_enabled->getSelected());
+		getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".runahead' " + runahead_enabled->getSelected());
+		getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".secondinstance' " + secondinstance_enabled->getSelected());
 #else
 		SystemConf::getInstance()->set(configName + ".runahead", runahead_enabled->getSelected());
 		SystemConf::getInstance()->set(configName + ".secondinstance", secondinstance_enabled->getSelected());
@@ -1914,7 +1914,7 @@ void GuiMenu::openGamesSettings_batocera()
 			shaders_choices->add(_("NONE"), "none", currentShader == "none");
 #ifdef _ENABLEEMUELEC	
 	std::string a;
-	for(std::stringstream ss(getShOutput(R"(/emuelec/scripts/emuelec-utils getshaders)")); getline(ss, a, ','); )
+	for(std::stringstream ss(getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils getshaders)")); getline(ss, a, ','); )
 		shaders_choices->add(a, a, currentShader == a); // emuelec
 #else
 			for (auto shader : installedShaders)
@@ -4188,8 +4188,8 @@ void GuiMenu::popSpecificConfigurationGui(Window* mWindow, std::string title, st
 		if (fileData != nullptr)
 		systemConfiguration->setSubTitle(systemData->getFullName());
 
-		std::string currentEmulator = fileData != nullptr ? fileData->getEmulator(false) : getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".emulator' ");
-		std::string currentCore = fileData != nullptr ? fileData->getCore(false) : getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".core' ");
+		std::string currentEmulator = fileData != nullptr ? fileData->getEmulator(false) : getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".emulator' ");
+		std::string currentCore = fileData != nullptr ? fileData->getCore(false) : getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".core' ");
 
 	if (systemData->hasEmulatorSelection())
 	{
@@ -4240,8 +4240,8 @@ void GuiMenu::popSpecificConfigurationGui(Window* mWindow, std::string title, st
 			else
 			{
 
-				getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".emulator' " + newEmul);
-				getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".core' " + newCore);
+				getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".emulator' " + newEmul);
+				getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".core' " + newCore);
 				
 			}
 
@@ -4258,59 +4258,59 @@ void GuiMenu::popSpecificConfigurationGui(Window* mWindow, std::string title, st
 	{
 		auto ratio_choice = createRatioOptionList(mWindow, configName);
 		systemConfiguration->addWithLabel(_("GAME RATIO"), ratio_choice);
-		systemConfiguration->addSaveFunc([configName, ratio_choice] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".ratio' " + ratio_choice->getSelected()); });
+		systemConfiguration->addSaveFunc([configName, ratio_choice] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".ratio' " + ratio_choice->getSelected()); });
 	}
 
 	// bezel
 	if (systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::decoration))
 	{
 		auto bezel_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BEZEL"));
-		bezel_enabled->add(_("AUTO"), "auto", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") != "0" && getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") != "1");
-		bezel_enabled->add(_("YES"), "1", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") == "1");
-		bezel_enabled->add(_("NO"), "0", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") == "0");
+		bezel_enabled->add(_("AUTO"), "auto", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") != "0" && getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") != "1");
+		bezel_enabled->add(_("YES"), "1", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") == "1");
+		bezel_enabled->add(_("NO"), "0", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".bezel'") == "0");
 		systemConfiguration->addWithLabel(_("BEZEL"), bezel_enabled);
-		systemConfiguration->addSaveFunc([configName, bezel_enabled] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".bezel' " + bezel_enabled->getSelected()); });
+		systemConfiguration->addSaveFunc([configName, bezel_enabled] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".bezel' " + bezel_enabled->getSelected()); });
 	}
 	
 	// maxperf
 		auto maxperf_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("ENABLE MAX PERFORMANCE"));
-		maxperf_enabled->add(_("AUTO"), "auto", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") != "0" && getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") != "1");
-		maxperf_enabled->add(_("YES"), "1", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") == "1");
-		maxperf_enabled->add(_("NO"), "0", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") == "0");
+		maxperf_enabled->add(_("AUTO"), "auto", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") != "0" && getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") != "1");
+		maxperf_enabled->add(_("YES"), "1", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") == "1");
+		maxperf_enabled->add(_("NO"), "0", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".maxperf'") == "0");
 		systemConfiguration->addWithLabel(_("ENABLE MAX PERFORMANCE"), maxperf_enabled);
-		systemConfiguration->addSaveFunc([configName, maxperf_enabled] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".maxperf' " + maxperf_enabled->getSelected()); });
+		systemConfiguration->addSaveFunc([configName, maxperf_enabled] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".maxperf' " + maxperf_enabled->getSelected()); });
 	
 	// smoothing
 	if (systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::smooth))
 	{
 		auto smoothing_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("SMOOTH GAMES"));
-		smoothing_enabled->add(_("AUTO"), "auto", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") != "0" && getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") != "1");
-		smoothing_enabled->add(_("ON"), "1", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") == "1");
-		smoothing_enabled->add(_("OFF"), "0", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") == "0");
+		smoothing_enabled->add(_("AUTO"), "auto", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") != "0" && getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") != "1");
+		smoothing_enabled->add(_("ON"), "1", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") == "1");
+		smoothing_enabled->add(_("OFF"), "0", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".smooth'") == "0");
 		systemConfiguration->addWithLabel(_("SMOOTH GAMES"), smoothing_enabled);
-		systemConfiguration->addSaveFunc([configName, smoothing_enabled] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".smooth' " + smoothing_enabled->getSelected()); });
+		systemConfiguration->addSaveFunc([configName, smoothing_enabled] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".smooth' " + smoothing_enabled->getSelected()); });
 	}
 
 	// rewind
 	if (systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::rewind))
 	{
 		auto rewind_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("REWIND"));
-		rewind_enabled->add(_("AUTO"), "auto", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") != "0" && getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") != "1");
-		rewind_enabled->add(_("ON"), "1", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") == "1");
-		rewind_enabled->add(_("OFF"), "0", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") == "0");
+		rewind_enabled->add(_("AUTO"), "auto", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") != "0" && getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") != "1");
+		rewind_enabled->add(_("ON"), "1", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") == "1");
+		rewind_enabled->add(_("OFF"), "0", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".rewind'") == "0");
 		systemConfiguration->addWithLabel(_("REWIND"), rewind_enabled);
-		systemConfiguration->addSaveFunc([configName, rewind_enabled] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".rewind' " + rewind_enabled->getSelected());	});
+		systemConfiguration->addSaveFunc([configName, rewind_enabled] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".rewind' " + rewind_enabled->getSelected());	});
 	}
 
 	// autosave
 	if (systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::autosave))
 	{
 		auto autosave_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("AUTO SAVE/LOAD"));
-		autosave_enabled->add(_("AUTO"), "auto", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") != "0" && getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") != "1");
-		autosave_enabled->add(_("ON"), "1", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") == "1");
-		autosave_enabled->add(_("OFF"), "0", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") == "0");
+		autosave_enabled->add(_("AUTO"), "auto", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") != "0" && getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") != "1");
+		autosave_enabled->add(_("ON"), "1", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") == "1");
+		autosave_enabled->add(_("OFF"), "0", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".autosave'") == "0");
 		systemConfiguration->addWithLabel(_("AUTO SAVE/LOAD"), autosave_enabled);
-		systemConfiguration->addSaveFunc([configName, autosave_enabled] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".autosave' " + autosave_enabled->getSelected()); });
+		systemConfiguration->addSaveFunc([configName, autosave_enabled] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".autosave' " + autosave_enabled->getSelected()); });
 	}
 
 	// Shaders preset
@@ -4318,38 +4318,38 @@ void GuiMenu::popSpecificConfigurationGui(Window* mWindow, std::string title, st
 		systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::shaders))
 	{
 		auto shaders_choices = std::make_shared<OptionListComponent<std::string> >(mWindow, _("SHADERS SET"),false);
-		std::string currentShader = getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".shaderset'");
+		std::string currentShader = getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".shaderset'");
 		if (currentShader.empty()) {
 			currentShader = std::string("auto");
 		}
 
 		shaders_choices->add(_("AUTO"), "auto", currentShader == "auto");
 		shaders_choices->add(_("NONE"), "none", currentShader == "none");
-		for(std::stringstream ss(getShOutput(R"(/emuelec/scripts/emuelec-utils getshaders)")); getline(ss, a, ','); )
+		for(std::stringstream ss(getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils getshaders)")); getline(ss, a, ','); )
 		shaders_choices->add(a, a, currentShader == a); // emuelec
 		systemConfiguration->addWithLabel(_("SHADERS SET"), shaders_choices);
-		systemConfiguration->addSaveFunc([configName, shaders_choices] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".shaderset' " + shaders_choices->getSelected()); });
+		systemConfiguration->addSaveFunc([configName, shaders_choices] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".shaderset' " + shaders_choices->getSelected()); });
 	}
 
 	// Integer scale
 	if (systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::pixel_perfect))
 	{
 		auto integerscale_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("INTEGER SCALE (PIXEL PERFECT)"));
-		integerscale_enabled->add(_("AUTO"), "auto", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") != "0" && getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") != "1");
-		integerscale_enabled->add(_("ON"), "1", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") == "1");
-		integerscale_enabled->add(_("OFF"), "0", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") == "0");
+		integerscale_enabled->add(_("AUTO"), "auto", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") != "0" && getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") != "1");
+		integerscale_enabled->add(_("ON"), "1", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") == "1");
+		integerscale_enabled->add(_("OFF"), "0", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".integerscale'") == "0");
 		systemConfiguration->addWithLabel(_("INTEGER SCALE (PIXEL PERFECT)"), integerscale_enabled);
-		systemConfiguration->addSaveFunc([integerscale_enabled, configName] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".integerscale' " + integerscale_enabled->getSelected()); });
+		systemConfiguration->addSaveFunc([integerscale_enabled, configName] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".integerscale' " + integerscale_enabled->getSelected()); });
 	}
 
 	// Vertical Game
 	if (systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::vertical))
 	{
 		auto vertical_enabled = std::make_shared<OptionListComponent<std::string>>(mWindow, _("ENABLE VERTICAL"));
-		vertical_enabled->add(_("OFF"), "auto", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".vertical'") != "1");
-		vertical_enabled->add(_("ON"), "1", getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".vertical'") == "1");
+		vertical_enabled->add(_("OFF"), "auto", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".vertical'") != "1");
+		vertical_enabled->add(_("ON"), "1", getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + ".vertical'") == "1");
 		systemConfiguration->addWithLabel(_("ENABLE VERTICAL"), vertical_enabled);
-		systemConfiguration->addSaveFunc([vertical_enabled, configName] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".vertical' " + vertical_enabled->getSelected()); });
+		systemConfiguration->addSaveFunc([vertical_enabled, configName] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + ".vertical' " + vertical_enabled->getSelected()); });
 	}
 
 	if (systemData->isFeatureSupported(currentEmulator, currentCore, EmulatorFeatures::latency_reduction))	
@@ -4359,7 +4359,7 @@ void GuiMenu::popSpecificConfigurationGui(Window* mWindow, std::string title, st
 	{
 		// gameboy colorize
 		auto colorizations_choices = std::make_shared<OptionListComponent<std::string> >(mWindow, _("COLORIZATION"), false);
-		std::string currentColorization = getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configName + "-renderer.colorization'");
+		std::string currentColorization = getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configName + "-renderer.colorization'");
 		if (currentColorization.empty()) {
 			currentColorization = std::string("auto");
 		}
@@ -4500,7 +4500,7 @@ void GuiMenu::popSpecificConfigurationGui(Window* mWindow, std::string title, st
 	if (systemData->getName() == "gb" || systemData->getName() == "gbc" || systemData->getName() == "gb2players" || systemData->getName() == "gbc2players" || systemData->getName() == "gbh" || systemData->getName() == "gbch") // only for gb, gbc and gb2players
 		{
 			systemConfiguration->addWithLabel(_("COLORIZATION"), colorizations_choices);
-			systemConfiguration->addSaveFunc([colorizations_choices, configName] { getShOutput(R"(/emuelec/scripts/emuelec-utils setemu set ')" + configName + "-renderer.colorization' " + colorizations_choices->getSelected()); });
+			systemConfiguration->addSaveFunc([colorizations_choices, configName] { getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu set ')" + configName + "-renderer.colorization' " + colorizations_choices->getSelected()); });
 		}		
 	}
 #endif 
@@ -4537,7 +4537,7 @@ std::shared_ptr<OptionListComponent<std::string>> GuiMenu::createRatioOptionList
 	if (configname == "global") {
 	currentRatio = SystemConf::getInstance()->get(configname + ".ratio");
 	} else {
-   currentRatio = getShOutput(R"(/emuelec/scripts/emuelec-utils setemu get ')" + configname + ".ratio'");
+   currentRatio = getShOutput(R"(/home/odroid/.config/emuelec/scripts/emuelec-utils setemu get ')" + configname + ".ratio'");
 	}	
 #else
 	std::string currentRatio = SystemConf::getInstance()->get(configname + ".ratio");

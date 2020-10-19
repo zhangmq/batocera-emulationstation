@@ -67,8 +67,11 @@ std::string EsLocale::init(std::string locale, std::string path) {
 
 	if (cs == NULL) {
 		/* outch not enough memory, no real thing to do */
+		printf("locale: %s \n", locale.c_str());
 		return locale;
 	}
+
+	printf("nlocale %s \n", nlocale.c_str());
 
 	return nlocale;
 
@@ -186,10 +189,14 @@ void EsLocale::checkLocalisationLoaded()
 
 	mItems.clear();
 
+	printf("language:" + mCurrentLanguage);
+
 	// batocera could be adapted using this path : "/usr/share/locale"
 	std::string xmlpath = ResourceManager::getInstance()->getResourcePath(":/locale/" + mCurrentLanguage + "/emulationstation2.po");
 	if (!Utils::FileSystem::exists(xmlpath))
 		xmlpath = ResourceManager::getInstance()->getResourcePath(":/locale/" + mCurrentLanguage + "/LC_MESSAGES/emulationstation2.po");
+
+	printf("language path:" + xmlpath);
 
 	if (!Utils::FileSystem::exists(xmlpath))
 		xmlpath = ResourceManager::getInstance()->getResourcePath(":/locale/lang/" + mCurrentLanguage + "/emulationstation2.po");

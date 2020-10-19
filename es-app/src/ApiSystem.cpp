@@ -156,7 +156,11 @@ std::string ApiSystem::getVersion()
 
 bool ApiSystem::setOverscan(bool enable) 
 {
+#ifdef _ENABLEEMUELEC
+	return executeScript("/home/odroid/.config/scripts/batocera/batocera-config overscan " + std::string(enable ? "enable" : "disable"));
+#else
 	return executeScript("batocera-config overscan " + std::string(enable ? "enable" : "disable"));
+#endif
 }
 
 bool ApiSystem::setOverclock(std::string mode) 
@@ -173,6 +177,10 @@ bool ApiSystem::setOverclock(std::string mode)
 // BusyComponent* ui
 std::pair<std::string, int> ApiSystem::updateSystem(const std::function<void(const std::string)>& func)
 {
+#ifdef _ENABLEEMUELEC
+	return std::pair<std::string, int>(std::string("updateSystem disabled"), 0);
+#endif
+	
 	LOG(LogDebug) << "ApiSystem::updateSystem";
 
 #ifdef _ENABLEEMUELEC	
@@ -212,6 +220,10 @@ std::pair<std::string, int> ApiSystem::updateSystem(const std::function<void(con
 
 std::pair<std::string, int> ApiSystem::backupSystem(BusyComponent* ui, std::string device) 
 {
+#ifdef _ENABLEEMUELEC
+	return std::pair<std::string, int>(std::string("backupSystem disabled"), 0);
+#endif
+	
 	LOG(LogDebug) << "ApiSystem::backupSystem";
 
 	std::string updatecommand = "batocera-sync sync " + device;
@@ -241,6 +253,10 @@ std::pair<std::string, int> ApiSystem::backupSystem(BusyComponent* ui, std::stri
 
 std::pair<std::string, int> ApiSystem::installSystem(BusyComponent* ui, std::string device, std::string architecture) 
 {
+#ifdef _ENABLEEMUELEC
+	return std::pair<std::string, int>(std::string("installSystem disabled"), 0);
+#endif
+	
 	LOG(LogDebug) << "ApiSystem::installSystem";
 
 	std::string updatecommand = "batocera-install install " + device + " " + architecture;
@@ -272,8 +288,11 @@ std::pair<std::string, int> ApiSystem::installSystem(BusyComponent* ui, std::str
 std::pair<std::string, int> ApiSystem::scrape(BusyComponent* ui) 
 {
 	LOG(LogDebug) << "ApiSystem::scrape";
-
+#ifdef _ENABLEEMUELEC
+	FILE* pipe = popen("/home/odroid/.config/emuelec/scripts/batocera/batocera-scraper", "r");
+#else
 	FILE* pipe = popen("batocera-scraper", "r");
+#endif
 	if (pipe == nullptr)
 		return std::pair<std::string, int>(std::string("Cannot call scrape command"), -1);
 	char line[1024] = "";
@@ -302,11 +321,15 @@ std::pair<std::string, int> ApiSystem::scrape(BusyComponent* ui)
 
 bool ApiSystem::ping() 
 {
-	return executeScript("timeout 1 ping -c 1 -t 1000 google.com");
+	return executeScript("timeout 1 ping -c 1 -t 1000 8.8.8.8");
 }
 
 bool ApiSystem::canUpdate(std::vector<std::string>& output) 
 {
+#ifdef _ENABLEEMUELEC
+	return false;
+#endif
+	
 	LOG(LogDebug) << "ApiSystem::canUpdate";
 
 	FILE *pipe = popen("batocera-config canupdate", "r");
@@ -400,7 +423,7 @@ bool ApiSystem::launchFileManager(Window *window)
 {
 	LOG(LogDebug) << "ApiSystem::launchFileManager";
 
-	std::string command = "/emuelec/scripts/emuelec-utils filemanager";
+	std::string command = "/home/odroid/.config/emuelec/scripts/emuelec-utils filemanager";
 
 	ApiSystem::launchExternalWindow_before(window);
 
@@ -417,7 +440,7 @@ bool ApiSystem::launchErrorWindow(Window *window)
 {
 	LOG(LogDebug) << "ApiSystem::launchErrorWindow";
 
-	std::string command = "/emuelec/scripts/emuelec-utils error";
+	std::string command = "/home/odroid/.config/emuelec/scripts/emuelec-utils error";
 
 	ApiSystem::launchExternalWindow_before(window);
 
@@ -433,7 +456,7 @@ bool ApiSystem::launchErrorWindow(Window *window)
 bool ApiSystem::enableWifi(std::string ssid, std::string key) 
 {
 #ifdef _ENABLEEMUELEC
-	return executeScript("batocera-config wifi enable \"" + ssid + "\" \"" + key + "\"");
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-config wifi enable \"" + ssid + "\" \"" + key + "\"");
 #else
 	return executeScript("batocera-wifi enable \"" + ssid + "\" \"" + key + "\"");
 #endif
@@ -442,7 +465,7 @@ bool ApiSystem::enableWifi(std::string ssid, std::string key)
 bool ApiSystem::disableWifi() 
 {
 #ifdef _ENABLEEMUELEC
-	return executeScript("batocera-config wifi disable");
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-config wifi disable");
 #else
 	return executeScript("batocera-wifi disable");
 #endif
@@ -506,42 +529,42 @@ std::string ApiSystem::getIpAdress()
 
 bool ApiSystem::scanNewBluetooth(const std::function<void(const std::string)>& func)
 {
-	return executeScript("batocera-bluetooth trust", func).second == 0;
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-bluetooth trust", func).second == 0;
 }
 
 std::vector<std::string> ApiSystem::getBluetoothDeviceList()
 {
-	return executeEnumerationScript("batocera-bluetooth list");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-bluetooth list");
 }
 
 bool ApiSystem::removeBluetoothDevice(const std::string deviceName)
 {
-	return executeScript("batocera-bluetooth remove "+ deviceName);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-bluetooth remove "+ deviceName);
 }
 
 std::vector<std::string> ApiSystem::getAvailableStorageDevices() 
 {
-	return executeEnumerationScript("batocera-config storage list");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-config storage list");
 }
 
 std::vector<std::string> ApiSystem::getVideoModes() 
 {
-	return executeEnumerationScript("batocera-resolution listModes");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-resolution listModes");
 }
 
 std::vector<std::string> ApiSystem::getAvailableBackupDevices() 
 {
-	return executeEnumerationScript("batocera-sync list");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-sync list");
 }
 
 std::vector<std::string> ApiSystem::getAvailableInstallDevices() 
 {
-	return executeEnumerationScript("batocera-install listDisks");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-install listDisks");
 }
 
 std::vector<std::string> ApiSystem::getAvailableInstallArchitectures() 
 {
-	return executeEnumerationScript("batocera-install listArchs");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-install listArchs");
 }
 
 std::vector<std::string> ApiSystem::getAvailableOverclocking() 
@@ -555,7 +578,7 @@ std::vector<std::string> ApiSystem::getAvailableOverclocking()
 
 std::vector<std::string> ApiSystem::getSystemInformations() 
 {
-	return executeEnumerationScript("batocera-info --full");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-info --full");
 }
 
 std::vector<BiosSystem> ApiSystem::getBiosInformations() 
@@ -564,7 +587,7 @@ std::vector<BiosSystem> ApiSystem::getBiosInformations()
 	BiosSystem current;
 	bool isCurrent = false;
 
-	auto systems = executeEnumerationScript("batocera-systems");
+	auto systems = executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-systems");
 	for (auto line : systems)
 	{
 		if (Utils::String::startsWith(line, "> ")) 
@@ -607,7 +630,7 @@ std::vector<BiosSystem> ApiSystem::getBiosInformations()
 
 bool ApiSystem::generateSupportFile() 
 {
-	return executeScript("batocera-support");
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-support");
 }
 
 std::string ApiSystem::getCurrentStorage() 
@@ -619,7 +642,7 @@ std::string ApiSystem::getCurrentStorage()
 #endif
 
 	std::ostringstream oss;
-	oss << "batocera-config storage current";
+	oss << "/home/odroid/.config/emuelec/scripts/batocera/batocera-config storage current";
 	FILE *pipe = popen(oss.str().c_str(), "r");
 	char line[1024];
 
@@ -636,12 +659,12 @@ std::string ApiSystem::getCurrentStorage()
 
 bool ApiSystem::setStorage(std::string selected) 
 {
-	return executeScript("batocera-config storage " + selected);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-config storage " + selected);
 }
 
 bool ApiSystem::forgetBluetoothControllers() 
 {
-	return executeScript("batocera-config forgetBT");
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-config forgetBT");
 }
 
 std::string ApiSystem::getRootPassword() 
@@ -649,7 +672,7 @@ std::string ApiSystem::getRootPassword()
 	LOG(LogDebug) << "ApiSystem::getRootPassword";
 
 	std::ostringstream oss;
-	oss << "batocera-config getRootPassword";
+	oss << "/home/odroid/.config/emuelec/scripts/batocera/batocera-config getRootPassword";
 	FILE *pipe = popen(oss.str().c_str(), "r");
 	char line[1024];
 
@@ -673,12 +696,12 @@ std::vector<std::string> ApiSystem::getAvailableAudioOutputDevices()
 	return res;
 #endif
 
-	return executeEnumerationScript("batocera-audio list");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-audio list");
 }
 
 std::vector<std::string> ApiSystem::getAvailableVideoOutputDevices() 
 {
-	return executeEnumerationScript("batocera-config lsoutputs");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-config lsoutputs");
 }
 
 std::string ApiSystem::getCurrentAudioOutputDevice() 
@@ -690,7 +713,11 @@ std::string ApiSystem::getCurrentAudioOutputDevice()
 	LOG(LogDebug) << "ApiSystem::getCurrentAudioOutputDevice";
 
 	std::ostringstream oss;
+#ifdef _ENABLEEMUELEC
+	oss << "/home/odroid/.config/emuelec/scripts/batocera/batocera-audio get";
+#else
 	oss << "batocera-audio get";
+#endif
 	FILE *pipe = popen(oss.str().c_str(), "r");
 	char line[1024];
 
@@ -721,7 +748,7 @@ bool ApiSystem::setAudioOutputDevice(std::string selected)
 
 	VolumeControl::getInstance()->init();
 	AudioManager::getInstance()->init();
-	Sound::get("/usr/share/emulationstation/resources/checksound.ogg")->play();
+	Sound::get("/usr/bin/emulationstation/resources/checksound.ogg")->play();
 
 	return exitcode == 0;
 }
@@ -733,7 +760,7 @@ RetroAchievementInfo ApiSystem::getRetroAchievements()
 
 	LOG(LogDebug) << "ApiSystem::getRetroAchievements";
 	
-	auto res = executeEnumerationScript("batocera-retroachievements-info " + SystemConf::getInstance()->get("global.retroachievements.username"));
+	auto res = executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-retroachievements-info " + SystemConf::getInstance()->get("global.retroachievements.username"));
 	std::string data = Utils::String::join(res, "\n");
 	if (data.empty())
 	{
@@ -893,7 +920,7 @@ std::vector<BatoceraTheme> ApiSystem::getBatoceraThemesList()
 
 	std::vector<BatoceraTheme> res;
 
-	std::string command = "batocera-es-theme list";
+	std::string command = "/home/odroid/.config/emuelec/scripts/batocera/batocera-es-theme list";
 	FILE *pipe = popen(command.c_str(), "r");
 	if (pipe == NULL)
 		return res;
@@ -926,12 +953,12 @@ std::vector<BatoceraTheme> ApiSystem::getBatoceraThemesList()
 
 std::pair<std::string, int> ApiSystem::installBatoceraTheme(std::string thname, const std::function<void(const std::string)>& func)
 {
-	return executeScript("batocera-es-theme install " + thname, func);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-es-theme install " + thname, func);
 }
 
 std::pair<std::string, int> ApiSystem::uninstallBatoceraTheme(std::string thname, const std::function<void(const std::string)>& func)
 {
-	return executeScript("batocera-es-theme remove " + thname, func);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-es-theme remove " + thname, func);
 }
 
 
@@ -941,7 +968,7 @@ std::vector<BatoceraBezel> ApiSystem::getBatoceraBezelsList()
 
 	std::vector<BatoceraBezel> res;
 
-	auto lines = executeEnumerationScript("batocera-es-thebezelproject list");
+	auto lines = executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-es-thebezelproject list");
 	for (auto line : lines)
 	{
 		auto parts = Utils::String::splitAny(line, " \t");
@@ -966,12 +993,12 @@ std::vector<BatoceraBezel> ApiSystem::getBatoceraBezelsList()
 
 std::pair<std::string, int> ApiSystem::installBatoceraBezel(std::string bezelsystem, const std::function<void(const std::string)>& func)
 {
-	return executeScript("batocera-es-thebezelproject install " + bezelsystem, func);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-es-thebezelproject install " + bezelsystem, func);
 }
 
 std::pair<std::string, int> ApiSystem::uninstallBatoceraBezel(std::string bezelsystem, const std::function<void(const std::string)>& func)
 {
-	return executeScript("batocera-es-thebezelproject remove " + bezelsystem, func);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-es-thebezelproject remove " + bezelsystem, func);
 }
 
 std::string ApiSystem::getCRC32(std::string fileName, bool fromZipContents)
@@ -1130,7 +1157,7 @@ void ApiSystem::setBrighness(int value)
 
 std::vector<std::string> ApiSystem::getWifiNetworks(bool scan)
 {
-	return executeEnumerationScript(scan ? "batocera-wifi scanlist" : "batocera-wifi list");
+	return executeEnumerationScript(scan ? "/home/odroid/.config/emuelec/scripts/batocera/batocera-wifi scanlist" : "batocera-wifi list");
 }
 
 std::vector<std::string> ApiSystem::executeEnumerationScript(const std::string command)
@@ -1243,7 +1270,7 @@ bool ApiSystem::isScriptingSupported(ScriptId script)
 
 	for (auto executable : executables)
 #ifdef _ENABLEEMUELEC
-		if (!Utils::FileSystem::exists("/emuelec/scripts/batocera/" + executable))
+		if (!Utils::FileSystem::exists("/home/odroid/.config/emuelec/scripts/batocera/" + executable))
 			return false;
 #else
 		if (!Utils::FileSystem::exists("/usr/bin/" + executable))
@@ -1299,7 +1326,7 @@ std::vector<std::string> ApiSystem::getFormatDiskList()
 	ret.push_back("e:\ DRIVE Z:");
 	return ret;
 #endif
-	return executeEnumerationScript("batocera-format listDisks");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-format listDisks");
 }
 
 std::vector<std::string> ApiSystem::getFormatFileSystems()
@@ -1310,7 +1337,7 @@ std::vector<std::string> ApiSystem::getFormatFileSystems()
 	ret.push_back("brfs");
 	return ret;
 #endif
-	return executeEnumerationScript("batocera-format listFstypes");
+	return executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-format listFstypes");
 }
 
 int ApiSystem::formatDisk(const std::string disk, const std::string format, const std::function<void(const std::string)>& func)
@@ -1427,7 +1454,7 @@ std::vector<PacmanPackage> ApiSystem::getBatoceraStorePackages()
 
 	LOG(LogDebug) << "ApiSystem::getBatoceraStorePackages";
 
-	auto res = executeEnumerationScript("batocera-store list");
+	auto res = executeEnumerationScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-store list");
 	std::string data = Utils::String::join(res, "\n");
 	if (data.empty())
 	{
@@ -1493,17 +1520,17 @@ std::vector<PacmanPackage> ApiSystem::getBatoceraStorePackages()
 
 std::pair<std::string, int> ApiSystem::installBatoceraStorePackage(std::string name, const std::function<void(const std::string)>& func)
 {
-	return executeScript("batocera-store install " + name, func);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-store install " + name, func);
 }
 
 std::pair<std::string, int> ApiSystem::uninstallBatoceraStorePackage(std::string name, const std::function<void(const std::string)>& func)
 {
-	return executeScript("batocera-store remove " + name, func);
+	return executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-store remove " + name, func);
 }
 
 void ApiSystem::updateBatoceraStorePackageList()
 {
-	executeScript("batocera-store update");
+	executeScript("/home/odroid/.config/emuelec/scripts/batocera/batocera-store update");
 }
 
 std::vector<std::string> ApiSystem::getShaderList()
